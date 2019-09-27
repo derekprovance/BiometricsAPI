@@ -11,6 +11,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class BloodSugarController {
     @Autowired
     private BloodSugarRepository bloodSugarRepository;
+    private java.util.Date dt = new java.util.Date();
+    private java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @RequestMapping(name="/bloodSugarEntries/", method=GET)
     public Iterable<BloodSugar> getBloodSugarEntries() {
@@ -24,8 +26,6 @@ public class BloodSugarController {
 
     @PostMapping("/bloodSugarEntries")
     public BloodSugar newBloodSugarEntry(@RequestBody BloodSugar newEntry) {
-        java.util.Date dt = new java.util.Date();
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         newEntry.setDatetime(sdf.format(dt));
 
         return bloodSugarRepository.save(newEntry);

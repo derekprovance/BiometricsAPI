@@ -8,11 +8,8 @@ import javax.persistence.Id;
 @Entity
 public class BloodSugar {
     private @Id @GeneratedValue(strategy=GenerationType.AUTO) Integer id;
-
     private String datetime;
-
     private Integer mgDl;
-
     private String notes;
 
     public Integer getId() {
