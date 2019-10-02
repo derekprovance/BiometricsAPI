@@ -12,7 +12,7 @@ public class SleepController {
     @Autowired
     private SleepRepository sleepRepository;
 
-    @RequestMapping(name="/sleep/", method=GET)
+    @GetMapping("/sleep/")
     public Iterable<Sleep> getSleepData() {
         return sleepRepository.findAll();
     }

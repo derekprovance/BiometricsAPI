@@ -14,7 +14,7 @@ public class HrDataController {
     private java.util.Date dt = new java.util.Date();
     private java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    @RequestMapping(name="/hr-data/", method=GET)
+    @GetMapping("/hr-data/")
     public Iterable<HrData> getHrData() {
         return hrDataRepository.findAll();
     }

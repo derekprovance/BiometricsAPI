@@ -14,17 +14,17 @@ public class DailyStatisticsController {
     private java.util.Date dt = new java.util.Date();
     private java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    @RequestMapping(name="/DailyStatisticsEntries/", method=GET)
+    @GetMapping("/daily-statistics-entries/")
     public Iterable<DailyStatistics> getDailyStatisticsEntries() {
         return dailyStatisticsRepository.findAll();
     }
 
-    @GetMapping("/DailyStatisticsEntries/{id}")
+    @GetMapping("/daily-statistics-entries/{id}")
     public DailyStatistics getSingleDailyStatisticsEntry(@PathVariable Integer id) {
         return dailyStatisticsRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id.toString()));
     }
 
-    @PostMapping("/DailyStatisticsEntries")
+    @PostMapping("/daily-statistics-entries")
     public DailyStatistics newDailyStatisticsEntry(@RequestBody DailyStatistics newEntry) {
         newEntry.setEntryDate(sdf.format(dt));
 

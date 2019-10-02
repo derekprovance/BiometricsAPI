@@ -1,9 +1,11 @@
 package com.derekprovance.biometrics.biometricsapi.dailyStatistics;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class DailyStatistics {
     private @Id
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;

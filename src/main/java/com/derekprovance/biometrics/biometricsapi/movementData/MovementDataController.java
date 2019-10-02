@@ -14,7 +14,7 @@ public class MovementDataController {
     private java.util.Date dt = new java.util.Date();
     private java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    @RequestMapping(name="/movement-data/", method=GET)
+    @GetMapping("/movement-data/")
     public Iterable<MovementData> getMovementData() {
         return movementDataRepository.findAll();
     }

@@ -14,17 +14,17 @@ public class BloodSugarController {
     private java.util.Date dt = new java.util.Date();
     private java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    @RequestMapping(name="/bloodSugarEntries/", method=GET)
+    @GetMapping("/blood-sugar-entries/")
     public Iterable<BloodSugar> getBloodSugarEntries() {
         return bloodSugarRepository.findAll();
     }
 
-    @GetMapping("/bloodSugarEntries/{id}")
+    @GetMapping("/blood-sugar-entries/{id}")
     public BloodSugar getSingleBloodSugarEntry(@PathVariable Integer id) {
         return bloodSugarRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id.toString()));
     }
 
-    @PostMapping("/bloodSugarEntries")
+    @PostMapping("/blood-sugar-entries")
     public BloodSugar newBloodSugarEntry(@RequestBody BloodSugar newEntry) {
         newEntry.setDatetime(sdf.format(dt));
 
