@@ -13,12 +13,12 @@ import org.springframework.web.client.RestTemplate;
 //TODO - remove hardcoded values
 
 @Service
-public class AccessTokenService {
+public class FitbitAccessTokenService {
     private RefreshTokenDTO refreshTokenDTO;
     private RestTemplate restTemplate = new RestTemplate();
     private HttpEntity<String> entity;
 
-    private static final Logger log = LoggerFactory.getLogger(AccessTokenService.class);
+    private static final Logger log = LoggerFactory.getLogger(FitbitAccessTokenService.class);
 
     @Value("${fitbit.application.clientId}")
     private String clientId;
@@ -26,7 +26,7 @@ public class AccessTokenService {
     @Value("${fitbit.application.clientSecret}")
     private String clientSecret;
 
-    public AccessTokenService() {
+    public FitbitAccessTokenService() {
         String initialRefreshToken = System.getenv("INITIAL_REFRESH_TOKEN");
         Assert.notNull(initialRefreshToken, "Error! Environment Variable INITIAL_REFRESH_TOKEN not set");
 
@@ -38,11 +38,11 @@ public class AccessTokenService {
         refreshTokenDTO = performTokenRefresh(initialRefreshToken);
     }
 
-    public String getAccessToken() {
+    String getAccessToken() {
         return refreshTokenDTO.getAccessToken();
     }
 
-    public String getUserId() {
+    String getUserId() {
         return refreshTokenDTO.getUserId();
     }
 

@@ -1,16 +1,34 @@
 package com.derekprovance.biometrics.biometricsapi.api.meals;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class MealEntry {
+    private @Id
+    @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
     private String date;
+    private String name;
+    private Float amount;
     private String unit;
-    private Integer amount;
     private Integer calories;
-    private Float carbohydrates;
+    private Integer carbs;
+    private Float fat;
+    private Float fiber;
     private Float protein;
     private Float sodium;
-    private Float fiber;
     private Integer mealTypeId;
-    private String name;
+    private Integer logId;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getDate() {
         return date;
@@ -18,6 +36,22 @@ public class MealEntry {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
     }
 
     public String getUnit() {
@@ -28,14 +62,6 @@ public class MealEntry {
         this.unit = unit;
     }
 
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
     public Integer getCalories() {
         return calories;
     }
@@ -44,12 +70,28 @@ public class MealEntry {
         this.calories = calories;
     }
 
-    public Float getCarbohydrates() {
-        return carbohydrates;
+    public Integer getCarbs() {
+        return carbs;
     }
 
-    public void setCarbohydrates(Float carbohydrates) {
-        this.carbohydrates = carbohydrates;
+    public void setCarbs(Integer carbs) {
+        this.carbs = carbs;
+    }
+
+    public Float getFat() {
+        return fat;
+    }
+
+    public void setFat(Float fat) {
+        this.fat = fat;
+    }
+
+    public Float getFiber() {
+        return fiber;
+    }
+
+    public void setFiber(Float fiber) {
+        this.fiber = fiber;
     }
 
     public Float getProtein() {
@@ -68,14 +110,6 @@ public class MealEntry {
         this.sodium = sodium;
     }
 
-    public Float getFiber() {
-        return fiber;
-    }
-
-    public void setFiber(Float fiber) {
-        this.fiber = fiber;
-    }
-
     public Integer getMealTypeId() {
         return mealTypeId;
     }
@@ -84,11 +118,11 @@ public class MealEntry {
         this.mealTypeId = mealTypeId;
     }
 
-    public String getName() {
-        return name;
+    public Integer getLogId() {
+        return logId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLogId(Integer logId) {
+        this.logId = logId;
     }
 }
