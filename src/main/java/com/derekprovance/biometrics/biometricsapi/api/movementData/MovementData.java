@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.hrData;
+package com.derekprovance.biometrics.biometricsapi.api.movementData;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,12 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class HrData {
+public class MovementData {
     private @Id
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
-    private Integer DailyStatisticsId;
+    private Integer dailyStatisticsId;
     private String eventTime;
-    private Integer hrValue;
+    private Float movement;
 
     public Integer getId() {
         return id;
@@ -22,11 +22,11 @@ public class HrData {
     }
 
     public Integer getDailyStatisticsId() {
-        return DailyStatisticsId;
+        return dailyStatisticsId;
     }
 
     public void setDailyStatisticsId(Integer dailyStatisticsId) {
-        DailyStatisticsId = dailyStatisticsId;
+        this.dailyStatisticsId = dailyStatisticsId;
     }
 
     public String getEventTime() {
@@ -37,11 +37,11 @@ public class HrData {
         this.eventTime = eventTime;
     }
 
-    public Integer getHrValue() {
-        return hrValue;
+    public Float getMovement() {
+        return movement;
     }
 
-    public void setHrValue(Integer hrValue) {
-        this.hrValue = hrValue;
+    public void setMovement(Float movement) {
+        this.movement = movement;
     }
 }

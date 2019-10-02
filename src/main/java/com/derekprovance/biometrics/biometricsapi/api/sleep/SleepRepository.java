@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.sleep;
+package com.derekprovance.biometrics.biometricsapi.api.sleep;
 
 import org.springframework.data.repository.CrudRepository;
 

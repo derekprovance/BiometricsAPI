@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.sleep;
+package com.derekprovance.biometrics.biometricsapi.api.sleep;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

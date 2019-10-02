@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.dailyStatistics;
+package com.derekprovance.biometrics.biometricsapi.api.dailyStatistics;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

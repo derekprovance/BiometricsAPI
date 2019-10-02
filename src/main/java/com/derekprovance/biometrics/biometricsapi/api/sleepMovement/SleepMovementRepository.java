@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.sleepMovement;
+package com.derekprovance.biometrics.biometricsapi.api.sleepMovement;
 
 import org.springframework.data.repository.CrudRepository;
 

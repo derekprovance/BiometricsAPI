@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.hrData;
+package com.derekprovance.biometrics.biometricsapi.api.hrData;
 
 import org.springframework.data.repository.CrudRepository;
 

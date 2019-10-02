@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.bloodSugar;
+package com.derekprovance.biometrics.biometricsapi.api.bloodSugar;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.movementData;
+package com.derekprovance.biometrics.biometricsapi.api.movementData;
 
 import org.springframework.data.repository.CrudRepository;
 

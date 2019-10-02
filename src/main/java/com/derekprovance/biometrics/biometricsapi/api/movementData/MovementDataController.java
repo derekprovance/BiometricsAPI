@@ -1,11 +1,9 @@
-package com.derekprovance.biometrics.biometricsapi.movementData;
+package com.derekprovance.biometrics.biometricsapi.api.movementData;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 public class MovementDataController {
