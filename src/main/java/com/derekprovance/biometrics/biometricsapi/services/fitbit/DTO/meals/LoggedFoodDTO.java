@@ -6,6 +6,7 @@ public class LoggedFoodDTO {
     private Integer mealTypeId;
     private String name;
     private UnitDTO unit;
+    private Integer calories;
 
     public Integer getAmount() {
         return amount;
@@ -45,5 +46,13 @@ public class LoggedFoodDTO {
 
     public void setUnit(UnitDTO unit) {
         this.unit = unit;
+    }
+
+    public Integer getCalories() {
+        return calories;
+    }
+
+    public void setCalories(Integer calories) {
+        this.calories = calories;
     }
 }

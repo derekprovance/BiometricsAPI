@@ -3,6 +3,7 @@ package com.derekprovance.biometrics.biometricsapi.services.fitbit;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.RefreshTokenDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,23 +11,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
-//TODO - remove hardcoded values
-
 @Service
 public class FitbitAccessTokenService {
+    private static final Logger log = LoggerFactory.getLogger(FitbitAccessTokenService.class);
+
     private RefreshTokenDTO refreshTokenDTO;
     private RestTemplate restTemplate = new RestTemplate();
     private HttpEntity<String> entity;
+    private String initialRefreshToken;
 
-    private static final Logger log = LoggerFactory.getLogger(FitbitAccessTokenService.class);
-
-    @Value("${fitbit.application.clientId}")
-    private String clientId;
-
-    @Value("${fitbit.application.clientSecret}")
-    private String clientSecret;
-
-    public FitbitAccessTokenService() {
+    @Autowired
+    public FitbitAccessTokenService(
+            @Value("${fitbit.application.client.id}") String clientId,
+            @Value("${fitbit.application.client.secret}") String clientSecret
+    ) {
         String initialRefreshToken = System.getenv("INITIAL_REFRESH_TOKEN");
         Assert.notNull(initialRefreshToken, "Error! Environment Variable INITIAL_REFRESH_TOKEN not set");
 
@@ -35,7 +33,7 @@ public class FitbitAccessTokenService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         entity = new HttpEntity<>(null, headers);
 
-        refreshTokenDTO = performTokenRefresh(initialRefreshToken);
+        this.initialRefreshToken = initialRefreshToken;
     }
 
     String getAccessToken() {
@@ -49,12 +47,24 @@ public class FitbitAccessTokenService {
     @Scheduled(fixedRate = (300 * 60000))
     private void performTokenRefresh() {
         log.info("Performing refresh of the access token");
-        refreshTokenDTO = performTokenRefresh(refreshTokenDTO.getRefreshToken());
+
+        String refreshToken = refreshTokenDTO != null && refreshTokenDTO.getRefreshToken() != null ? refreshTokenDTO.getRefreshToken() : initialRefreshToken;
+        refreshTokenDTO = performTokenRefresh(refreshToken);
+
+        if(refreshTokenDTO != null) {
+            log.debug("New Refresh Token: " + refreshTokenDTO.getRefreshToken());
+        }
     }
 
     private RefreshTokenDTO performTokenRefresh(String refreshToken) {
         String refreshUri = "https://api.fitbit.com/oauth2/token?grant_type=refresh_token&refresh_token=" + refreshToken;
-        final ResponseEntity<RefreshTokenDTO> exchange = restTemplate.exchange(refreshUri, HttpMethod.POST, entity, RefreshTokenDTO.class);
-        return exchange.getBody();
+        try {
+            final ResponseEntity<RefreshTokenDTO> exchange = restTemplate.exchange(refreshUri, HttpMethod.POST, entity, RefreshTokenDTO.class);
+            return exchange.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            //TODO - handle manual refresh of token due to loss of token
+            return new RefreshTokenDTO(); //Placeholder
+        }
     }
 }

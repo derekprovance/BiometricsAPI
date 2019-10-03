@@ -22,9 +22,8 @@ public class FitbitFoodAPIService {
 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private RestTemplate restTemplate = new RestTemplate();
-    private HttpEntity<String> entity;
 
-    public FitbitFoodEndpointDTO getEntriesForDate(Date date) {
+    FitbitFoodEndpointDTO getEntriesForDate(Date date) {
         return performCall(date);
     }
 
@@ -32,7 +31,7 @@ public class FitbitFoodAPIService {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(fitbitAccessTokenService.getAccessToken());
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        entity = new HttpEntity<>(null, headers);
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
         String dateStr = dateFormat.format(date);
         String uri = String.format("https://api.fitbit.com/1/user/%s/foods/log/date/%s.json", fitbitAccessTokenService.getUserId(), dateStr);

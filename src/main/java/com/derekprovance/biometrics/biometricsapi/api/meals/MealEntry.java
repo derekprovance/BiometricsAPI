@@ -1,25 +1,44 @@
 package com.derekprovance.biometrics.biometricsapi.api.meals;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.validator.constraints.UniqueElements;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class MealEntry {
     private @Id
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
+
+    @NotNull
     private String date;
+
+    @NotNull
     private String name;
-    private Float amount;
+
+    @NotNull
+    private Integer amount;
+
+    @NotNull
     private String unit;
+
     private Integer calories;
-    private Integer carbs;
+
+    private Float carbs;
+
     private Float fat;
+
     private Float fiber;
+
     private Float protein;
+
     private Float sodium;
+
+    @NotNull
     private Integer mealTypeId;
+
+    @NotNull
+    @UniqueElements
     private Integer logId;
 
     public Integer getId() {
@@ -46,11 +65,11 @@ public class MealEntry {
         this.name = name;
     }
 
-    public Float getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -70,11 +89,11 @@ public class MealEntry {
         this.calories = calories;
     }
 
-    public Integer getCarbs() {
+    public Float getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(Integer carbs) {
+    public void setCarbs(Float carbs) {
         this.carbs = carbs;
     }
 
