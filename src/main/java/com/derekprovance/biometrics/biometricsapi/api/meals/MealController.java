@@ -21,6 +21,8 @@ public class MealController {
     @Autowired
     private FoodLogService foodLogService;
 
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     @GetMapping("/meal/")
     public Iterable<MealEntry> getMealEntries() {
         return mealRepository.findAll();
@@ -34,10 +36,10 @@ public class MealController {
     @RequestMapping(value = "/meal/fitbit/{dateStr}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> pullMealsFromFitbitByDate(@PathVariable String dateStr) {
         try {
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-            foodLogService.syncWithDatabase(date);
+            Date date = simpleDateFormat.parse(dateStr);
+            Integer count = foodLogService.syncWithDatabase(date);
 
-            return ResponseEntity.status(HttpStatus.OK).body(String.format("{\"status\": \"%s\", \"message\": \"Processed entities for date %s\"}", HttpStatus.OK, dateStr));
+            return ResponseEntity.status(HttpStatus.OK).body(String.format("{\"status\": \"%s\", \"message\": \"Processed %d entities for date %s\"}", HttpStatus.OK, count, dateStr));
         } catch (ParseException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(String.format("{\"status\": \"%s\", \"message\": \"Date format must be YYYY-MM-DD\"}", HttpStatus.BAD_REQUEST));

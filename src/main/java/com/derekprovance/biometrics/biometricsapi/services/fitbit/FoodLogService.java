@@ -26,19 +26,21 @@ public class FoodLogService {
     FitbitFoodAPIService fitbitFoodAPIService;
 
     @Scheduled(fixedRate = 3600000)
-    public void syncWithDatabase() {
-        syncWithDatabase(new Date());
+    public Integer syncWithDatabase() {
+        return syncWithDatabase(new Date());
     }
 
-    public void syncWithDatabase(Date date) {
+    public Integer syncWithDatabase(Date date) {
         final FitbitFoodEndpointDTO entriesForDate = fitbitFoodAPIService.getEntriesForDate(date);
 
         if(entriesForDate != null) {
-            processEntries(entriesForDate);
+            return processEntries(entriesForDate);
         }
+
+        return 0;
     }
 
-    private void processEntries(FitbitFoodEndpointDTO fitbitFoodEndpointDTO) {
+    private Integer processEntries(FitbitFoodEndpointDTO fitbitFoodEndpointDTO) {
         List<MealEntry> mealEntries = new ArrayList<>();
 
         for(MealEntryDTO mealEntryDTO : fitbitFoodEndpointDTO.getFoods()) {
@@ -72,6 +74,8 @@ public class FoodLogService {
             log.info(String.format("Saving %s food entries to database", mealEntries.size()));
             mealRepository.saveAll(mealEntries);
         }
+
+        return mealEntries.size();
     }
 
 }
