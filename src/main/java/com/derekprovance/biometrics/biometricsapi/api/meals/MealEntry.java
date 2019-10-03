@@ -38,8 +38,8 @@ public class MealEntry {
     private Integer mealTypeId;
 
     @NotNull
-    @UniqueElements
-    private Integer logId;
+    @Column(unique=true)
+    private Long logId;
 
     public Integer getId() {
         return id;
@@ -137,11 +137,11 @@ public class MealEntry {
         this.mealTypeId = mealTypeId;
     }
 
-    public Integer getLogId() {
+    public Long getLogId() {
         return logId;
     }
 
-    public void setLogId(Integer logId) {
+    public void setLogId(Long logId) {
         this.logId = logId;
     }
 }

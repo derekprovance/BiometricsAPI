@@ -2,7 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals;
 
 public class MealEntryDTO {
     private String logDate;
-    private Integer logId;
+    private Long logId;
     private LoggedFoodDTO loggedFood;
     private NutritionalValuesDTO nutritionalValues;
 
@@ -30,11 +30,11 @@ public class MealEntryDTO {
         this.nutritionalValues = nutritionalValues;
     }
 
-    public Integer getLogId() {
+    public Long getLogId() {
         return logId;
     }
 
-    public void setLogId(Integer logId) {
+    public void setLogId(Long logId) {
         this.logId = logId;
     }
 }

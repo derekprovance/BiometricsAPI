@@ -44,18 +44,25 @@ public class FoodLogService {
         for(MealEntryDTO mealEntryDTO : fitbitFoodEndpointDTO.getFoods()) {
             if(mealRepository.findByLogId(mealEntryDTO.getLogId()) == null) {
                 MealEntry mealEntry = new MealEntry();
-                mealEntry.setAmount(mealEntryDTO.getLoggedFood().getAmount());
-                mealEntry.setName(mealEntryDTO.getLoggedFood().getName());
-                mealEntry.setCalories(mealEntryDTO.getLoggedFood().getCalories());
-                mealEntry.setCarbs(mealEntryDTO.getNutritionalValues().getCarbs());
+
+                if(mealEntryDTO.getNutritionalValues() != null) {
+                    mealEntry.setCarbs(mealEntryDTO.getNutritionalValues().getCarbs());
+                    mealEntry.setFat(mealEntryDTO.getNutritionalValues().getFat());
+                    mealEntry.setFiber(mealEntryDTO.getNutritionalValues().getFiber());
+                    mealEntry.setProtein(mealEntryDTO.getNutritionalValues().getProtein());
+                    mealEntry.setSodium(mealEntryDTO.getNutritionalValues().getSodium());
+                }
+
+                if(mealEntryDTO.getLoggedFood() != null) {
+                    mealEntry.setAmount(mealEntryDTO.getLoggedFood().getAmount());
+                    mealEntry.setName(mealEntryDTO.getLoggedFood().getName());
+                    mealEntry.setCalories(mealEntryDTO.getLoggedFood().getCalories());
+                    mealEntry.setUnit(mealEntryDTO.getLoggedFood().getUnit().getName());
+                    mealEntry.setMealTypeId(mealEntryDTO.getLoggedFood().getMealTypeId());
+                }
+
                 mealEntry.setDate(mealEntryDTO.getLogDate());
-                mealEntry.setFat(mealEntryDTO.getNutritionalValues().getFat());
-                mealEntry.setFiber(mealEntryDTO.getNutritionalValues().getFiber());
-                mealEntry.setProtein(mealEntryDTO.getNutritionalValues().getProtein());
-                mealEntry.setSodium(mealEntryDTO.getNutritionalValues().getSodium());
-                mealEntry.setUnit(mealEntryDTO.getLoggedFood().getUnit().getName());
                 mealEntry.setLogId(mealEntryDTO.getLogId());
-                mealEntry.setMealTypeId(mealEntryDTO.getLoggedFood().getMealTypeId());
 
                 mealEntries.add(mealEntry);
             }

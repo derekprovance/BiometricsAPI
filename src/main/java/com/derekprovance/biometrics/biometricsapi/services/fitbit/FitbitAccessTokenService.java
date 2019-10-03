@@ -26,7 +26,10 @@ public class FitbitAccessTokenService {
             @Value("${fitbit.application.client.secret}") String clientSecret
     ) {
         String initialRefreshToken = System.getenv("INITIAL_REFRESH_TOKEN");
-        Assert.notNull(initialRefreshToken, "Error! Environment Variable INITIAL_REFRESH_TOKEN not set");
+
+        if(System.getenv("ACCESS_TOKEN_OVERRIDE") == null) {
+            Assert.notNull(initialRefreshToken, "Error! Environment Variable INITIAL_REFRESH_TOKEN not set");
+        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(clientId, clientSecret);
@@ -50,13 +53,17 @@ public class FitbitAccessTokenService {
 
         String refreshToken = refreshTokenDTO != null && refreshTokenDTO.getRefreshToken() != null ? refreshTokenDTO.getRefreshToken() : initialRefreshToken;
         refreshTokenDTO = performTokenRefresh(refreshToken);
-
-        if(refreshTokenDTO != null) {
-            log.debug("New Refresh Token: " + refreshTokenDTO.getRefreshToken());
-        }
     }
 
     private RefreshTokenDTO performTokenRefresh(String refreshToken) {
+        if(System.getenv("ACCESS_TOKEN_OVERRIDE") != null) {
+            RefreshTokenDTO refreshTokenDTO = new RefreshTokenDTO();
+            refreshTokenDTO.setUserId("7SNSH6"); //TODO: boo
+            refreshTokenDTO.setAccessToken(System.getenv("ACCESS_TOKEN_OVERRIDE"));
+
+            return refreshTokenDTO;
+        }
+
         String refreshUri = "https://api.fitbit.com/oauth2/token?grant_type=refresh_token&refresh_token=" + refreshToken;
         try {
             final ResponseEntity<RefreshTokenDTO> exchange = restTemplate.exchange(refreshUri, HttpMethod.POST, entity, RefreshTokenDTO.class);
