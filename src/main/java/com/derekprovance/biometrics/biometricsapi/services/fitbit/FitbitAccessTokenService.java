@@ -16,9 +16,9 @@ public class FitbitAccessTokenService {
     private static final Logger log = LoggerFactory.getLogger(FitbitAccessTokenService.class);
 
     private RefreshTokenDTO refreshTokenDTO;
-    private RestTemplate restTemplate = new RestTemplate();
-    private HttpEntity<String> entity;
-    private String initialRefreshToken;
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final HttpEntity<String> entity;
+    private final String initialRefreshToken;
 
     @Autowired
     public FitbitAccessTokenService(

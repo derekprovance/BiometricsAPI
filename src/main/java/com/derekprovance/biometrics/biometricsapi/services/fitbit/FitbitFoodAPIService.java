@@ -20,8 +20,8 @@ public class FitbitFoodAPIService {
     @Autowired
     private FitbitAccessTokenService fitbitAccessTokenService;
 
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private RestTemplate restTemplate = new RestTemplate();
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final RestTemplate restTemplate = new RestTemplate();
 
     FitbitFoodEndpointDTO getEntriesForDate(Date date) {
         return performCall(date);

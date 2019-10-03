@@ -9,8 +9,8 @@ import javax.persistence.EntityNotFoundException;
 public class HrDataController {
     @Autowired
     private HrDataRepository hrDataRepository;
-    private java.util.Date dt = new java.util.Date();
-    private java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final java.util.Date dt = new java.util.Date();
+    private final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @GetMapping("/hr-data/")
     public Iterable<HrData> getHrData() {

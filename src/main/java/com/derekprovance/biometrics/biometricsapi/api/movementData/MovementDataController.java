@@ -9,8 +9,8 @@ import javax.persistence.EntityNotFoundException;
 public class MovementDataController {
     @Autowired
     private MovementDataRepository movementDataRepository;
-    private java.util.Date dt = new java.util.Date();
-    private java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final java.util.Date dt = new java.util.Date();
+    private final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @GetMapping("/movement-data/")
     public Iterable<MovementData> getMovementData() {

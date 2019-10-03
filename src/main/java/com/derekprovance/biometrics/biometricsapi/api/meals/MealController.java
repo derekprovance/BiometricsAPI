@@ -1,7 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.meals;
 
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.FoodLogService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +20,7 @@ public class MealController {
     @Autowired
     private FoodLogService foodLogService;
 
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @GetMapping("/meal/")
     public Iterable<MealEntry> getMealEntries() {
