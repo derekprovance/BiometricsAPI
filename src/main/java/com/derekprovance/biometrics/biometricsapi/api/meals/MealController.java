@@ -14,13 +14,16 @@ import java.util.Date;
 
 @RestController
 public class MealController {
-    @Autowired
     private MealRepository mealRepository;
-
-    @Autowired
     private FoodLogService foodLogService;
 
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Autowired
+    public MealController(MealRepository mealRepository, FoodLogService foodLogService) {
+        this.mealRepository = mealRepository;
+        this.foodLogService = foodLogService;
+    }
 
     @GetMapping("/meal/")
     public Iterable<MealEntry> getMealEntries() {

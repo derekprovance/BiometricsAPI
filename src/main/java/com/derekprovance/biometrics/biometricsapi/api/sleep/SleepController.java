@@ -7,8 +7,12 @@ import javax.persistence.EntityNotFoundException;
 
 @RestController
 public class SleepController {
-    @Autowired
     private SleepRepository sleepRepository;
+
+    @Autowired
+    public SleepController(SleepRepository sleepRepository) {
+        this.sleepRepository = sleepRepository;
+    }
 
     @GetMapping("/sleep/")
     public Iterable<Sleep> getSleepData() {

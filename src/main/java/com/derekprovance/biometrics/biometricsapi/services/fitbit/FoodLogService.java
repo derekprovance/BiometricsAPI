@@ -19,11 +19,14 @@ public class FoodLogService {
 
     private static final Logger log = LoggerFactory.getLogger(FoodLogService.class);
 
-    @Autowired
-    MealRepository mealRepository;
+    private MealRepository mealRepository;
+    private FitbitFoodAPIService fitbitFoodAPIService;
 
     @Autowired
-    FitbitFoodAPIService fitbitFoodAPIService;
+    public FoodLogService(MealRepository mealRepository, FitbitFoodAPIService fitbitFoodAPIService) {
+        this.mealRepository = mealRepository;
+        this.fitbitFoodAPIService = fitbitFoodAPIService;
+    }
 
     @Scheduled(fixedRate = 3600000)
     public Integer syncWithDatabase() {

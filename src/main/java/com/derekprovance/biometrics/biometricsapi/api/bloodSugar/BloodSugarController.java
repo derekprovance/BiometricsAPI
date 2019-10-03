@@ -7,10 +7,14 @@ import javax.persistence.EntityNotFoundException;
 
 @RestController
 public class BloodSugarController {
-    @Autowired
     private BloodSugarRepository bloodSugarRepository;
     private final java.util.Date dt = new java.util.Date();
     private final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    @Autowired
+    public BloodSugarController(BloodSugarRepository bloodSugarRepository) {
+        this.bloodSugarRepository = bloodSugarRepository;
+    }
 
     @GetMapping("/blood-sugar-entries/")
     public Iterable<BloodSugar> getBloodSugarEntries() {

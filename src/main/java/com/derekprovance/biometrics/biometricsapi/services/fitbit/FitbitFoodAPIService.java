@@ -17,11 +17,15 @@ public class FitbitFoodAPIService {
 
     private static final Logger log = LoggerFactory.getLogger(FitbitFoodAPIService.class);
 
-    @Autowired
     private FitbitAccessTokenService fitbitAccessTokenService;
 
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final RestTemplate restTemplate = new RestTemplate();
+
+    @Autowired
+    public FitbitFoodAPIService(FitbitAccessTokenService fitbitAccessTokenService) {
+        this.fitbitAccessTokenService = fitbitAccessTokenService;
+    }
 
     FitbitFoodEndpointDTO getEntriesForDate(Date date) {
         return performCall(date);

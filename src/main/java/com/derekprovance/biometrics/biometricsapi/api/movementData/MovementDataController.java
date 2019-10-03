@@ -7,10 +7,14 @@ import javax.persistence.EntityNotFoundException;
 
 @RestController
 public class MovementDataController {
-    @Autowired
     private MovementDataRepository movementDataRepository;
     private final java.util.Date dt = new java.util.Date();
     private final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    @Autowired
+    public MovementDataController(MovementDataRepository movementDataRepository) {
+        this.movementDataRepository = movementDataRepository;
+    }
 
     @GetMapping("/movement-data/")
     public Iterable<MovementData> getMovementData() {
