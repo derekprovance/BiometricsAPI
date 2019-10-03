@@ -28,7 +28,7 @@ public class FoodLogService {
         this.fitbitFoodAPIService = fitbitFoodAPIService;
     }
 
-    @Scheduled(fixedRate = 3600000)
+//    @Scheduled(fixedRate = 3600000)
     public Integer syncWithDatabase() {
         return syncWithDatabase(new Date());
     }
