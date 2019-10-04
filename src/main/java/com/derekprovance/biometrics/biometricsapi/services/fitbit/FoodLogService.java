@@ -7,6 +7,7 @@ import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.Meal
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class FoodLogService {
         this.fitbitAPIService = fitbitAPIService;
     }
 
-//    @Scheduled(fixedRate = 3600000)
+    @Scheduled(fixedRate = 3600000)
     public Integer syncWithDatabase() {
         return syncWithDatabase(new Date());
     }

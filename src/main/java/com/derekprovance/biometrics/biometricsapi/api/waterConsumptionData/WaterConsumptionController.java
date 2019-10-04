@@ -47,7 +47,7 @@ public class WaterConsumptionController {
             return ResponseEntity.badRequest().body(String.format("{\"status\": \"%s\", \"message\": \"Date format must be YYYY-MM-DD\"}", HttpStatus.BAD_REQUEST));
         }
     }
-    
+
     @PostMapping("/water-consumption")
     public WaterConsumption newWaterConsumptionDataEntry(@RequestBody WaterConsumption newEntry) {
         return waterConsumptionRepository.save(newEntry);
