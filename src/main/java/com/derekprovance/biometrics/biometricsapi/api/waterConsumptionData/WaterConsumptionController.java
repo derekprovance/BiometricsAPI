@@ -1,6 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.waterConsumptionData;
 
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.WaterLogService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ public class WaterConsumptionController {
     private WaterLogService waterLogService;
 
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final Gson gson = new Gson();
 
     @Autowired
     public WaterConsumptionController(WaterConsumptionRepository waterConsumptionRepository, WaterLogService waterLogService) {
@@ -30,9 +32,16 @@ public class WaterConsumptionController {
         return waterConsumptionRepository.findAll();
     }
 
-    @GetMapping("/water-consumption/{id}")
-    public WaterConsumption getSingleWaterConsumptionDataEntry(@PathVariable Integer id) {
-        return waterConsumptionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id.toString()));
+    @RequestMapping(value="/water-consumption/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getSingleWaterConsumptionEntry(@PathVariable Integer id) {
+        try {
+            final WaterConsumption waterConsumption = waterConsumptionRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
+
+            return ResponseEntity.ok().body(gson.toJson(waterConsumption));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @RequestMapping(value = "/water-consumption/fitbit/{dateStr}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

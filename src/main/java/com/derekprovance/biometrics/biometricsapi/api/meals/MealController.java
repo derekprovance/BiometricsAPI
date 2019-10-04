@@ -1,6 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.meals;
 
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.FoodLogService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ public class MealController {
     private FoodLogService foodLogService;
 
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final Gson gson = new Gson();
 
     @Autowired
     public MealController(MealRepository mealRepository, FoodLogService foodLogService) {
@@ -30,9 +32,16 @@ public class MealController {
         return mealRepository.findAll();
     }
 
-    @GetMapping("/meal/{id}")
-    public MealEntry getSingleMealEntry(@PathVariable Integer id) {
-        return mealRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id.toString()));
+    @RequestMapping(value="/meal/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getSingleMealEntryEntry(@PathVariable Integer id) {
+        try {
+            final MealEntry mealEntry = mealRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
+
+            return ResponseEntity.ok().body(gson.toJson(mealEntry));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @RequestMapping(value = "/meal/fitbit/{dateStr}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
