@@ -14,7 +14,6 @@ import java.util.Date;
 @RestController
 public class BloodSugarController extends AbstractApiController {
     private BloodSugarRepository bloodSugarRepository;
-    private final Gson gson = new Gson();
 
     @Autowired
     public BloodSugarController(BloodSugarRepository bloodSugarRepository) {

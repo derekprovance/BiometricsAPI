@@ -14,7 +14,6 @@ import java.util.Date;
 @RestController
 public class HrDataController extends AbstractApiController {
     private HrDataRepository hrDataRepository;
-    private final Gson gson = new Gson();
 
     @Autowired
     public HrDataController(HrDataRepository hrDataRepository) {

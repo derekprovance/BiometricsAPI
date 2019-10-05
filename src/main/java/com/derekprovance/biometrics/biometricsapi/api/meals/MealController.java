@@ -12,16 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
 public class MealController extends AbstractApiController {
     private MealRepository mealRepository;
     private FoodLogService foodLogService;
-
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private final Gson gson = new Gson();
 
     @Autowired
     public MealController(MealRepository mealRepository, FoodLogService foodLogService) {

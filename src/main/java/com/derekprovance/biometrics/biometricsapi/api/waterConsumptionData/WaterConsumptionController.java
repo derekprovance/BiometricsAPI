@@ -20,9 +20,6 @@ public class WaterConsumptionController extends AbstractApiController {
     private WaterConsumptionRepository waterConsumptionRepository;
     private WaterLogService waterLogService;
 
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private final Gson gson = new Gson();
-
     @Autowired
     public WaterConsumptionController(WaterConsumptionRepository waterConsumptionRepository, WaterLogService waterLogService) {
         this.waterConsumptionRepository = waterConsumptionRepository;

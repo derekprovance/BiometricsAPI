@@ -14,7 +14,6 @@ import java.util.Date;
 @RestController
 public class DailyStatisticsController extends AbstractApiController {
     private DailyStatisticsRepository dailyStatisticsRepository;
-    private final Gson gson = new Gson();
 
     @Autowired
     public DailyStatisticsController(DailyStatisticsRepository dailyStatisticsRepository) {

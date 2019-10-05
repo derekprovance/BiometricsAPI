@@ -14,7 +14,6 @@ import java.util.Date;
 @RestController
 public class MovementDataController extends AbstractApiController {
     private MovementDataRepository movementDataRepository;
-    private final Gson gson = new Gson();
 
     @Autowired
     public MovementDataController(MovementDataRepository movementDataRepository) {

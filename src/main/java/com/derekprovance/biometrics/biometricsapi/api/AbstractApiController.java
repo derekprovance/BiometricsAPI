@@ -1,5 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.api;
 
+import com.google.gson.Gson;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -7,6 +10,8 @@ import java.util.TimeZone;
 public abstract class AbstractApiController {
 
     private Calendar cal = Calendar.getInstance();
+    protected final Gson gson = new Gson();
+    protected final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public AbstractApiController() {
         cal.setTimeZone(TimeZone.getTimeZone("UTC"));

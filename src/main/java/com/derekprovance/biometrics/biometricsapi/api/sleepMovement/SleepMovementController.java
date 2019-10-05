@@ -12,7 +12,6 @@ import javax.persistence.EntityNotFoundException;
 @RestController
 public class SleepMovementController extends AbstractApiController {
     private SleepMovementRepository sleepMovementRepository;
-    private final Gson gson = new Gson();
 
     @Autowired
     public SleepMovementController(SleepMovementRepository sleepMovementRepository) {
