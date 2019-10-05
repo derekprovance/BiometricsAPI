@@ -27,11 +27,6 @@ public class WaterConsumptionController {
         this.waterLogService = waterLogService;
     }
 
-    @GetMapping("/water-consumption/")
-    public Iterable<WaterConsumption> getWaterConsumptionData() {
-        return waterConsumptionRepository.findAll();
-    }
-
     @RequestMapping(value="/water-consumption/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleWaterConsumptionEntry(@PathVariable Integer id) {
         try {

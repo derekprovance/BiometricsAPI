@@ -20,11 +20,6 @@ public class MovementDataController {
         this.movementDataRepository = movementDataRepository;
     }
 
-    @GetMapping("/movement-data/")
-    public Iterable<MovementData> getMovementData() {
-        return movementDataRepository.findAll();
-    }
-
     @RequestMapping(value="/movement-data/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleBloodSugarEntry(@PathVariable Integer id) {
         try {

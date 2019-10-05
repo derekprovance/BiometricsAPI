@@ -15,11 +15,6 @@ public class DailyStatisticsController {
     private final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final Gson gson = new Gson();
 
-    @Autowired
-    public DailyStatisticsController(DailyStatisticsRepository dailyStatisticsRepository) {
-        this.dailyStatisticsRepository = dailyStatisticsRepository;
-    }
-
     @GetMapping("/daily-statistics-entries/")
     public Iterable<DailyStatistics> getDailyStatisticsEntries() {
         return dailyStatisticsRepository.findAll();

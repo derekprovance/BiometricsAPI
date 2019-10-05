@@ -20,11 +20,6 @@ public class HrDataController {
         this.hrDataRepository = hrDataRepository;
     }
 
-    @GetMapping("/hr-data/")
-    public Iterable<HrData> getHrData() {
-        return hrDataRepository.findAll();
-    }
-
     @RequestMapping(value="/hr-data/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleHrDataEntry(@PathVariable Integer id) {
         try {

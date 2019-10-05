@@ -18,11 +18,6 @@ public class SleepMovementController {
         this.sleepMovementRepository = sleepMovementRepository;
     }
 
-    @GetMapping("/sleep-movement/")
-    public Iterable<SleepMovement> getSleepMovementData() {
-        return sleepMovementRepository.findAll();
-    }
-
     @RequestMapping(value="/sleep-movement/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleSleepMovementEntry(@PathVariable Integer id) {
         try {

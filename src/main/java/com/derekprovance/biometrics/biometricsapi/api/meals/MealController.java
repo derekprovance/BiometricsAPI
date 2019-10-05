@@ -27,11 +27,6 @@ public class MealController {
         this.foodLogService = foodLogService;
     }
 
-    @GetMapping("/meal/")
-    public Iterable<MealEntry> getMealEntries() {
-        return mealRepository.findAll();
-    }
-
     @RequestMapping(value="/meal/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleMealEntryEntry(@PathVariable Integer id) {
         try {

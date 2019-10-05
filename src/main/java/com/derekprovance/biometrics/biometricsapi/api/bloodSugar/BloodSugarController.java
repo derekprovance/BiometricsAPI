@@ -20,11 +20,6 @@ public class BloodSugarController {
         this.bloodSugarRepository = bloodSugarRepository;
     }
 
-    @GetMapping("/blood-sugar-entries/")
-    public Iterable<BloodSugar> getBloodSugarEntries() {
-        return bloodSugarRepository.findAll();
-    }
-
     @RequestMapping(value="/blood-sugar-entries/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleBloodSugarEntry(@PathVariable Integer id) {
         try {
