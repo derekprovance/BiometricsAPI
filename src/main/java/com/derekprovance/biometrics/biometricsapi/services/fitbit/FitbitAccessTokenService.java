@@ -25,7 +25,7 @@ public class FitbitAccessTokenService {
             @Value("${fitbit.application.client.id}") String clientId,
             @Value("${fitbit.application.client.secret}") String clientSecret
     ) {
-        String initialRefreshToken = System.getenv("INITIAL_REFRESH_TOKEN");
+        String initialRefreshToken = "test";
 
         if(System.getenv("ACCESS_TOKEN_OVERRIDE") == null) {
             Assert.notNull(initialRefreshToken, "Error! Environment Variable INITIAL_REFRESH_TOKEN not set");
@@ -47,8 +47,7 @@ public class FitbitAccessTokenService {
         return refreshTokenDTO.getUserId();
     }
 
-    @Scheduled(fixedRate = (300 * 60000))
-    private void performTokenRefresh() {
+    public void performTokenRefresh() {
         log.info("Performing refresh of the access token");
 
         String refreshToken = refreshTokenDTO != null && refreshTokenDTO.getRefreshToken() != null ? refreshTokenDTO.getRefreshToken() : initialRefreshToken;

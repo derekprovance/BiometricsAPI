@@ -31,7 +31,6 @@ public class WaterLogService {
         this.fitbitAPIService = fitbitAPIService;
     }
 
-    @Scheduled(fixedRate = 3600000)
     public void syncWithDatabase() {
         syncWithDatabase(new Date());
     }
