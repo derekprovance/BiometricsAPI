@@ -1,8 +1,10 @@
 package com.derekprovance.biometrics.biometricsapi.api.waterConsumptionData;
 
+import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.WaterLogService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
-public class WaterConsumptionController {
+public class WaterConsumptionController extends AbstractApiController {
     private WaterConsumptionRepository waterConsumptionRepository;
     private WaterLogService waterLogService;
 
@@ -25,6 +27,21 @@ public class WaterConsumptionController {
     public WaterConsumptionController(WaterConsumptionRepository waterConsumptionRepository, WaterLogService waterLogService) {
         this.waterConsumptionRepository = waterConsumptionRepository;
         this.waterLogService = waterLogService;
+    }
+
+    @RequestMapping(value="/water-consumption/{startDate}", method=RequestMethod.GET)
+    public Iterable<WaterConsumption> getWaterConsumptionByDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+    ) {
+        return waterConsumptionRepository.findAllByDateBetween(getBeginningOfDay(date), getEndOfDay(date));
+    }
+
+    @RequestMapping(value="/water-consumption/{startDate}/{endDate}", method=RequestMethod.GET)
+    public Iterable<WaterConsumption> getWaterConsumptionBetweenDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+    ) {
+        return waterConsumptionRepository.findAllByDateBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
     }
 
     @RequestMapping(value="/water-consumption/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)

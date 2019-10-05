@@ -1,8 +1,10 @@
 package com.derekprovance.biometrics.biometricsapi.api.meals;
 
+import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.FoodLogService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
-public class MealController {
+public class MealController extends AbstractApiController {
     private MealRepository mealRepository;
     private FoodLogService foodLogService;
 
@@ -25,6 +27,21 @@ public class MealController {
     public MealController(MealRepository mealRepository, FoodLogService foodLogService) {
         this.mealRepository = mealRepository;
         this.foodLogService = foodLogService;
+    }
+
+    @RequestMapping(value="/meal/{startDate}", method=RequestMethod.GET)
+    public Iterable<MealEntry> getMealEntryByDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+    ) {
+        return mealRepository.findAllByDateBetween(getBeginningOfDay(date), getEndOfDay(date));
+    }
+
+    @RequestMapping(value="/meal/{startDate}/{endDate}", method=RequestMethod.GET)
+    public Iterable<MealEntry> getMealEntryBetweenDates(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+    ) {
+        return mealRepository.findAllByDateBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
     }
 
     @RequestMapping(value="/meal/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)

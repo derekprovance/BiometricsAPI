@@ -1,16 +1,16 @@
 package com.derekprovance.biometrics.biometricsapi.api.hrData;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class HrData {
     private @Id
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
     private Integer DailyStatisticsId;
-    private String eventTime;
+
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date eventTime;
     private Integer hrValue;
 
     public Integer getId() {
@@ -29,11 +29,11 @@ public class HrData {
         DailyStatisticsId = dailyStatisticsId;
     }
 
-    public String getEventTime() {
+    public Date getEventTime() {
         return eventTime;
     }
 
-    public void setEventTime(String eventTime) {
+    public void setEventTime(Date eventTime) {
         this.eventTime = eventTime;
     }
 

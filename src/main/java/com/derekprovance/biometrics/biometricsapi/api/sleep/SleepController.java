@@ -1,5 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.sleep;
 
+import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -9,13 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 
 @RestController
-public class SleepController {
+public class SleepController extends AbstractApiController {
     private SleepRepository sleepRepository;
     private final Gson gson = new Gson();
 
     @Autowired
     public SleepController(SleepRepository sleepRepository) {
         this.sleepRepository = sleepRepository;
+    }
+
+    @GetMapping("/sleep/")
+    public Iterable<Sleep> getSleepData() {
+        return sleepRepository.findAll();
     }
 
     @RequestMapping(value="/sleep/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)

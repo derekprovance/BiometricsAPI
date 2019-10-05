@@ -1,15 +1,18 @@
 package com.derekprovance.biometrics.biometricsapi.api.movementData;
 
+import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Date;
 
 @RestController
-public class MovementDataController {
+public class MovementDataController extends AbstractApiController {
     private MovementDataRepository movementDataRepository;
     private final java.util.Date dt = new java.util.Date();
     private final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -18,6 +21,21 @@ public class MovementDataController {
     @Autowired
     public MovementDataController(MovementDataRepository movementDataRepository) {
         this.movementDataRepository = movementDataRepository;
+    }
+
+    @RequestMapping(value="/movement-data/{startDate}", method=RequestMethod.GET)
+    public Iterable<MovementData> getMovementDateByDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+    ) {
+        return movementDataRepository.findAllByEventTimeBetween(getBeginningOfDay(date), getEndOfDay(date));
+    }
+
+    @RequestMapping(value="/movement-data/{startDate}/{endDate}", method=RequestMethod.GET)
+    public Iterable<MovementData> getMovementDataBetweenDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+    ) {
+        return movementDataRepository.findAllByEventTimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
     }
 
     @RequestMapping(value="/movement-data/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
