@@ -2,6 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.api.meals;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class MealEntry {
@@ -9,7 +10,7 @@ public class MealEntry {
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
 
     @NotNull
-    private String date;
+    private Date date;
 
     @NotNull
     private String name;
@@ -47,11 +48,11 @@ public class MealEntry {
         this.id = id;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

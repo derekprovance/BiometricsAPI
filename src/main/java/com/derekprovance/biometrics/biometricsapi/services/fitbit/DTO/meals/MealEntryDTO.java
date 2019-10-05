@@ -1,16 +1,18 @@
 package com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals;
 
+import java.util.Date;
+
 public class MealEntryDTO {
-    private String logDate;
+    private Date logDate;
     private Long logId;
     private LoggedFoodDTO loggedFood;
     private NutritionalValuesDTO nutritionalValues;
 
-    public String getLogDate() {
+    public Date getLogDate() {
         return logDate;
     }
 
-    public void setLogDate(String logDate) {
+    public void setLogDate(Date logDate) {
         this.logDate = logDate;
     }
 

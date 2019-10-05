@@ -14,8 +14,6 @@ import java.util.Date;
 @RestController
 public class MovementDataController extends AbstractApiController {
     private MovementDataRepository movementDataRepository;
-    private final java.util.Date dt = new java.util.Date();
-    private final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final Gson gson = new Gson();
 
     @Autowired
@@ -37,7 +35,7 @@ public class MovementDataController extends AbstractApiController {
 
     @PostMapping("/movement-data")
     public MovementData newMovementDataEntry(@RequestBody MovementData newEntry) {
-        newEntry.setEventTime(sdf.format(dt));
+        newEntry.setEventTime(new Date());
 
         return movementDataRepository.save(newEntry);
     }

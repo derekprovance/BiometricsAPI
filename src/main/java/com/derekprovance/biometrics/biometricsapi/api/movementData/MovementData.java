@@ -4,13 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class MovementData {
     private @Id
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
     private Integer dailyStatisticsId;
-    private String eventTime;
+    private Date eventTime;
     private Float movement;
 
     public Integer getId() {
@@ -29,11 +30,11 @@ public class MovementData {
         this.dailyStatisticsId = dailyStatisticsId;
     }
 
-    public String getEventTime() {
+    public Date getEventTime() {
         return eventTime;
     }
 
-    public void setEventTime(String eventTime) {
+    public void setEventTime(Date eventTime) {
         this.eventTime = eventTime;
     }
 

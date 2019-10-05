@@ -14,8 +14,6 @@ import java.util.Date;
 @RestController
 public class BloodSugarController extends AbstractApiController {
     private BloodSugarRepository bloodSugarRepository;
-    private final java.util.Date dt = new java.util.Date();
-    private final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final Gson gson = new Gson();
 
     @Autowired
@@ -37,7 +35,7 @@ public class BloodSugarController extends AbstractApiController {
 
     @PostMapping("/blood-sugar-entries")
     public BloodSugar newBloodSugarEntry(@RequestBody BloodSugar newEntry) {
-        newEntry.setDatetime(sdf.format(dt));
+        newEntry.setDatetime(new Date());
 
         return bloodSugarRepository.save(newEntry);
     }

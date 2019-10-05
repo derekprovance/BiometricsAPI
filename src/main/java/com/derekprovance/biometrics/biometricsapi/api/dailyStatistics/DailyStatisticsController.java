@@ -14,8 +14,6 @@ import java.util.Date;
 @RestController
 public class DailyStatisticsController extends AbstractApiController {
     private DailyStatisticsRepository dailyStatisticsRepository;
-    private final java.util.Date dt = new java.util.Date();
-    private final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final Gson gson = new Gson();
 
     @Autowired
@@ -52,7 +50,7 @@ public class DailyStatisticsController extends AbstractApiController {
 
     @PostMapping("/daily-statistics-entries")
     public DailyStatistics newDailyStatisticsEntry(@RequestBody DailyStatistics newEntry) {
-        newEntry.setEntryDate(sdf.format(dt));
+        newEntry.setEntryDate(new Date());
 
         return dailyStatisticsRepository.save(newEntry);
     }

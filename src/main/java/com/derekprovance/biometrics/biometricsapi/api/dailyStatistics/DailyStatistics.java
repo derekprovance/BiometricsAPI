@@ -4,12 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class DailyStatistics {
     private @Id
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
-    private String entryDate;
+    private Date entryDate;
     private Integer maxHr;
     private Integer minHr;
     private Integer restingHr;
@@ -31,11 +32,11 @@ public class DailyStatistics {
         this.id = id;
     }
 
-    public String getEntryDate() {
+    public Date getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(String entryDate) {
+    public void setEntryDate(Date entryDate) {
         this.entryDate = entryDate;
     }
 
