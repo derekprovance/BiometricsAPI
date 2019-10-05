@@ -23,21 +23,6 @@ public class MovementDataController extends AbstractApiController {
         this.movementDataRepository = movementDataRepository;
     }
 
-    @RequestMapping(value="/movement-data/{startDate}", method=RequestMethod.GET)
-    public Iterable<MovementData> getMovementDateByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
-    ) {
-        return movementDataRepository.findAllByEventTimeBetween(getBeginningOfDay(date), getEndOfDay(date));
-    }
-
-    @RequestMapping(value="/movement-data/{startDate}/{endDate}", method=RequestMethod.GET)
-    public Iterable<MovementData> getMovementDataBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
-    ) {
-        return movementDataRepository.findAllByEventTimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
-    }
-
     @RequestMapping(value="/movement-data/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleBloodSugarEntry(@PathVariable Integer id) {
         try {
@@ -55,5 +40,20 @@ public class MovementDataController extends AbstractApiController {
         newEntry.setEventTime(sdf.format(dt));
 
         return movementDataRepository.save(newEntry);
+    }
+
+    @RequestMapping(value="/movement-data/date/{startDate}", method=RequestMethod.GET)
+    public Iterable<MovementData> getMovementDateByDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+    ) {
+        return movementDataRepository.findAllByEventTimeBetween(getBeginningOfDay(date), getEndOfDay(date));
+    }
+
+    @RequestMapping(value="/movement-data/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    public Iterable<MovementData> getMovementDataBetweenDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+    ) {
+        return movementDataRepository.findAllByEventTimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
     }
 }

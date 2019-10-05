@@ -29,21 +29,6 @@ public class MealController extends AbstractApiController {
         this.foodLogService = foodLogService;
     }
 
-    @RequestMapping(value="/meal/{startDate}", method=RequestMethod.GET)
-    public Iterable<MealEntry> getMealEntryByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
-    ) {
-        return mealRepository.findAllByDateBetween(getBeginningOfDay(date), getEndOfDay(date));
-    }
-
-    @RequestMapping(value="/meal/{startDate}/{endDate}", method=RequestMethod.GET)
-    public Iterable<MealEntry> getMealEntryBetweenDates(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
-    ) {
-        return mealRepository.findAllByDateBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
-    }
-
     @RequestMapping(value="/meal/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleMealEntryEntry(@PathVariable Integer id) {
         try {
@@ -72,5 +57,20 @@ public class MealController extends AbstractApiController {
     @PostMapping("/meal")
     public MealEntry newMealEntry(@RequestBody MealEntry newEntry) {
         return mealRepository.save(newEntry);
+    }
+
+    @RequestMapping(value="/meal/date/{startDate}", method=RequestMethod.GET)
+    public Iterable<MealEntry> getMealEntryByDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+    ) {
+        return mealRepository.findAllByDateBetween(getBeginningOfDay(date), getEndOfDay(date));
+    }
+
+    @RequestMapping(value="/meal/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    public Iterable<MealEntry> getMealEntryBetweenDates(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+    ) {
+        return mealRepository.findAllByDateBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
     }
 }

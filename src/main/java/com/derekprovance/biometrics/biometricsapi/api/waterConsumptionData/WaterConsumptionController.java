@@ -29,21 +29,6 @@ public class WaterConsumptionController extends AbstractApiController {
         this.waterLogService = waterLogService;
     }
 
-    @RequestMapping(value="/water-consumption/{startDate}", method=RequestMethod.GET)
-    public Iterable<WaterConsumption> getWaterConsumptionByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
-    ) {
-        return waterConsumptionRepository.findAllByDateBetween(getBeginningOfDay(date), getEndOfDay(date));
-    }
-
-    @RequestMapping(value="/water-consumption/{startDate}/{endDate}", method=RequestMethod.GET)
-    public Iterable<WaterConsumption> getWaterConsumptionBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
-    ) {
-        return waterConsumptionRepository.findAllByDateBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
-    }
-
     @RequestMapping(value="/water-consumption/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleWaterConsumptionEntry(@PathVariable Integer id) {
         try {
@@ -72,5 +57,20 @@ public class WaterConsumptionController extends AbstractApiController {
     @PostMapping("/water-consumption")
     public WaterConsumption newWaterConsumptionDataEntry(@RequestBody WaterConsumption newEntry) {
         return waterConsumptionRepository.save(newEntry);
+    }
+
+    @RequestMapping(value="/water-consumption/date/{startDate}", method=RequestMethod.GET)
+    public Iterable<WaterConsumption> getWaterConsumptionByDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+    ) {
+        return waterConsumptionRepository.findAllByDateBetween(getBeginningOfDay(date), getEndOfDay(date));
+    }
+
+    @RequestMapping(value="/water-consumption/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    public Iterable<WaterConsumption> getWaterConsumptionBetweenDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+    ) {
+        return waterConsumptionRepository.findAllByDateBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
     }
 }

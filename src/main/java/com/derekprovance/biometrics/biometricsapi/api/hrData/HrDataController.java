@@ -21,21 +21,6 @@ public class HrDataController extends AbstractApiController {
         this.hrDataRepository = hrDataRepository;
     }
 
-    @RequestMapping(value="/hr-data/{startDate}", method=RequestMethod.GET)
-    public Iterable<HrData> getHrDataByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
-    ) {
-        return hrDataRepository.findAllByEventTimeBetween(getBeginningOfDay(date), getEndOfDay(date));
-    }
-
-    @RequestMapping(value="/hr-data/{startDate}/{endDate}", method=RequestMethod.GET)
-    public Iterable<HrData> getHrDataBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
-    ) {
-        return hrDataRepository.findAllByEventTimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
-    }
-
     @RequestMapping(value="/hr-data/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleHrDataEntry(@PathVariable Integer id) {
         try {
@@ -53,5 +38,20 @@ public class HrDataController extends AbstractApiController {
         newEntry.setEventTime(new Date());
 
         return hrDataRepository.save(newEntry);
+    }
+
+    @RequestMapping(value="/hr-data/date/{startDate}", method=RequestMethod.GET)
+    public Iterable<HrData> getHrDataByDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+    ) {
+        return hrDataRepository.findAllByEventTimeBetween(getBeginningOfDay(date), getEndOfDay(date));
+    }
+
+    @RequestMapping(value="/hr-data/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    public Iterable<HrData> getHrDataBetweenDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+    ) {
+        return hrDataRepository.findAllByEventTimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
     }
 }

@@ -23,22 +23,6 @@ public class BloodSugarController extends AbstractApiController {
         this.bloodSugarRepository = bloodSugarRepository;
     }
 
-    @RequestMapping(value="/blood-sugar-entries/{startDate}", method=RequestMethod.GET)
-    public Iterable<BloodSugar> getBloodSugarByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
-    ) {
-        return bloodSugarRepository.findByDatetimeBetween(getBeginningOfDay(date), getEndOfDay(date));
-    }
-
-    @RequestMapping(value="/blood-sugar-entries/{startDate}/{endDate}", method=RequestMethod.GET)
-    public Iterable<BloodSugar> getBloodSugarBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
-    ) {
-        return bloodSugarRepository.findByDatetimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
-    }
-
-
     @RequestMapping(value="/blood-sugar-entries/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleBloodSugarEntry(@PathVariable Integer id) {
         try {
@@ -56,5 +40,20 @@ public class BloodSugarController extends AbstractApiController {
         newEntry.setDatetime(sdf.format(dt));
 
         return bloodSugarRepository.save(newEntry);
+    }
+
+    @RequestMapping(value="/blood-sugar-entries/date/{startDate}", method=RequestMethod.GET)
+    public Iterable<BloodSugar> getBloodSugarByDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+    ) {
+        return bloodSugarRepository.findByDatetimeBetween(getBeginningOfDay(date), getEndOfDay(date));
+    }
+
+    @RequestMapping(value="/blood-sugar-entries/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    public Iterable<BloodSugar> getBloodSugarBetweenDate(
+            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+    ) {
+        return bloodSugarRepository.findByDatetimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
     }
 }
