@@ -6,14 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class FitbitAccessTokenService {
-    private static final Logger log = LoggerFactory.getLogger(FitbitAccessTokenService.class);
+public class FitBitAccessTokenService {
+    private static final Logger log = LoggerFactory.getLogger(FitBitAccessTokenService.class);
 
     private RefreshTokenDTO refreshTokenDTO;
     private final RestTemplate restTemplate = new RestTemplate();
@@ -21,14 +20,13 @@ public class FitbitAccessTokenService {
     private final String initialRefreshToken;
 
     @Autowired
-    public FitbitAccessTokenService(
+    public FitBitAccessTokenService(
             @Value("${fitbit.application.client.id}") String clientId,
-            @Value("${fitbit.application.client.secret}") String clientSecret
+            @Value("${fitbit.application.client.secret}") String clientSecret,
+            @Value("${fitbit.access.refresh}") String initialRefreshToken
     ) {
-        String initialRefreshToken = "test";
-
         if(System.getenv("ACCESS_TOKEN_OVERRIDE") == null) {
-            Assert.notNull(initialRefreshToken, "Error! Environment Variable INITIAL_REFRESH_TOKEN not set");
+            Assert.notNull(initialRefreshToken, "Error! Property fitbit.access.refresh not set");
         }
 
         HttpHeaders headers = new HttpHeaders();

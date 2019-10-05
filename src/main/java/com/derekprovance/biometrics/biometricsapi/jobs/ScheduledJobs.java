@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.jobs;
 
-import com.derekprovance.biometrics.biometricsapi.services.fitbit.FitbitAccessTokenService;
+import com.derekprovance.biometrics.biometricsapi.services.fitbit.FitBitAccessTokenService;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.FoodLogService;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.WaterLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ public class ScheduledJobs {
 
     private FoodLogService foodLogService;
     private WaterLogService waterLogService;
-    private FitbitAccessTokenService fitbitAccessTokenService;
+    private FitBitAccessTokenService fitbitAccessTokenService;
 
     @Autowired
-    public ScheduledJobs(FoodLogService foodLogService, WaterLogService waterLogService, FitbitAccessTokenService fitbitAccessTokenService) {
+    public ScheduledJobs(FoodLogService foodLogService, WaterLogService waterLogService, FitBitAccessTokenService fitbitAccessTokenService) {
         this.foodLogService = foodLogService;
         this.waterLogService = waterLogService;
         this.fitbitAccessTokenService = fitbitAccessTokenService;

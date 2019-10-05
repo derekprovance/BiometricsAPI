@@ -18,13 +18,13 @@ public class FitbitAPIService {
 
     private static final Logger log = LoggerFactory.getLogger(FitbitAPIService.class);
 
-    private FitbitAccessTokenService fitbitAccessTokenService;
+    private FitBitAccessTokenService fitbitAccessTokenService;
 
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
-    public FitbitAPIService(FitbitAccessTokenService fitbitAccessTokenService) {
+    public FitbitAPIService(FitBitAccessTokenService fitbitAccessTokenService) {
         this.fitbitAccessTokenService = fitbitAccessTokenService;
     }
 
