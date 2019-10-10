@@ -3,6 +3,7 @@ package com.derekprovance.biometrics.biometricsapi.api.waterConsumptionData;
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.WaterLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,11 +18,17 @@ import java.util.Date;
 public class WaterConsumptionController extends AbstractApiController {
     private WaterConsumptionRepository waterConsumptionRepository;
     private WaterLogService waterLogService;
+    private Boolean fitBitEnabled;
 
     @Autowired
-    public WaterConsumptionController(WaterConsumptionRepository waterConsumptionRepository, WaterLogService waterLogService) {
+    public WaterConsumptionController(
+            WaterConsumptionRepository waterConsumptionRepository,
+            WaterLogService waterLogService,
+            @Value("${fitbit.enabled}") Boolean fitBitEnabled
+    ) {
         this.waterConsumptionRepository = waterConsumptionRepository;
         this.waterLogService = waterLogService;
+        this.fitBitEnabled = fitBitEnabled;
     }
 
     @RequestMapping(value="/water-consumption/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -38,6 +45,10 @@ public class WaterConsumptionController extends AbstractApiController {
 
     @RequestMapping(value = "/water-consumption/fitbit/{dateStr}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> pullWaterByDate(@PathVariable String dateStr) {
+        if(!fitBitEnabled) {
+            return ResponseEntity.badRequest().body(String.format("{\"status\": \"%s\", \"message\": \"FitBit API access has been disabled.\"}", HttpStatus.BAD_REQUEST));
+        }
+
         try {
             Date date = simpleDateFormat.parse(dateStr);
             waterLogService.syncWithDatabase(date);
