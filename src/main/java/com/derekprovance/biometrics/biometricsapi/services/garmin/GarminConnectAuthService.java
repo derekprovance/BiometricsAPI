@@ -17,28 +17,40 @@ public class GarminConnectAuthService {
     private String username;
     private String password;
 
-    private String token;
-
     private Pattern pattern = Pattern.compile("(?<=\\?ticket=)(.*)(?=\";)");
+    private OkHttpClient client = new OkHttpClient();
+    private final RestTemplate restTemplate = new RestTemplate();
+    private String session;
+    private String userId;
+
 
     @Autowired
     public GarminConnectAuthService(
             @Value("${garmin.username}") String username,
-            @Value("${garmin.password}") String password
+            @Value("${garmin.password}") String password,
+            @Value("${garmin.session") String session,
+            @Value("${garmin.user.id}") String userId
     ) {
         this.username = username;
         this.password = password;
+        this.session = session;
+        this.userId = userId;
     }
 
-    public String getToken() {
-        if(token == null) {
-            return "";
-        }
-
-        return token;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void performTokenRefresh() {
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public String getSessionCookie() {
+        return String.format("SESSIONID=%s", this.session);
+    }
+
+    //TODO - get token acquisition functioning
+    public void acquireToken() {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
@@ -61,7 +73,7 @@ public class GarminConnectAuthService {
 
             Matcher matcher = pattern.matcher(bodyStr);
             if(matcher.find()) {
-                this.token = matcher.group(0);
+//                acquireSessionId(matcher.group(0));
             }
         } catch (IOException e) {
             e.printStackTrace();
