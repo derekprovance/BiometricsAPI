@@ -5,7 +5,7 @@ import com.derekprovance.biometrics.biometricsapi.services.fitbit.FoodLogService
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.WaterLogService;
 import org.springframework.scheduling.annotation.Scheduled;
 
-public class FitBitSyncJob {
+public class FitBitSyncJob extends AbstractSyncJob {
 
     private FoodLogService foodLogService;
     private WaterLogService waterLogService;
@@ -17,10 +17,16 @@ public class FitBitSyncJob {
         this.fitbitAccessTokenService = fitbitAccessTokenService;
     }
 
-    @Scheduled(fixedDelay = 3600000)
+    @Scheduled(cron = "1 * * * * ?")
     public void runFitBitJobs() {
         foodLogService.syncWithDatabase();
         waterLogService.syncWithDatabase();
+    }
+
+    @Scheduled(cron = "0 1 * * * ?")
+    public void runFitBitJobsForYesterday() {
+        foodLogService.syncWithDatabase(getYesterdayDate());
+        waterLogService.syncWithDatabase(getYesterdayDate());
     }
 
     @Scheduled(fixedRate = 18000000)

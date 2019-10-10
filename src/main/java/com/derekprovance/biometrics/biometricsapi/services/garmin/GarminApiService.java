@@ -26,25 +26,25 @@ public class GarminApiService {
         this.garminConnectAuthService = garminConnectAuthService;
     }
 
-    public DailySleepData getDailySleepData(Date date) {
+    DailySleepData getDailySleepData(Date date) {
         String endpoint = GARMIN_API_URL + String.format("/wellness-service/wellness/dailySleepData/%s?date=%s&nonSleepBufferMinutes=60", garminConnectAuthService.getUserId(), convertDateToString(date));
         final DailySleepData dailySleepData = (DailySleepData) performApiCall(endpoint, DailySleepData.class);
         return dailySleepData;
     }
 
-    public DailyHeartRate getDailyHrData(Date date) {
+    DailyHeartRate getDailyHrData(Date date) {
         String endpoint = GARMIN_API_URL + String.format("/wellness-service/wellness/dailyHeartRate/%s?date=%s&_=1532359756927", garminConnectAuthService.getUserId(), convertDateToString(date));
         final DailyHeartRate dailyHeartRate = (DailyHeartRate) performApiCall(endpoint, DailyHeartRate.class);
         return dailyHeartRate;
     }
 
-    public DailyMovementData getDailyMovement(Date date) {
+    DailyMovementData getDailyMovement(Date date) {
         String endpoint = GARMIN_API_URL + String.format("/wellness-service/wellness/dailyMovement/%s?calendarDate=%s&_=1532359756928", garminConnectAuthService.getUserId(), convertDateToString(date));
         final DailyMovementData dailyMovementData = (DailyMovementData) performApiCall(endpoint, DailyMovementData.class);
         return dailyMovementData;
     }
 
-    public DailyUserSummary getUserSummary(Date date) {
+    DailyUserSummary getUserSummary(Date date) {
         String endpoint = GARMIN_API_URL + String.format("/usersummary-service/usersummary/daily/%s?calendarDate=%s&_=1532359756925", garminConnectAuthService.getUserId(), convertDateToString(date));
         final DailyUserSummary dailyUserSummary = (DailyUserSummary) performApiCall(endpoint, DailyUserSummary.class);
         return dailyUserSummary;

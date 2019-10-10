@@ -2,6 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.services.garmin;
 
 import com.derekprovance.biometrics.biometricsapi.api.dailyStatistics.DailyStatistics;
 import com.derekprovance.biometrics.biometricsapi.api.dailyStatistics.DailyStatisticsRepository;
+import com.derekprovance.biometrics.biometricsapi.api.garmin.ItemSyncCount;
 import com.derekprovance.biometrics.biometricsapi.api.hrData.HrData;
 import com.derekprovance.biometrics.biometricsapi.api.hrData.HrDataRepository;
 import com.derekprovance.biometrics.biometricsapi.api.movementData.MovementData;
@@ -23,8 +24,6 @@ import java.util.List;
 
 @Service
 public class GarminSyncService {
-    //TODO - consider protection for previously run entries
-
     private GarminApiService garminApiService;
     private DailyStatisticsRepository dailyStatisticsRepository;
     private HrDataRepository hrDataRepository;
@@ -46,20 +45,33 @@ public class GarminSyncService {
         this.sleepMovementRepository = sleepMovementRepository;
     }
 
-    public void sync() {
-        sync(new Date());
+    public ItemSyncCount sync(Date date) {
+        ItemSyncCount itemSyncCount = new ItemSyncCount();
+        itemSyncCount.setDate(date);
+
+        final DailyStatistics dailyStatistics = syncDailyStatistics(date);
+        if(dailyStatistics != null) {
+            final List<HrData> hrData = syncHrData(date);
+            final List<MovementData> movementData = syncMovementData(date);
+            final List<SleepMovement> sleepMovements = syncSleepMovementData(date);
+
+            itemSyncCount.setDailyStatistic(true);
+            itemSyncCount.setHrData(hrData.size());
+            itemSyncCount.setMovementData(movementData.size());
+            itemSyncCount.setSleepMovementData(sleepMovements.size());
+        } else {
+            itemSyncCount.setDailyStatistic(false);
+            itemSyncCount.setHrData(0);
+            itemSyncCount.setMovementData(0);
+            itemSyncCount.setSleepMovementData(0);
+        }
+
+        return itemSyncCount;
     }
 
-    public void sync(Date date) {
-        syncHrData(date);
-        syncMovementData(date);
-        syncSleepMovementData(date);
-        syncDailyStatistics(date);
-    }
-
-    private void syncDailyStatistics(Date date) {
+    private DailyStatistics syncDailyStatistics(Date date) {
         if(dailyStatisticsRepository.findByEntryDate(date) != null) {
-            return;
+            return null;
         }
 
         final DailyUserSummary userSummary = garminApiService.getUserSummary(date);
@@ -79,52 +91,66 @@ public class GarminSyncService {
         dailyStatisticsEntry.setTotalSteps(userSummary.getTotalSteps());
 
         dailyStatisticsRepository.save(dailyStatisticsEntry);
+
+        return dailyStatisticsEntry;
     }
 
-    private void syncSleepMovementData(Date date) {
+    private List<SleepMovement> syncSleepMovementData(Date date) {
         final DailySleepData dailySleepData = garminApiService.getDailySleepData(date);
         final SleepMovementDTO[] sleepMovement = dailySleepData.getSleepMovement();
         List<SleepMovement> sleepMovementData = new ArrayList<>();
 
-        for(SleepMovementDTO sleepMovementValue : sleepMovement) {
-            SleepMovement newEntry = new SleepMovement();
-            newEntry.setActivityLevel(sleepMovementValue.getActivityLevel());
-            newEntry.setStart(sleepMovementValue.getStartGMT());
-            newEntry.setEnd(sleepMovementValue.getEndGMT());
-            sleepMovementData.add(newEntry);
+        if(sleepMovement != null) {
+            for(SleepMovementDTO sleepMovementValue : sleepMovement) {
+                SleepMovement newEntry = new SleepMovement();
+                newEntry.setActivityLevel(sleepMovementValue.getActivityLevel());
+                newEntry.setStart(sleepMovementValue.getStartGMT());
+                newEntry.setEnd(sleepMovementValue.getEndGMT());
+                sleepMovementData.add(newEntry);
+            }
+
+            sleepMovementRepository.saveAll(sleepMovementData);
         }
 
-        sleepMovementRepository.saveAll(sleepMovementData);
+        return sleepMovementData;
     }
 
-    private void syncMovementData(Date date) {
+    private List<MovementData> syncMovementData(Date date) {
         final DailyMovementData dailyMovement = garminApiService.getDailyMovement(date);
         Object[][] dailyMovementValues = dailyMovement.getMovementValues();
         List<MovementData> movementData = new ArrayList<>();
 
-        for(Object[] dailyMovementValue : dailyMovementValues) {
-            MovementData movementDataEntry = new MovementData();
-            movementDataEntry.setEventTime(convertTimestamp((Long) dailyMovementValue[0]));
-            movementDataEntry.setMovement((Double) dailyMovementValue[1]);
-            movementData.add(movementDataEntry);
+        if(dailyMovementValues != null) {
+            for(Object[] dailyMovementValue : dailyMovementValues) {
+                MovementData movementDataEntry = new MovementData();
+                movementDataEntry.setEventTime(convertTimestamp((Long) dailyMovementValue[0]));
+                movementDataEntry.setMovement((Double) dailyMovementValue[1]);
+                movementData.add(movementDataEntry);
+            }
+
+            movementDataRepository.saveAll(movementData);
         }
 
-        movementDataRepository.saveAll(movementData);
+        return movementData;
     }
 
-    private void syncHrData(Date date) {
+    private List<HrData> syncHrData(Date date) {
         final DailyHeartRate dailyHrData = garminApiService.getDailyHrData(date);
         List<HrData> hrData = new ArrayList<>();
 
         Object[][] heartRateValues = dailyHrData.getHeartRateValues();
-        for (Object[] heartRateValue : heartRateValues) {
-            HrData newEntry = new HrData();
-            newEntry.setEventTime(convertTimestamp((Long) heartRateValue[0]));
-            newEntry.setHrValue((Integer) heartRateValue[1]);
-            hrData.add(newEntry);
+        if(heartRateValues != null) {
+            for (Object[] heartRateValue : heartRateValues) {
+                HrData newEntry = new HrData();
+                newEntry.setEventTime(convertTimestamp((Long) heartRateValue[0]));
+                newEntry.setHrValue((Integer) heartRateValue[1]);
+                hrData.add(newEntry);
+            }
+
+            hrDataRepository.saveAll(hrData);
         }
 
-        hrDataRepository.saveAll(hrData);
+        return hrData;
     }
 
     private Date convertTimestamp(Long timestamp) {

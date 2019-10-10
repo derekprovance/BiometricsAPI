@@ -13,8 +13,7 @@ public class GarminSyncJob extends AbstractSyncJob {
         this.garminSyncService = garminSyncService;
     }
 
-//    @Scheduled(cron = "0 1 * * *")
-    @Scheduled(fixedDelay = 3600000)
+    @Scheduled(cron = "0 1 * * * ?")
     public void runGarminSyncJobs() {
         garminSyncService.sync(getYesterdayDate());
     }
