@@ -6,5 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface DailyStatisticsRepository extends CrudRepository<DailyStatistics, Integer> {
+    DailyStatistics findByEntryDate(Date date);
     List<DailyStatistics> findAllByEntryDateBetween(Date start, Date end);
 }

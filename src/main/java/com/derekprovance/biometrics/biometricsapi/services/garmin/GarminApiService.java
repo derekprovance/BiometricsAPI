@@ -9,6 +9,10 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 @Service
 public class GarminApiService {
 
@@ -22,28 +26,34 @@ public class GarminApiService {
         this.garminConnectAuthService = garminConnectAuthService;
     }
 
-    public DailySleepData getDailySleepData() {
-        String endpoint = GARMIN_API_URL + String.format("/wellness-service/wellness/dailySleepData/%s?date=2019-04-01&nonSleepBufferMinutes=60", garminConnectAuthService.getUserId());
+    public DailySleepData getDailySleepData(Date date) {
+        String endpoint = GARMIN_API_URL + String.format("/wellness-service/wellness/dailySleepData/%s?date=%s&nonSleepBufferMinutes=60", garminConnectAuthService.getUserId(), convertDateToString(date));
         final DailySleepData dailySleepData = (DailySleepData) performApiCall(endpoint, DailySleepData.class);
         return dailySleepData;
     }
 
-    public DailyHeartRate getDailyHrData() {
-        String endpoint = GARMIN_API_URL + String.format("/wellness-service/wellness/dailyHeartRate/%s?date=2019-04-01&_=1532359756927", garminConnectAuthService.getUserId());
+    public DailyHeartRate getDailyHrData(Date date) {
+        String endpoint = GARMIN_API_URL + String.format("/wellness-service/wellness/dailyHeartRate/%s?date=%s&_=1532359756927", garminConnectAuthService.getUserId(), convertDateToString(date));
         final DailyHeartRate dailyHeartRate = (DailyHeartRate) performApiCall(endpoint, DailyHeartRate.class);
         return dailyHeartRate;
     }
 
-    public DailyMovementData getDailyMovement() {
-        String endpoint = GARMIN_API_URL + String.format("/wellness-service/wellness/dailyMovement/%s?calendarDate=2019-04-01&_=1532359756928", garminConnectAuthService.getUserId());
+    public DailyMovementData getDailyMovement(Date date) {
+        String endpoint = GARMIN_API_URL + String.format("/wellness-service/wellness/dailyMovement/%s?calendarDate=%s&_=1532359756928", garminConnectAuthService.getUserId(), convertDateToString(date));
         final DailyMovementData dailyMovementData = (DailyMovementData) performApiCall(endpoint, DailyMovementData.class);
         return dailyMovementData;
     }
 
-    public DailyUserSummary getUserSummary() {
-        String endpoint = GARMIN_API_URL + String.format("/usersummary-service/usersummary/daily/%s?calendarDate=2019-04-01&_=1532359756925", garminConnectAuthService.getUserId());
+    public DailyUserSummary getUserSummary(Date date) {
+        String endpoint = GARMIN_API_URL + String.format("/usersummary-service/usersummary/daily/%s?calendarDate=%s&_=1532359756925", garminConnectAuthService.getUserId(), convertDateToString(date));
         final DailyUserSummary dailyUserSummary = (DailyUserSummary) performApiCall(endpoint, DailyUserSummary.class);
         return dailyUserSummary;
+    }
+
+    private String convertDateToString(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.of("UTC"))
+                .toLocalDate().toString();
     }
 
     private Object performApiCall(String uri, Class dto) {

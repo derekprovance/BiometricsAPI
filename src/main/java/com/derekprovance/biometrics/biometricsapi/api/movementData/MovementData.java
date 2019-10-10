@@ -12,7 +12,7 @@ public class MovementData {
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
     private Integer dailyStatisticsId;
     private Date eventTime;
-    private Float movement;
+    private Double movement;
 
     public Integer getId() {
         return id;
@@ -38,11 +38,11 @@ public class MovementData {
         this.eventTime = eventTime;
     }
 
-    public Float getMovement() {
+    public Double getMovement() {
         return movement;
     }
 
-    public void setMovement(Float movement) {
+    public void setMovement(Double movement) {
         this.movement = movement;
     }
 }

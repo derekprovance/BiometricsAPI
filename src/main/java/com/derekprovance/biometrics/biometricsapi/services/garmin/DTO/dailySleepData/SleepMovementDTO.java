@@ -2,7 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySlee
 
 import java.util.Date;
 
-public class SleepMovement {
+public class SleepMovementDTO {
     private Date startGMT;
     private Date endGMT;
     private Float activityLevel;

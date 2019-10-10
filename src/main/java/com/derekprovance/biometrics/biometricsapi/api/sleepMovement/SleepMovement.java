@@ -4,14 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class SleepMovement {
     private @Id
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
     private Integer sleepId;
-    private String start;
-    private String end;
+    private Date start;
+    private Date end;
     private Float activityLevel;
 
     public Integer getId() {
@@ -30,19 +31,19 @@ public class SleepMovement {
         this.sleepId = sleepId;
     }
 
-    public String getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public Date getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(Date end) {
         this.end = end;
     }
 

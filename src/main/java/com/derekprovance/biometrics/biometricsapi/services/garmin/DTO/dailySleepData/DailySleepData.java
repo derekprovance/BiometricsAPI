@@ -2,7 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySlee
 
 public class DailySleepData {
     private DailySleepDTO dailySleepDTO;
-    private SleepMovement[] sleepMovement;
+    private SleepMovementDTO[] sleepMovement;
 
     public DailySleepDTO getDailySleepDTO() {
         return dailySleepDTO;
@@ -12,11 +12,11 @@ public class DailySleepData {
         this.dailySleepDTO = dailySleepDTO;
     }
 
-    public SleepMovement[] getSleepMovement() {
+    public SleepMovementDTO[] getSleepMovement() {
         return sleepMovement;
     }
 
-    public void setSleepMovement(SleepMovement[] sleepMovement) {
+    public void setSleepMovement(SleepMovementDTO[] sleepMovement) {
         this.sleepMovement = sleepMovement;
     }
 }

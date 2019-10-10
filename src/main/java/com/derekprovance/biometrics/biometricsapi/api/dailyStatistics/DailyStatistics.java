@@ -1,15 +1,14 @@
 package com.derekprovance.biometrics.biometricsapi.api.dailyStatistics;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class DailyStatistics {
     private @Id
     @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
+
+    @Temporal(TemporalType.DATE)
     private Date entryDate;
     private Integer maxHr;
     private Integer minHr;
