@@ -3,8 +3,6 @@ package com.derekprovance.biometrics.biometricsapi.api;
 import com.google.gson.Gson;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -45,7 +43,6 @@ public abstract class AbstractApiController {
     @ExceptionHandler(value = { ConversionFailedException.class, IllegalArgumentException.class })
     public Map<String, Object> unsupportedMediaTypeException(MethodArgumentTypeMismatchException e) {
         Map<String, Object> message = new HashMap<>();
-        message.put("code", HttpStatus.BAD_REQUEST.value());
         message.put("message", String.format("%s is invalid: %s", e.getName(), e.getValue()));
         return message;
     }
