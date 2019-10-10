@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Sleep {
     private @Id
-    @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
     private Integer dailyStatisticsId;
     private String sleepStart;
     private String sleepEnd;

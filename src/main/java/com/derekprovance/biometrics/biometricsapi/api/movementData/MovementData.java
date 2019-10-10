@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 public class MovementData {
     private @Id
-    @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
     private Integer dailyStatisticsId;
     private Date eventTime;
     private Double movement;

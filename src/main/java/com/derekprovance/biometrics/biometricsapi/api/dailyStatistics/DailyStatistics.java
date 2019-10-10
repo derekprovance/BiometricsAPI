@@ -6,10 +6,11 @@ import java.util.Date;
 @Entity
 public class DailyStatistics {
     private @Id
-    @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY) Integer id;
 
     @Temporal(TemporalType.DATE)
     private Date entryDate;
+
     private Integer maxHr;
     private Integer minHr;
     private Integer restingHr;

@@ -6,7 +6,7 @@ import java.util.Date;
 @Entity
 public class HrData {
     private @Id
-    @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
     private Integer DailyStatisticsId;
 
     @Temporal(value = TemporalType.TIMESTAMP)

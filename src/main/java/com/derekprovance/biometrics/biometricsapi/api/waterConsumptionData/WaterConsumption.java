@@ -7,7 +7,7 @@ import java.util.Date;
 @Entity
 public class WaterConsumption {
     private @Id
-    @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 
     @NotNull @Column(unique=true) @Temporal(TemporalType.DATE)
     private Date date;

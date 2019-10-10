@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 public class BloodSugar {
-    private @Id @GeneratedValue(strategy=GenerationType.AUTO) Integer id;
+    private @Id @GeneratedValue(strategy=GenerationType.IDENTITY) Integer id;
     private Date datetime;
     private Integer mgDl;
     private String notes;

@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 public class SleepMovement {
     private @Id
-    @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
     private Integer sleepId;
     private Date start;
     private Date end;

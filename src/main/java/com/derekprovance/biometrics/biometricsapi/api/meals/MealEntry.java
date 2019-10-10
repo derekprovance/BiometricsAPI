@@ -7,7 +7,7 @@ import java.util.Date;
 @Entity
 public class MealEntry {
     private @Id
-    @GeneratedValue(strategy= GenerationType.AUTO) Integer id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 
     @NotNull
     private Date date;
