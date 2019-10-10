@@ -17,13 +17,13 @@ public class FitBitSyncJob extends AbstractSyncJob {
         this.fitbitAccessTokenService = fitbitAccessTokenService;
     }
 
-    @Scheduled(cron = "1 * * * * ?")
+    @Scheduled(cron = "0 0 * * * ?")
     public void runFitBitJobs() {
         foodLogService.syncWithDatabase();
         waterLogService.syncWithDatabase();
     }
 
-    @Scheduled(cron = "0 1 * * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void runFitBitJobsForYesterday() {
         foodLogService.syncWithDatabase(getYesterdayDate());
         waterLogService.syncWithDatabase(getYesterdayDate());
