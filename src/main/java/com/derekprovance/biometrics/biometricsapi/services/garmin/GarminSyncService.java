@@ -17,6 +17,8 @@ import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyUserS
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepDTO;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepData;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.SleepMovementDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,8 @@ public class GarminSyncService {
     private MovementDataRepository movementDataRepository;
     private SleepMovementRepository sleepMovementRepository;
     private SleepRepository sleepRepository;
+
+    private static final Logger log = LoggerFactory.getLogger(GarminSyncService.class);
 
     @Autowired
     public GarminSyncService(
@@ -57,6 +61,8 @@ public class GarminSyncService {
 
         final DailyStatistics dailyStatistics = syncDailyStatistics(date);
         if(dailyStatistics != null) {
+            log.info("Syncing data from Garmin for " + date);
+
             final List<HrData> hrData = syncHrData(date);
             final List<MovementData> movementData = syncMovementData(date);
             final List<SleepMovement> sleepMovements = syncSleepData(date);
