@@ -9,7 +9,6 @@ import javax.persistence.Id;
 public class Sleep {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
-    private Integer dailyStatisticsId;
     private String sleepStart;
     private String sleepEnd;
     private Integer deepSleep;
@@ -23,14 +22,6 @@ public class Sleep {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getDailyStatisticsId() {
-        return dailyStatisticsId;
-    }
-
-    public void setDailyStatisticsId(Integer dailyStatisticsId) {
-        this.dailyStatisticsId = dailyStatisticsId;
     }
 
     public String getSleepStart() {

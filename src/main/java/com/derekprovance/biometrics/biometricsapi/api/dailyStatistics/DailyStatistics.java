@@ -14,7 +14,6 @@ public class DailyStatistics {
     private Integer maxHr;
     private Integer minHr;
     private Integer restingHr;
-    private Integer totalSleep;
     private Integer totalSteps;
     private Integer highlyActiveSeconds;
     private Integer sedentarySeconds;
@@ -62,14 +61,6 @@ public class DailyStatistics {
 
     public void setRestingHr(Integer restingHr) {
         this.restingHr = restingHr;
-    }
-
-    public Integer getTotalSleep() {
-        return totalSleep;
-    }
-
-    public void setTotalSleep(Integer totalSleep) {
-        this.totalSleep = totalSleep;
     }
 
     public Integer getTotalSteps() {

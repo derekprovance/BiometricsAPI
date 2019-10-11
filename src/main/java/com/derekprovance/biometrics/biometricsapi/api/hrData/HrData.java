@@ -7,7 +7,6 @@ import java.util.Date;
 public class HrData {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
-    private Integer DailyStatisticsId;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date eventTime;
@@ -19,14 +18,6 @@ public class HrData {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getDailyStatisticsId() {
-        return DailyStatisticsId;
-    }
-
-    public void setDailyStatisticsId(Integer dailyStatisticsId) {
-        DailyStatisticsId = dailyStatisticsId;
     }
 
     public Date getEventTime() {

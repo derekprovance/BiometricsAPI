@@ -10,6 +10,7 @@ public class MealEntry {
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 
     @NotNull
+    @Temporal(TemporalType.DATE)
     private Date date;
 
     @NotNull

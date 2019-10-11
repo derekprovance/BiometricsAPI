@@ -10,7 +10,6 @@ import java.util.Date;
 public class MovementData {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
-    private Integer dailyStatisticsId;
     private Date eventTime;
     private Double movement;
 
@@ -20,14 +19,6 @@ public class MovementData {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getDailyStatisticsId() {
-        return dailyStatisticsId;
-    }
-
-    public void setDailyStatisticsId(Integer dailyStatisticsId) {
-        this.dailyStatisticsId = dailyStatisticsId;
     }
 
     public Date getEventTime() {

@@ -26,6 +26,7 @@ public abstract class AbstractApiController {
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
+
         return cal.getTime();
 
     }
@@ -35,6 +36,7 @@ public abstract class AbstractApiController {
         cal.set(Calendar.HOUR_OF_DAY, 23);
         cal.set(Calendar.MINUTE, 59);
         cal.set(Calendar.SECOND, 59);
+        
         return cal.getTime();
     }
 
