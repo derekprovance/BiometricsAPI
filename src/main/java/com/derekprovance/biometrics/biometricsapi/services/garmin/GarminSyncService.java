@@ -20,6 +20,7 @@ import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleep
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -59,18 +60,14 @@ public class GarminSyncService {
         ItemSyncCount itemSyncCount = new ItemSyncCount();
         itemSyncCount.setDate(date);
 
-        final DailyStatistics dailyStatistics = syncDailyStatistics(date);
-        if(dailyStatistics != null) {
+        if(!dailyStatisticsExists(date)) {
             log.info("Syncing data from Garmin for " + date);
-
-            final List<HrData> hrData = syncHrData(date);
-            final List<MovementData> movementData = syncMovementData(date);
-            final List<SleepMovement> sleepMovements = syncSleepData(date);
+            syncDailyStatistics(date);
 
             itemSyncCount.setDailyStatistic(true);
-            itemSyncCount.setHrData(hrData.size());
-            itemSyncCount.setMovementData(movementData.size());
-            itemSyncCount.setSleepMovementData(sleepMovements.size());
+            itemSyncCount.setHrData(syncHrData(date).size());
+            itemSyncCount.setMovementData(syncMovementData(date).size());
+            itemSyncCount.setSleepMovementData(syncSleepData(date));
         } else {
             itemSyncCount.setDailyStatistic(false);
             itemSyncCount.setHrData(0);
@@ -81,11 +78,11 @@ public class GarminSyncService {
         return itemSyncCount;
     }
 
-    private DailyStatistics syncDailyStatistics(Date date) {
-        if(dailyStatisticsRepository.findByEntryDate(date) != null) {
-            return null;
-        }
+    private Boolean dailyStatisticsExists(Date date) {
+        return dailyStatisticsRepository.findByEntryDate(date) != null;
+    }
 
+    private void syncDailyStatistics(Date date) {
         final DailyUserSummary userSummary = garminApiService.getUserSummary(date);
 
         DailyStatistics dailyStatisticsEntry = new DailyStatistics();
@@ -103,17 +100,28 @@ public class GarminSyncService {
         dailyStatisticsEntry.setTotalSteps(userSummary.getTotalSteps());
 
         dailyStatisticsRepository.save(dailyStatisticsEntry);
-
-        return dailyStatisticsEntry;
     }
 
-    private List<SleepMovement> syncSleepData(Date date) {
+    private int syncSleepData(Date date) {
         final DailySleepData dailySleepData = garminApiService.getDailySleepData(date);
-        final DailySleepDTO dailySleepDTO = dailySleepData.getDailySleepDTO();
-        final SleepMovementDTO[] sleepMovement = dailySleepData.getSleepMovement();
-        List<SleepMovement> sleepMovementData = new ArrayList<>();
+        Sleep sleep = null;
 
+        final List<SleepMovement> movementsInSleep = syncSleepMovement(dailySleepData.getSleepMovement());
+        if(movementsInSleep != null && movementsInSleep.size() > 0) {
+            sleep = syncSleepMeta(dailySleepData.getDailySleepDTO());
+        }
+
+        int savedItems = 0;
+        if(sleep != null) {
+            savedItems = movementsInSleep.size() + 1;
+        }
+
+        return savedItems;
+    }
+
+    private Sleep syncSleepMeta(DailySleepDTO dailySleepDTO) {
         Sleep sleep = new Sleep();
+
         sleep.setAwakeSleep(dailySleepDTO.getAwakeSleepSeconds());
         sleep.setDeepSleep(dailySleepDTO.getDeepSleepSeconds());
         sleep.setLightSleep(dailySleepDTO.getLightSleepSeconds());
@@ -121,18 +129,36 @@ public class GarminSyncService {
         sleep.setSleepStart(dailySleepDTO.getSleepStartTimestampGMT());
         sleep.setSleepEnd(dailySleepDTO.getSleepEndTimestampGMT());
 
-        sleepRepository.save(sleep);
+        try {
+            sleepRepository.save(sleep);
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
-        if(sleepMovement != null) {
-            for(SleepMovementDTO sleepMovementValue : sleepMovement) {
-                SleepMovement newEntry = new SleepMovement();
-                newEntry.setActivityLevel(sleepMovementValue.getActivityLevel());
-                newEntry.setStart(sleepMovementValue.getStartGMT());
-                newEntry.setEnd(sleepMovementValue.getEndGMT());
-                sleepMovementData.add(newEntry);
-            }
+        return sleep;
+    }
 
+    private List<SleepMovement> syncSleepMovement(SleepMovementDTO[] sleepMovement) {
+        List<SleepMovement> sleepMovementData = new ArrayList<>();
+
+        if(sleepMovement == null) {
+            return sleepMovementData;
+        }
+
+        for(SleepMovementDTO sleepMovementValue : sleepMovement) {
+            SleepMovement newEntry = new SleepMovement();
+            newEntry.setActivityLevel(sleepMovementValue.getActivityLevel());
+            newEntry.setStart(sleepMovementValue.getStartGMT());
+            newEntry.setEnd(sleepMovementValue.getEndGMT());
+            sleepMovementData.add(newEntry);
+        }
+
+        try {
             sleepMovementRepository.saveAll(sleepMovementData);
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+            return null;
         }
 
         return sleepMovementData;
@@ -160,8 +186,8 @@ public class GarminSyncService {
     private List<HrData> syncHrData(Date date) {
         final DailyHeartRate dailyHrData = garminApiService.getDailyHrData(date);
         List<HrData> hrData = new ArrayList<>();
-
         Object[][] heartRateValues = dailyHrData.getHeartRateValues();
+
         if(heartRateValues != null) {
             for (Object[] heartRateValue : heartRateValues) {
                 HrData newEntry = new HrData();
