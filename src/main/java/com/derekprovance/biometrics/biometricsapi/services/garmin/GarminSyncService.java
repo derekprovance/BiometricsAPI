@@ -7,11 +7,14 @@ import com.derekprovance.biometrics.biometricsapi.api.hrData.HrData;
 import com.derekprovance.biometrics.biometricsapi.api.hrData.HrDataRepository;
 import com.derekprovance.biometrics.biometricsapi.api.movementData.MovementData;
 import com.derekprovance.biometrics.biometricsapi.api.movementData.MovementDataRepository;
+import com.derekprovance.biometrics.biometricsapi.api.sleep.Sleep;
+import com.derekprovance.biometrics.biometricsapi.api.sleep.SleepRepository;
 import com.derekprovance.biometrics.biometricsapi.api.sleepMovement.SleepMovement;
 import com.derekprovance.biometrics.biometricsapi.api.sleepMovement.SleepMovementRepository;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyHeartRate;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyMovementData;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyUserSummary;
+import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepDTO;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepData;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.SleepMovementDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,7 @@ public class GarminSyncService {
     private HrDataRepository hrDataRepository;
     private MovementDataRepository movementDataRepository;
     private SleepMovementRepository sleepMovementRepository;
+    private SleepRepository sleepRepository;
 
     @Autowired
     public GarminSyncService(
@@ -36,13 +40,15 @@ public class GarminSyncService {
             DailyStatisticsRepository dailyStatisticsRepository,
             HrDataRepository hrDataRepository,
             MovementDataRepository movementDataRepository,
-            SleepMovementRepository sleepMovementRepository
+            SleepMovementRepository sleepMovementRepository,
+            SleepRepository sleepRepository
     ) {
         this.garminApiService = garminApiService;
         this.dailyStatisticsRepository = dailyStatisticsRepository;
         this.hrDataRepository = hrDataRepository;
         this.movementDataRepository = movementDataRepository;
         this.sleepMovementRepository = sleepMovementRepository;
+        this.sleepRepository = sleepRepository;
     }
 
     public ItemSyncCount sync(Date date) {
@@ -53,7 +59,7 @@ public class GarminSyncService {
         if(dailyStatistics != null) {
             final List<HrData> hrData = syncHrData(date);
             final List<MovementData> movementData = syncMovementData(date);
-            final List<SleepMovement> sleepMovements = syncSleepMovementData(date);
+            final List<SleepMovement> sleepMovements = syncSleepData(date);
 
             itemSyncCount.setDailyStatistic(true);
             itemSyncCount.setHrData(hrData.size());
@@ -95,10 +101,21 @@ public class GarminSyncService {
         return dailyStatisticsEntry;
     }
 
-    private List<SleepMovement> syncSleepMovementData(Date date) {
+    private List<SleepMovement> syncSleepData(Date date) {
         final DailySleepData dailySleepData = garminApiService.getDailySleepData(date);
+        final DailySleepDTO dailySleepDTO = dailySleepData.getDailySleepDTO();
         final SleepMovementDTO[] sleepMovement = dailySleepData.getSleepMovement();
         List<SleepMovement> sleepMovementData = new ArrayList<>();
+
+        Sleep sleep = new Sleep();
+        sleep.setAwakeSleep(dailySleepDTO.getAwakeSleepSeconds());
+        sleep.setDeepSleep(dailySleepDTO.getDeepSleepSeconds());
+        sleep.setLightSleep(dailySleepDTO.getLightSleepSeconds());
+        sleep.setRemSleep(dailySleepDTO.getRemSleepSeconds());
+        sleep.setSleepStart(dailySleepDTO.getSleepStartTimestampGMT());
+        sleep.setSleepEnd(dailySleepDTO.getSleepEndTimestampGMT());
+
+        sleepRepository.save(sleep);
 
         if(sleepMovement != null) {
             for(SleepMovementDTO sleepMovementValue : sleepMovement) {

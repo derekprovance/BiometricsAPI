@@ -4,17 +4,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Sleep {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
-    private String sleepStart;
-    private String sleepEnd;
-    private Integer deepSleep;
-    private Integer lightSleep;
-    private Integer remSleep;
-    private Integer awakeSleep;
+
+    private Date sleepStart;
+    private Date sleepEnd;
+    private Long deepSleep;
+    private Long lightSleep;
+    private Long remSleep;
+    private Long awakeSleep;
 
     public Integer getId() {
         return id;
@@ -24,51 +26,51 @@ public class Sleep {
         this.id = id;
     }
 
-    public String getSleepStart() {
+    public Date getSleepStart() {
         return sleepStart;
     }
 
-    public void setSleepStart(String sleepStart) {
+    public void setSleepStart(Date sleepStart) {
         this.sleepStart = sleepStart;
     }
 
-    public String getSleepEnd() {
+    public Date getSleepEnd() {
         return sleepEnd;
     }
 
-    public void setSleepEnd(String sleepEnd) {
+    public void setSleepEnd(Date sleepEnd) {
         this.sleepEnd = sleepEnd;
     }
 
-    public Integer getDeepSleep() {
+    public Long getDeepSleep() {
         return deepSleep;
     }
 
-    public void setDeepSleep(Integer deepSleep) {
+    public void setDeepSleep(Long deepSleep) {
         this.deepSleep = deepSleep;
     }
 
-    public Integer getLightSleep() {
+    public Long getLightSleep() {
         return lightSleep;
     }
 
-    public void setLightSleep(Integer lightSleep) {
+    public void setLightSleep(Long lightSleep) {
         this.lightSleep = lightSleep;
     }
 
-    public Integer getRemSleep() {
+    public Long getRemSleep() {
         return remSleep;
     }
 
-    public void setRemSleep(Integer remSleep) {
+    public void setRemSleep(Long remSleep) {
         this.remSleep = remSleep;
     }
 
-    public Integer getAwakeSleep() {
+    public Long getAwakeSleep() {
         return awakeSleep;
     }
 
-    public void setAwakeSleep(Integer awakeSleep) {
+    public void setAwakeSleep(Long awakeSleep) {
         this.awakeSleep = awakeSleep;
     }
 }
