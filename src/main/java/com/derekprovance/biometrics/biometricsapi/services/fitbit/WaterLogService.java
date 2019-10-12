@@ -16,10 +16,10 @@ public class WaterLogService {
     private static final Logger log = LoggerFactory.getLogger(WaterLogService.class);
 
     private WaterConsumptionRepository waterConsumptionRepository;
-    private FitbitAPIService fitbitAPIService;
+    private FitBitAPIService fitbitAPIService;
 
     @Autowired
-    public WaterLogService(WaterConsumptionRepository waterConsumptionRepository, FitbitAPIService fitbitAPIService) {
+    public WaterLogService(WaterConsumptionRepository waterConsumptionRepository, FitBitAPIService fitbitAPIService) {
         this.waterConsumptionRepository = waterConsumptionRepository;
         this.fitbitAPIService = fitbitAPIService;
     }

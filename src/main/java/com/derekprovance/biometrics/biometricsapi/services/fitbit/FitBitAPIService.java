@@ -1,5 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.services.fitbit;
 
+import com.derekprovance.biometrics.biometricsapi.services.AbstractService;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.FitbitFoodEndpointDTO;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.water.WaterLogDTO;
 import org.slf4j.Logger;
@@ -8,23 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
-public class FitbitAPIService {
+public class FitBitAPIService extends AbstractService {
 
-    private static final Logger log = LoggerFactory.getLogger(FitbitAPIService.class);
-
+    private static final Logger log = LoggerFactory.getLogger(FitBitAPIService.class);
     private FitBitAccessTokenService fitbitAccessTokenService;
-
-    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
-    public FitbitAPIService(FitBitAccessTokenService fitbitAccessTokenService) {
+    public FitBitAPIService(FitBitAccessTokenService fitbitAccessTokenService) {
         this.fitbitAccessTokenService = fitbitAccessTokenService;
     }
 

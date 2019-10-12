@@ -19,10 +19,10 @@ public class FoodLogService {
     private static final Logger log = LoggerFactory.getLogger(FoodLogService.class);
 
     private MealRepository mealRepository;
-    private FitbitAPIService fitbitAPIService;
+    private FitBitAPIService fitbitAPIService;
 
     @Autowired
-    public FoodLogService(MealRepository mealRepository, FitbitAPIService fitbitAPIService) {
+    public FoodLogService(MealRepository mealRepository, FitBitAPIService fitbitAPIService) {
         this.mealRepository = mealRepository;
         this.fitbitAPIService = fitbitAPIService;
     }

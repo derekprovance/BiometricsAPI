@@ -11,26 +11,25 @@ import com.derekprovance.biometrics.biometricsapi.api.sleep.Sleep;
 import com.derekprovance.biometrics.biometricsapi.api.sleep.SleepRepository;
 import com.derekprovance.biometrics.biometricsapi.api.sleepMovement.SleepMovement;
 import com.derekprovance.biometrics.biometricsapi.api.sleepMovement.SleepMovementRepository;
+import com.derekprovance.biometrics.biometricsapi.services.AbstractService;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyHeartRate;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyMovementData;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyUserSummary;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepDTO;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepData;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.SleepMovementDTO;
-import com.derekprovance.biometrics.biometricsapi.util.Chrono;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
-public class GarminSyncService {
+public class GarminSyncService extends AbstractService {
     private GarminApiService garminApiService;
     private DailyStatisticsRepository dailyStatisticsRepository;
     private HrDataRepository hrDataRepository;
@@ -173,7 +172,7 @@ public class GarminSyncService {
         if(dailyMovementValues != null) {
             for(Object[] dailyMovementValue : dailyMovementValues) {
                 MovementData movementDataEntry = new MovementData();
-                movementDataEntry.setEventTime(Chrono.convertTimestamp((Long) dailyMovementValue[0]));
+                movementDataEntry.setEventTime(convertTimestamp((Long) dailyMovementValue[0]));
                 movementDataEntry.setMovement((Double) dailyMovementValue[1]);
                 movementData.add(movementDataEntry);
             }
@@ -192,7 +191,7 @@ public class GarminSyncService {
         if(heartRateValues != null) {
             for (Object[] heartRateValue : heartRateValues) {
                 HrData newEntry = new HrData();
-                newEntry.setEventTime(Chrono.convertTimestamp((Long) heartRateValue[0]));
+                newEntry.setEventTime(convertTimestamp((Long) heartRateValue[0]));
                 newEntry.setHrValue((Integer) heartRateValue[1]);
                 hrData.add(newEntry);
             }

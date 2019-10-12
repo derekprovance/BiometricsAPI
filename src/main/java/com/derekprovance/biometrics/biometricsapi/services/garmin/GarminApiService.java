@@ -1,20 +1,19 @@
 package com.derekprovance.biometrics.biometricsapi.services.garmin;
 
+import com.derekprovance.biometrics.biometricsapi.services.AbstractService;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyHeartRate;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyMovementData;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyUserSummary;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepData;
-import com.derekprovance.biometrics.biometricsapi.util.Chrono;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.ZoneId;
 import java.util.Date;
 
 @Service
-public class GarminApiService {
+public class GarminApiService extends AbstractService {
 
     private final RestTemplate restTemplate = new RestTemplate();
     private GarminConnectAuthService garminConnectAuthService;
@@ -53,7 +52,7 @@ public class GarminApiService {
     }
 
     private String formatEndpoint(String endpoint, Date date) {
-        return String.format(endpoint, garminConnectAuthService.getUserId(), Chrono.convertDateToString(date));
+        return String.format(endpoint, garminConnectAuthService.getUserId(), convertDateToString(date));
     }
 
     private Object performApiCall(String uri, Class dto) {
