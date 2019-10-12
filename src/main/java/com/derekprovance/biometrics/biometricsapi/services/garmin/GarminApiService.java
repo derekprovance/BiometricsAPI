@@ -4,6 +4,7 @@ import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyHeart
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyMovementData;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyUserSummary;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepData;
+import com.derekprovance.biometrics.biometricsapi.util.Chrono;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -52,13 +53,7 @@ public class GarminApiService {
     }
 
     private String formatEndpoint(String endpoint, Date date) {
-        return String.format(endpoint, garminConnectAuthService.getUserId(), convertDateToString(date));
-    }
-
-    private String convertDateToString(Date date) {
-        return date.toInstant()
-                .atZone(ZoneId.of("UTC"))
-                .toLocalDate().toString();
+        return String.format(endpoint, garminConnectAuthService.getUserId(), Chrono.convertDateToString(date));
     }
 
     private Object performApiCall(String uri, Class dto) {

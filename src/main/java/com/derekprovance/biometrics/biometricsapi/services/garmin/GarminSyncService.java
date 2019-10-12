@@ -17,6 +17,7 @@ import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyUserS
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepDTO;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepData;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.SleepMovementDTO;
+import com.derekprovance.biometrics.biometricsapi.util.Chrono;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,7 +173,7 @@ public class GarminSyncService {
         if(dailyMovementValues != null) {
             for(Object[] dailyMovementValue : dailyMovementValues) {
                 MovementData movementDataEntry = new MovementData();
-                movementDataEntry.setEventTime(convertTimestamp((Long) dailyMovementValue[0]));
+                movementDataEntry.setEventTime(Chrono.convertTimestamp((Long) dailyMovementValue[0]));
                 movementDataEntry.setMovement((Double) dailyMovementValue[1]);
                 movementData.add(movementDataEntry);
             }
@@ -191,7 +192,7 @@ public class GarminSyncService {
         if(heartRateValues != null) {
             for (Object[] heartRateValue : heartRateValues) {
                 HrData newEntry = new HrData();
-                newEntry.setEventTime(convertTimestamp((Long) heartRateValue[0]));
+                newEntry.setEventTime(Chrono.convertTimestamp((Long) heartRateValue[0]));
                 newEntry.setHrValue((Integer) heartRateValue[1]);
                 hrData.add(newEntry);
             }
@@ -202,8 +203,5 @@ public class GarminSyncService {
         return hrData;
     }
 
-    private Date convertTimestamp(Long timestamp) {
-        Timestamp stamp = new Timestamp(timestamp);
-        return new Date(stamp.getTime());
-    }
+
 }
