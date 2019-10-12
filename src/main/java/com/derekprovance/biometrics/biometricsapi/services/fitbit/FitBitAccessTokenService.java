@@ -19,6 +19,8 @@ public class FitBitAccessTokenService {
     private final HttpEntity<String> entity;
     private final String initialRefreshToken;
 
+    private static final String REFRESH_URI = "https://api.fitbit.com/oauth2/token?grant_type=refresh_token&refresh_token=";
+
     @Autowired
     public FitBitAccessTokenService(
             @Value("${fitbit.application.client.id}") String clientId,
@@ -46,7 +48,7 @@ public class FitBitAccessTokenService {
     }
 
     public void performTokenRefresh() {
-        log.info("Performing refresh of the access token");
+        log.info("Refreshing access token");
 
         String refreshToken = refreshTokenDTO != null && refreshTokenDTO.getRefreshToken() != null ? refreshTokenDTO.getRefreshToken() : initialRefreshToken;
         refreshTokenDTO = performTokenRefresh(refreshToken);
@@ -61,9 +63,8 @@ public class FitBitAccessTokenService {
             return refreshTokenDTO;
         }
 
-        String refreshUri = "https://api.fitbit.com/oauth2/token?grant_type=refresh_token&refresh_token=" + refreshToken;
         try {
-            final ResponseEntity<RefreshTokenDTO> exchange = restTemplate.exchange(refreshUri, HttpMethod.POST, entity, RefreshTokenDTO.class);
+            final ResponseEntity<RefreshTokenDTO> exchange = restTemplate.exchange(REFRESH_URI + refreshToken, HttpMethod.POST, entity, RefreshTokenDTO.class);
             return exchange.getBody();
         } catch (Exception e) {
             e.printStackTrace();

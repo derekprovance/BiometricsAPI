@@ -18,25 +18,30 @@ public class FitBitAPIService extends AbstractService {
     private FitBitAccessTokenService fitbitAccessTokenService;
     private final RestTemplate restTemplate = new RestTemplate();
 
+    private static final String FOOD_LOG_API = "https://api.fitbit.com/1/user/%s/foods/log/date/%s.json";
+    private static final String WATER_LOG_API = "https://api.fitbit.com/1/user/%s/foods/log/water/date/%s.json";
+
     @Autowired
     public FitBitAPIService(FitBitAccessTokenService fitbitAccessTokenService) {
         this.fitbitAccessTokenService = fitbitAccessTokenService;
     }
 
     FitbitFoodEndpointDTO performFoodApiCall(Date date) {
-        String dateStr = dateFormat.format(date);
-        String uri = String.format("https://api.fitbit.com/1/user/%s/foods/log/date/%s.json", fitbitAccessTokenService.getUserId(), dateStr);
+        String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 
-        return (FitbitFoodEndpointDTO) performApiCall(uri, FitbitFoodEndpointDTO.class);
+        return (FitbitFoodEndpointDTO) performApiCall(formatEndpoint(FOOD_LOG_API, dateStr), FitbitFoodEndpointDTO.class);
     }
 
     WaterLogDTO performWaterLog(Date date) {
-        String dateStr = dateFormat.format(date);
-        String uri = String.format("https://api.fitbit.com/1/user/%s/foods/log/water/date/%s.json", fitbitAccessTokenService.getUserId(), dateStr);
+        String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 
-        return (WaterLogDTO) performApiCall(uri, WaterLogDTO.class);
+        return (WaterLogDTO) performApiCall(formatEndpoint(WATER_LOG_API, dateStr), WaterLogDTO.class);
+    }
+
+    private String formatEndpoint(String endpoint, String dateStr) {
+        return String.format(endpoint, fitbitAccessTokenService.getUserId(), dateStr);
     }
 
     private Object performApiCall(String uri, Class dto) {
