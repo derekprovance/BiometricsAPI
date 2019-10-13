@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +80,7 @@ public class FitBitController extends AbstractApiController {
         Map<String, Object> map = new HashMap<>();
         map.put("status", HttpStatus.OK.value());
         map.put("message", "Refresh Token has been updated successfully");
+        map.put("code", code);
 
         return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(map));
     }
