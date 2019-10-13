@@ -24,8 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -56,7 +56,7 @@ public class GarminSyncService extends AbstractService {
         this.sleepRepository = sleepRepository;
     }
 
-    public ItemSyncCount sync(Date date) {
+    public ItemSyncCount sync(LocalDate date) {
         ItemSyncCount itemSyncCount = new ItemSyncCount();
         itemSyncCount.setDate(date);
 
@@ -78,11 +78,11 @@ public class GarminSyncService extends AbstractService {
         return itemSyncCount;
     }
 
-    private Boolean dailyStatisticsExists(Date date) {
+    private Boolean dailyStatisticsExists(LocalDate date) {
         return dailyStatisticsRepository.findByEntryDate(date) != null;
     }
 
-    private void syncDailyStatistics(Date date) {
+    private void syncDailyStatistics(LocalDate date) {
         final DailyUserSummary userSummary = garminApiService.getUserSummary(date);
 
         DailyStatistics dailyStatisticsEntry = new DailyStatistics();
@@ -102,7 +102,7 @@ public class GarminSyncService extends AbstractService {
         dailyStatisticsRepository.save(dailyStatisticsEntry);
     }
 
-    private int syncSleepData(Date date) {
+    private int syncSleepData(LocalDate date) {
         final DailySleepData dailySleepData = garminApiService.getDailySleepData(date);
         Sleep sleep = null;
 
@@ -164,7 +164,7 @@ public class GarminSyncService extends AbstractService {
         return sleepMovementData;
     }
 
-    private List<MovementData> syncMovementData(Date date) {
+    private List<MovementData> syncMovementData(LocalDate date) {
         final DailyMovementData dailyMovement = garminApiService.getDailyMovement(date);
         Object[][] dailyMovementValues = dailyMovement.getMovementValues();
         List<MovementData> movementData = new ArrayList<>();
@@ -183,7 +183,7 @@ public class GarminSyncService extends AbstractService {
         return movementData;
     }
 
-    private List<HrData> syncHrData(Date date) {
+    private List<HrData> syncHrData(LocalDate date) {
         final DailyHeartRate dailyHrData = garminApiService.getDailyHrData(date);
         List<HrData> hrData = new ArrayList<>();
         Object[][] heartRateValues = dailyHrData.getHeartRateValues();

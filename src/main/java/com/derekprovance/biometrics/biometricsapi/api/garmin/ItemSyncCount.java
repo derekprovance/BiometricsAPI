@@ -1,19 +1,19 @@
 package com.derekprovance.biometrics.biometricsapi.api.garmin;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ItemSyncCount {
-    private Date date;
+    private LocalDate date;
     private Integer hrData;
     private Integer movementData;
     private Integer sleepMovementData;
     private Boolean dailyStatistic;
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

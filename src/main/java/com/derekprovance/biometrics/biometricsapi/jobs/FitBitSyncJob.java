@@ -25,8 +25,8 @@ public class FitBitSyncJob extends AbstractSyncJob {
 
     @Scheduled(cron = "0 0 1 * * ?")
     public void runFitBitJobsForYesterday() {
-        foodLogService.syncWithDatabase(getYesterdayDate());
-        waterLogService.syncWithDatabase(getYesterdayDate());
+        foodLogService.syncWithDatabase(getYesterdayDate().toLocalDate());
+        waterLogService.syncWithDatabase(getYesterdayDate().toLocalDate());
     }
 
     @Scheduled(fixedRate = 18000000)

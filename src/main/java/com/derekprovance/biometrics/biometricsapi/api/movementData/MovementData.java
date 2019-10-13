@@ -4,13 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class MovementData {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
-    private Date eventTime;
+    private LocalDateTime eventTime;
     private Double movement;
 
     public Integer getId() {
@@ -21,11 +21,11 @@ public class MovementData {
         this.id = id;
     }
 
-    public Date getEventTime() {
+    public LocalDateTime getEventTime() {
         return eventTime;
     }
 
-    public void setEventTime(Date eventTime) {
+    public void setEventTime(LocalDateTime eventTime) {
         this.eventTime = eventTime;
     }
 

@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @RestController
 public class HrDataController extends AbstractApiController {
@@ -33,23 +35,23 @@ public class HrDataController extends AbstractApiController {
 
     @PostMapping("/hr-data")
     public HrData newHrDataEntry(@RequestBody HrData newEntry) {
-        newEntry.setEventTime(new Date());
+        newEntry.setEventTime(LocalDateTime.now());
 
         return hrDataRepository.save(newEntry);
     }
 
     @RequestMapping(value="/hr-data/date/{startDate}", method=RequestMethod.GET)
     public Iterable<HrData> getHrDataByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return hrDataRepository.findAllByEventTimeBetween(getBeginningOfDay(date), getEndOfDay(date));
+        return hrDataRepository.findAllByEventTimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
     @RequestMapping(value="/hr-data/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<HrData> getHrDataBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return hrDataRepository.findAllByEventTimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
+        return hrDataRepository.findAllByEventTimeBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 }

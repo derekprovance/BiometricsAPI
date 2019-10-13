@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @RestController
 public class GarminController extends AbstractApiController {
@@ -29,7 +29,7 @@ public class GarminController extends AbstractApiController {
     }
 
     @RequestMapping(value = "/garmin/sync/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getGarminData(@PathVariable  @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
+    public ResponseEntity<String> getGarminData(@PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if(!garminEnabled) {
             return ResponseEntity.badRequest().body(String.format("{\"status\": \"%s\", \"message\": \"Garmin API access has been disabled.\"}", HttpStatus.BAD_REQUEST));
 

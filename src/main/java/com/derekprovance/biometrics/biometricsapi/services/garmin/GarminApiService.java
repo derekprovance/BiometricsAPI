@@ -10,7 +10,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Service
 public class GarminApiService extends AbstractService {
@@ -35,23 +35,23 @@ public class GarminApiService extends AbstractService {
         entity = new HttpEntity<>(null, headers);
     }
 
-    DailySleepData getDailySleepData(Date date) {
+    DailySleepData getDailySleepData(LocalDate date) {
         return (DailySleepData) performApiCall(formatEndpoint(DAILY_SLEEP_ENDPOINT, date), DailySleepData.class);
     }
 
-    DailyHeartRate getDailyHrData(Date date) {
+    DailyHeartRate getDailyHrData(LocalDate date) {
         return (DailyHeartRate) performApiCall(formatEndpoint(DAILY_HR_ENDPOINT, date), DailyHeartRate.class);
     }
 
-    DailyMovementData getDailyMovement(Date date) {
+    DailyMovementData getDailyMovement(LocalDate date) {
         return (DailyMovementData) performApiCall(formatEndpoint(DAILY_MOVEMENT_ENDPOINT, date), DailyMovementData.class);
     }
 
-    DailyUserSummary getUserSummary(Date date) {
+    DailyUserSummary getUserSummary(LocalDate date) {
         return (DailyUserSummary) performApiCall(formatEndpoint(USER_SUMMARY_ENDPOINT, date), DailyUserSummary.class);
     }
 
-    private String formatEndpoint(String endpoint, Date date) {
+    private String formatEndpoint(String endpoint, LocalDate date) {
         return String.format(endpoint, garminConnectAuthService.getUserId(), convertDateToString(date));
     }
 

@@ -5,16 +5,15 @@ import com.derekprovance.biometrics.biometricsapi.services.garmin.GarminSyncServ
 import org.springframework.scheduling.annotation.Scheduled;
 
 public class GarminSyncJob extends AbstractSyncJob {
-    private GarminConnectAuthService garminConnectAuthService; //TODO(DEREK) - Implement
     private GarminSyncService garminSyncService;
 
     public GarminSyncJob(GarminConnectAuthService garminConnectAuthService, GarminSyncService garminSyncService) {
-        this.garminConnectAuthService = garminConnectAuthService;
+        //TODO(DEREK) - Implement
         this.garminSyncService = garminSyncService;
     }
 
     @Scheduled(cron = "0 0 0/3 * * ?")
     public void runGarminSyncJobs() {
-        garminSyncService.sync(getYesterdayDate());
+        garminSyncService.sync(getYesterdayDate().toLocalDate());
     }
 }

@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @RestController
 public class BloodSugarController extends AbstractApiController {
@@ -33,23 +35,23 @@ public class BloodSugarController extends AbstractApiController {
 
     @PostMapping("/blood-sugar-entries")
     public BloodSugar newBloodSugarEntry(@RequestBody BloodSugar newEntry) {
-        newEntry.setDatetime(new Date());
+        newEntry.setDatetime(LocalDateTime.now());
 
         return bloodSugarRepository.save(newEntry);
     }
 
     @RequestMapping(value="/blood-sugar-entries/date/{startDate}", method=RequestMethod.GET)
     public Iterable<BloodSugar> getBloodSugarByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return bloodSugarRepository.findByDatetimeBetween(getBeginningOfDay(date), getEndOfDay(date));
+        return bloodSugarRepository.findByDatetimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
     @RequestMapping(value="/blood-sugar-entries/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<BloodSugar> getBloodSugarBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return bloodSugarRepository.findByDatetimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
+        return bloodSugarRepository.findByDatetimeBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 }

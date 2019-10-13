@@ -4,12 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class BloodSugar {
     private @Id @GeneratedValue(strategy=GenerationType.IDENTITY) Integer id;
-    private Date datetime;
+    private LocalDateTime datetime;
     private Integer mgDl;
     private String notes;
 
@@ -21,11 +21,11 @@ public class BloodSugar {
         this.id = id;
     }
 
-    public Date getDatetime() {
+    public LocalDateTime getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(Date datetime) {
+    public void setDatetime(LocalDateTime datetime) {
         this.datetime = datetime;
     }
 

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Service
 public class WaterLogService {
@@ -25,10 +25,10 @@ public class WaterLogService {
     }
 
     public void syncWithDatabase() {
-        syncWithDatabase(new Date());
+        syncWithDatabase(LocalDate.now());
     }
 
-    public void syncWithDatabase(Date date) {
+    public void syncWithDatabase(LocalDate date) {
         final WaterLogDTO entriesForDate = fitbitAPIService.performWaterLog(date);
 
         if(entriesForDate != null) {
@@ -36,7 +36,7 @@ public class WaterLogService {
         }
     }
 
-    private void processEntries(Date date, WaterLogDTO waterLogDTO) {
+    private void processEntries(LocalDate date, WaterLogDTO waterLogDTO) {
         WaterConsumption waterConsumption = waterConsumptionRepository.findByDate(date);
 
         if(waterConsumption == null) {

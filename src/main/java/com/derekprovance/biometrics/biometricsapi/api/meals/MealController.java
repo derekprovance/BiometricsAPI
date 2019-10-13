@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @RestController
 public class MealController extends AbstractApiController {
@@ -36,17 +36,13 @@ public class MealController extends AbstractApiController {
         }
     }
 
-    @RequestMapping(value = "/meal/fitbit/{dateStr}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> pullMealsFromFitbitByDate(@PathVariable String dateStr) {
-        try {
-            Date date = simpleDateFormat.parse(dateStr);
-            Integer count = foodLogService.syncWithDatabase(date);
+    @RequestMapping(value = "/meal/fitbit/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> pullMealsFromFitbitByDate(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+    ) {
+        Integer count = foodLogService.syncWithDatabase(date);
 
-            return ResponseEntity.status(HttpStatus.OK).body(String.format("{\"status\": \"%s\", \"message\": \"Processed %d entities for date %s\"}", HttpStatus.OK, count, dateStr));
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(String.format("{\"status\": \"%s\", \"message\": \"Date format must be YYYY-MM-DD\"}", HttpStatus.BAD_REQUEST));
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(String.format("{\"status\": \"%s\", \"message\": \"Processed %d entities for date %s\"}", HttpStatus.OK, count, date.toString()));
     }
 
     @PostMapping("/meal")
@@ -56,16 +52,16 @@ public class MealController extends AbstractApiController {
 
     @RequestMapping(value="/meal/date/{startDate}", method=RequestMethod.GET)
     public Iterable<MealEntry> getMealEntryByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return mealRepository.findAllByDateBetween(getBeginningOfDay(date), getEndOfDay(date));
+        return mealRepository.findAllByDateBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
     @RequestMapping(value="/meal/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<MealEntry> getMealEntryBetweenDates(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return mealRepository.findAllByDateBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
+        return mealRepository.findAllByDateBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 }

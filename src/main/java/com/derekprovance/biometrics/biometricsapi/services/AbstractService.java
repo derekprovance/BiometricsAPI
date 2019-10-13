@@ -1,18 +1,19 @@
 package com.derekprovance.biometrics.biometricsapi.services;
 
 import java.sql.Timestamp;
-import java.time.ZoneId;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public abstract class AbstractService {
-    protected static Date convertTimestamp(Long timestamp) {
+    private static DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    protected static LocalDateTime convertTimestamp(Long timestamp) {
         Timestamp stamp = new Timestamp(timestamp);
-        return new Date(stamp.getTime());
+        return stamp.toLocalDateTime();
     }
 
-    protected static String convertDateToString(Date date) {
-        return date.toInstant()
-                .atZone(ZoneId.of("UTC"))
-                .toLocalDate().toString();
+    protected static String convertDateToString(LocalDate date) {
+        return format.format(date);
     }
 }

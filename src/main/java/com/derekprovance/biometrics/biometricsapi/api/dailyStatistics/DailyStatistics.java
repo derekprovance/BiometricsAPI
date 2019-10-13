@@ -1,15 +1,14 @@
 package com.derekprovance.biometrics.biometricsapi.api.dailyStatistics;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class DailyStatistics {
     private @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY) Integer id;
 
-    @Temporal(TemporalType.DATE)
-    private Date entryDate;
+    private LocalDate entryDate;
 
     private Integer maxHr;
     private Integer minHr;
@@ -31,11 +30,11 @@ public class DailyStatistics {
         this.id = id;
     }
 
-    public Date getEntryDate() {
+    public LocalDate getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(Date entryDate) {
+    public void setEntryDate(LocalDate entryDate) {
         this.entryDate = entryDate;
     }
 

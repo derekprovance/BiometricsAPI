@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 @Service
 public class FitBitAPIService extends AbstractService {
@@ -26,14 +27,14 @@ public class FitBitAPIService extends AbstractService {
         this.fitbitAccessTokenService = fitbitAccessTokenService;
     }
 
-    FitbitFoodEndpointDTO performFoodApiCall(Date date) {
+    FitbitFoodEndpointDTO performFoodApiCall(LocalDate date) {
         String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 
         return (FitbitFoodEndpointDTO) performApiCall(formatEndpoint(FOOD_LOG_API, dateStr), FitbitFoodEndpointDTO.class);
     }
 
-    WaterLogDTO performWaterLog(Date date) {
+    WaterLogDTO performWaterLog(LocalDate date) {
         String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 

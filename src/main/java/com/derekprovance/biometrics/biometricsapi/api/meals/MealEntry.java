@@ -2,7 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.api.meals;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class MealEntry {
@@ -10,8 +10,7 @@ public class MealEntry {
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    private LocalDate date;
 
     @NotNull
     private String name;
@@ -49,11 +48,11 @@ public class MealEntry {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

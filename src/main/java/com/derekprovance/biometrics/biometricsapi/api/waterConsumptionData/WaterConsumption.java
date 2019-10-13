@@ -2,15 +2,15 @@ package com.derekprovance.biometrics.biometricsapi.api.waterConsumptionData;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class WaterConsumption {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 
-    @NotNull @Column(unique=true) @Temporal(TemporalType.DATE)
-    private Date date;
+    @NotNull @Column(unique=true)
+    private LocalDate date;
 
     @NotNull
     private Integer amount;
@@ -42,11 +42,11 @@ public class WaterConsumption {
         this.unit = unit;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }

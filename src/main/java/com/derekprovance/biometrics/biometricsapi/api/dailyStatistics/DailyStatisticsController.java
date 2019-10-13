@@ -8,7 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @RestController
 public class DailyStatisticsController extends AbstractApiController {
@@ -33,23 +34,23 @@ public class DailyStatisticsController extends AbstractApiController {
 
     @PostMapping("/daily-statistics-entries")
     public DailyStatistics newDailyStatisticsEntry(@RequestBody DailyStatistics newEntry) {
-        newEntry.setEntryDate(new Date());
+        newEntry.setEntryDate(LocalDate.now());
 
         return dailyStatisticsRepository.save(newEntry);
     }
 
     @RequestMapping(value="/daily-statistics-entries/date/{startDate}", method=RequestMethod.GET)
     public Iterable<DailyStatistics> getDailyStatisticsByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return dailyStatisticsRepository.findAllByEntryDateBetween(getBeginningOfDay(date), getEndOfDay(date));
+        return dailyStatisticsRepository.findAllByEntryDateBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
     @RequestMapping(value="/daily-statistics-entries/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<DailyStatistics> getDailyStatisticsBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return dailyStatisticsRepository.findAllByEntryDateBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
+        return dailyStatisticsRepository.findAllByEntryDateBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 }

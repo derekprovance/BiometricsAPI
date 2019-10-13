@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,10 +28,10 @@ public class FoodLogService {
     }
 
     public Integer syncWithDatabase() {
-        return syncWithDatabase(new Date());
+        return syncWithDatabase(LocalDate.now());
     }
 
-    public Integer syncWithDatabase(Date date) {
+    public Integer syncWithDatabase(LocalDate date) {
         final FitbitFoodEndpointDTO entriesForDate = fitbitAPIService.performFoodApiCall(date);
 
         if(entriesForDate != null) {

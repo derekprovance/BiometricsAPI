@@ -1,17 +1,18 @@
 package com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DailySleepDTO {
     private Long id;
-    private Date calendarDate;
+    private LocalDate calendarDate;
     private Long sleepTimeSeconds;
     private Long napTimeSeconds;
-    private Date sleepStartTimestampGMT;
-    private Date sleepEndTimestampGMT;
-    private Date sleepStartTimestampLocal;
-    private Date autoSleepStartTimestampGMT;
-    private Date autoSleepEndTimestampGMT;
+    private LocalDateTime sleepStartTimestampGMT;
+    private LocalDateTime sleepEndTimestampGMT;
+    private LocalDateTime sleepStartTimestampLocal;
+    private LocalDateTime autoSleepStartTimestampGMT;
+    private LocalDateTime autoSleepEndTimestampGMT;
     private Long unmeasurableSleepSeconds;
     private Long deepSleepSeconds;
     private Long lightSleepSeconds;
@@ -26,11 +27,11 @@ public class DailySleepDTO {
         this.id = id;
     }
 
-    public Date getCalendarDate() {
+    public LocalDate getCalendarDate() {
         return calendarDate;
     }
 
-    public void setCalendarDate(Date calendarDate) {
+    public void setCalendarDate(LocalDate calendarDate) {
         this.calendarDate = calendarDate;
     }
 
@@ -50,43 +51,43 @@ public class DailySleepDTO {
         this.napTimeSeconds = napTimeSeconds;
     }
 
-    public Date getSleepStartTimestampGMT() {
+    public LocalDateTime getSleepStartTimestampGMT() {
         return sleepStartTimestampGMT;
     }
 
-    public void setSleepStartTimestampGMT(Date sleepStartTimestampGMT) {
+    public void setSleepStartTimestampGMT(LocalDateTime sleepStartTimestampGMT) {
         this.sleepStartTimestampGMT = sleepStartTimestampGMT;
     }
 
-    public Date getSleepEndTimestampGMT() {
+    public LocalDateTime getSleepEndTimestampGMT() {
         return sleepEndTimestampGMT;
     }
 
-    public void setSleepEndTimestampGMT(Date sleepEndTimestampGMT) {
+    public void setSleepEndTimestampGMT(LocalDateTime sleepEndTimestampGMT) {
         this.sleepEndTimestampGMT = sleepEndTimestampGMT;
     }
 
-    public Date getSleepStartTimestampLocal() {
+    public LocalDateTime getSleepStartTimestampLocal() {
         return sleepStartTimestampLocal;
     }
 
-    public void setSleepStartTimestampLocal(Date sleepStartTimestampLocal) {
+    public void setSleepStartTimestampLocal(LocalDateTime sleepStartTimestampLocal) {
         this.sleepStartTimestampLocal = sleepStartTimestampLocal;
     }
 
-    public Date getAutoSleepStartTimestampGMT() {
+    public LocalDateTime getAutoSleepStartTimestampGMT() {
         return autoSleepStartTimestampGMT;
     }
 
-    public void setAutoSleepStartTimestampGMT(Date autoSleepStartTimestampGMT) {
+    public void setAutoSleepStartTimestampGMT(LocalDateTime autoSleepStartTimestampGMT) {
         this.autoSleepStartTimestampGMT = autoSleepStartTimestampGMT;
     }
 
-    public Date getAutoSleepEndTimestampGMT() {
+    public LocalDateTime getAutoSleepEndTimestampGMT() {
         return autoSleepEndTimestampGMT;
     }
 
-    public void setAutoSleepEndTimestampGMT(Date autoSleepEndTimestampGMT) {
+    public void setAutoSleepEndTimestampGMT(LocalDateTime autoSleepEndTimestampGMT) {
         this.autoSleepEndTimestampGMT = autoSleepEndTimestampGMT;
     }
 

@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @RestController
 public class MovementDataController extends AbstractApiController {
@@ -33,23 +35,23 @@ public class MovementDataController extends AbstractApiController {
 
     @PostMapping("/movement-data")
     public MovementData newMovementDataEntry(@RequestBody MovementData newEntry) {
-        newEntry.setEventTime(new Date());
+        newEntry.setEventTime(LocalDateTime.now());
 
         return movementDataRepository.save(newEntry);
     }
 
     @RequestMapping(value="/movement-data/date/{startDate}", method=RequestMethod.GET)
     public Iterable<MovementData> getMovementDateByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date date
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return movementDataRepository.findAllByEventTimeBetween(getBeginningOfDay(date), getEndOfDay(date));
+        return movementDataRepository.findAllByEventTimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
     @RequestMapping(value="/movement-data/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<MovementData> getMovementDataBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return movementDataRepository.findAllByEventTimeBetween(getBeginningOfDay(startDate), getEndOfDay(endDate));
+        return movementDataRepository.findAllByEventTimeBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 }

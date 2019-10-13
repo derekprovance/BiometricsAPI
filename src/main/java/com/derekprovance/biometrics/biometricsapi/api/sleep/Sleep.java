@@ -4,15 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Sleep {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 
-    private Date sleepStart;
-    private Date sleepEnd;
+    private LocalDateTime sleepStart;
+    private LocalDateTime sleepEnd;
     private Long deepSleep;
     private Long lightSleep;
     private Long remSleep;
@@ -26,19 +26,19 @@ public class Sleep {
         this.id = id;
     }
 
-    public Date getSleepStart() {
+    public LocalDateTime getSleepStart() {
         return sleepStart;
     }
 
-    public void setSleepStart(Date sleepStart) {
+    public void setSleepStart(LocalDateTime sleepStart) {
         this.sleepStart = sleepStart;
     }
 
-    public Date getSleepEnd() {
+    public LocalDateTime getSleepEnd() {
         return sleepEnd;
     }
 
-    public void setSleepEnd(Date sleepEnd) {
+    public void setSleepEnd(LocalDateTime sleepEnd) {
         this.sleepEnd = sleepEnd;
     }
 
