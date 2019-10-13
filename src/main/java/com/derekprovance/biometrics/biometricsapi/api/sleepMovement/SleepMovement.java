@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 public class SleepMovement {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
-    private Integer sleepId;
     private LocalDateTime start;
     private LocalDateTime end;
     private Float activityLevel;
@@ -21,14 +20,6 @@ public class SleepMovement {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getSleepId() {
-        return sleepId;
-    }
-
-    public void setSleepId(Integer sleepId) {
-        this.sleepId = sleepId;
     }
 
     public LocalDateTime getStart() {
