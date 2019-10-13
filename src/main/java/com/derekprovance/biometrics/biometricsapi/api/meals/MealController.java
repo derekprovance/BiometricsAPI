@@ -16,12 +16,10 @@ import java.time.LocalTime;
 @RestController
 public class MealController extends AbstractApiController {
     private MealRepository mealRepository;
-    private FoodLogService foodLogService;
 
     @Autowired
-    public MealController(MealRepository mealRepository, FoodLogService foodLogService) {
+    public MealController(MealRepository mealRepository) {
         this.mealRepository = mealRepository;
-        this.foodLogService = foodLogService;
     }
 
     @RequestMapping(value="/meal/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -34,15 +32,6 @@ public class MealController extends AbstractApiController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @RequestMapping(value = "/meal/fitbit/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> pullMealsFromFitbitByDate(
-            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
-        Integer count = foodLogService.syncWithDatabase(date);
-
-        return ResponseEntity.status(HttpStatus.OK).body(String.format("{\"status\": \"%s\", \"message\": \"Processed %d entities for date %s\"}", HttpStatus.OK, count, date.toString()));
     }
 
     @PostMapping("/meal")

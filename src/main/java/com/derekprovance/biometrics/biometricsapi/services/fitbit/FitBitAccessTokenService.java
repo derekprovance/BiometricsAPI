@@ -39,6 +39,11 @@ public class FitBitAccessTokenService {
         this.initialRefreshToken = initialRefreshToken;
     }
 
+    public void updateRefreshToken(String code) {
+        log.info("Updating Refresh Token to " + code);
+        refreshTokenDTO.setRefreshToken(code);
+    }
+
     String getAccessToken() {
         return refreshTokenDTO.getAccessToken();
     }

@@ -5,7 +5,6 @@ import com.derekprovance.biometrics.biometricsapi.services.fitbit.WaterLogServic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,24 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class WaterConsumptionController extends AbstractApiController {
     private WaterConsumptionRepository waterConsumptionRepository;
-    private WaterLogService waterLogService;
-    private Boolean fitBitEnabled;
 
     @Autowired
     public WaterConsumptionController(
-            WaterConsumptionRepository waterConsumptionRepository,
-            WaterLogService waterLogService,
-            @Value("${fitbit.enabled}") Boolean fitBitEnabled
+            WaterConsumptionRepository waterConsumptionRepository
     ) {
         this.waterConsumptionRepository = waterConsumptionRepository;
-        this.waterLogService = waterLogService;
-        this.fitBitEnabled = fitBitEnabled;
     }
 
     @RequestMapping(value="/water-consumption/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -43,27 +34,6 @@ public class WaterConsumptionController extends AbstractApiController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @RequestMapping(value = "/water-consumption/fitbit/{dateStr}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> pullWaterByDate(
-            @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
-        Map<String, Object> map = new HashMap<>();
-
-        if(!fitBitEnabled) {
-            map.put("status", HttpStatus.BAD_REQUEST.value());
-            map.put("message", "FitBit API access has been disabled.");
-            return ResponseEntity.badRequest().body(gson.toJson(map));
-        }
-
-        waterLogService.syncWithDatabase(date);
-
-        map.put("status", HttpStatus.OK.value());
-        map.put("message", "Processed water log entry for date " + date.toString());
-
-        return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(map));
-
     }
 
     @PostMapping("/water-consumption")
