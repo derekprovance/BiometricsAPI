@@ -40,9 +40,9 @@ public class MovementDataController extends AbstractApiController {
         return movementDataRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/movement-data/date/{startDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/movement-data/date/{date}", method=RequestMethod.GET)
     public Iterable<MovementData> getMovementDateByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+            @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return movementDataRepository.findAllByEventTimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }

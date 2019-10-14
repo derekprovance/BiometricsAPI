@@ -39,9 +39,9 @@ public class MealController extends AbstractApiController {
         return mealRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/meal/date/{startDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/meal/date/{date}", method=RequestMethod.GET)
     public Iterable<MealEntry> getMealEntryByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+            @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return mealRepository.findAllByDateBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }

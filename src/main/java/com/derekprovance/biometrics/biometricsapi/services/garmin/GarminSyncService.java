@@ -126,8 +126,8 @@ public class GarminSyncService extends AbstractService {
         sleep.setDeepSleep(dailySleepDTO.getDeepSleepSeconds());
         sleep.setLightSleep(dailySleepDTO.getLightSleepSeconds());
         sleep.setRemSleep(dailySleepDTO.getRemSleepSeconds());
-        sleep.setSleepStart(dailySleepDTO.getSleepStartTimestampGMT());
-        sleep.setSleepEnd(dailySleepDTO.getSleepEndTimestampGMT());
+        sleep.setSleepStart(dailySleepDTO.getSleepStartTimestampGMT().toLocalDateTime());
+        sleep.setSleepEnd(dailySleepDTO.getSleepEndTimestampGMT().toLocalDateTime());
 
         try {
             sleepRepository.save(sleep);
@@ -149,8 +149,8 @@ public class GarminSyncService extends AbstractService {
         for(SleepMovementDTO sleepMovementValue : sleepMovement) {
             SleepMovement newEntry = new SleepMovement();
             newEntry.setActivityLevel(sleepMovementValue.getActivityLevel());
-            newEntry.setStart(sleepMovementValue.getStartGMT());
-            newEntry.setEnd(sleepMovementValue.getEndGMT());
+            newEntry.setStart(sleepMovementValue.getStartGMT().toLocalDateTime());
+            newEntry.setEnd(sleepMovementValue.getEndGMT().toLocalDateTime());
             sleepMovementData.add(newEntry);
         }
 

@@ -36,7 +36,7 @@ public class FitBitController extends AbstractApiController {
         this.fitBitAccessTokenService = fitBitAccessTokenService;
     }
 
-    @RequestMapping(value = "/fitbit/sync/water-consumption/{dateStr}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/fitbit/sync/water-consumption/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> pullWaterByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {

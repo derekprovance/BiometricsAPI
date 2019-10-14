@@ -1,25 +1,26 @@
 package com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class SleepMovementDTO {
-    private LocalDateTime startGMT;
-    private LocalDateTime endGMT;
+    private Timestamp startGMT;
+    private Timestamp endGMT;
     private Float activityLevel;
 
-    public LocalDateTime getStartGMT() {
+    public Timestamp getStartGMT() {
         return startGMT;
     }
 
-    public void setStartGMT(LocalDateTime startGMT) {
+    public void setStartGMT(Timestamp startGMT) {
         this.startGMT = startGMT;
     }
 
-    public LocalDateTime getEndGMT() {
+    public Timestamp getEndGMT() {
         return endGMT;
     }
 
-    public void setEndGMT(LocalDateTime endGMT) {
+    public void setEndGMT(Timestamp endGMT) {
         this.endGMT = endGMT;
     }
 

@@ -40,9 +40,9 @@ public class HrDataController extends AbstractApiController {
         return hrDataRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/hr-data/date/{startDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/hr-data/date/{date}", method=RequestMethod.GET)
     public Iterable<HrData> getHrDataByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+            @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return hrDataRepository.findAllByEventTimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }

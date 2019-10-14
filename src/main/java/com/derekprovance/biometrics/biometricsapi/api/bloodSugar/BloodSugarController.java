@@ -35,14 +35,15 @@ public class BloodSugarController extends AbstractApiController {
 
     @PostMapping("/blood-sugar-entries")
     public BloodSugar newBloodSugarEntry(@RequestBody BloodSugar newEntry) {
-        newEntry.setDatetime(LocalDateTime.now());
-
+        if(newEntry.getDatetime() == null) {
+            newEntry.setDatetime(LocalDateTime.now());
+        }
         return bloodSugarRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/blood-sugar-entries/date/{startDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/blood-sugar-entries/date/{date}", method=RequestMethod.GET)
     public Iterable<BloodSugar> getBloodSugarByDate(
-            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+            @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return bloodSugarRepository.findByDatetimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
