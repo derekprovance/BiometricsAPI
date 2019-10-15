@@ -60,16 +60,14 @@ public class GarminSyncService extends AbstractService {
         ItemSyncCount itemSyncCount = new ItemSyncCount();
         itemSyncCount.setDate(date);
 
-        if(!dailyStatisticsExists(date)) {
+        if(!dataAlreadySynced(date)) {
             log.info("Syncing data from Garmin for " + date);
             syncDailyStatistics(date);
 
-            itemSyncCount.setDailyStatistic(true);
             itemSyncCount.setHrData(syncHrData(date).size());
             itemSyncCount.setMovementData(syncMovementData(date).size());
             itemSyncCount.setSleepMovementData(syncSleepData(date));
         } else {
-            itemSyncCount.setDailyStatistic(false);
             itemSyncCount.setHrData(0);
             itemSyncCount.setMovementData(0);
             itemSyncCount.setSleepMovementData(0);
@@ -78,14 +76,33 @@ public class GarminSyncService extends AbstractService {
         return itemSyncCount;
     }
 
-    private Boolean dailyStatisticsExists(LocalDate date) {
-        return dailyStatisticsRepository.findByEntryDate(date) != null;
+    private Boolean dataAlreadySynced(LocalDate date) {
+        final DailyStatistics dailyStatistics = dailyStatisticsRepository.findByEntryDate(date);
+
+        if(dailyStatistics == null) {
+            return false;
+        }
+
+        //TODO(DEREK) - make timestamps unique constraints in database and deny entry that way
+        return !(dailyStatistics.getHighlyActiveSeconds() == null &&
+                dailyStatistics.getHighStressDuration() == null &&
+                dailyStatistics.getLowStressDuration() == null &&
+                dailyStatistics.getMaxHr() == null &&
+                dailyStatistics.getMinHr() == null &&
+                dailyStatistics.getRestingHr() == null &&
+                dailyStatistics.getSedentarySeconds() == null &&
+                dailyStatistics.getSleepingSeconds() == null &&
+                dailyStatistics.getTotalSteps() == null);
     }
 
     private void syncDailyStatistics(LocalDate date) {
+        DailyStatistics dailyStatisticsEntry = dailyStatisticsRepository.findByEntryDate(date);
+        if(dailyStatisticsEntry == null) {
+            dailyStatisticsEntry = new DailyStatistics();
+        }
+
         final DailyUserSummary userSummary = garminApiService.getUserSummary(date);
 
-        DailyStatistics dailyStatisticsEntry = new DailyStatistics();
         dailyStatisticsEntry.setEntryDate(userSummary.getCalendarDate());
         dailyStatisticsEntry.setHighlyActiveSeconds(userSummary.getHighlyActiveSeconds());
         dailyStatisticsEntry.setSedentarySeconds(userSummary.getSedentarySeconds());

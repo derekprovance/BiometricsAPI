@@ -7,7 +7,6 @@ public class ItemSyncCount {
     private Integer hrData;
     private Integer movementData;
     private Integer sleepMovementData;
-    private Boolean dailyStatistic;
 
     public LocalDate getDate() {
         return date;
@@ -39,13 +38,5 @@ public class ItemSyncCount {
 
     public void setSleepMovementData(Integer sleepMovementData) {
         this.sleepMovementData = sleepMovementData;
-    }
-
-    public Boolean getDailyStatistic() {
-        return dailyStatistic;
-    }
-
-    public void setDailyStatistic(Boolean dailyStatistic) {
-        this.dailyStatistic = dailyStatistic;
     }
 }

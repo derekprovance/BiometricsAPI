@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class GarminController extends AbstractApiController {
@@ -31,11 +33,32 @@ public class GarminController extends AbstractApiController {
     @RequestMapping(value = "/garmin/sync/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getGarminData(@PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if(!garminEnabled) {
-            return ResponseEntity.badRequest().body(String.format("{\"status\": \"%s\", \"message\": \"Garmin API access has been disabled.\"}", HttpStatus.BAD_REQUEST));
-
+            Map<String, Object> map = new HashMap<>();
+            map.put("status", HttpStatus.BAD_REQUEST.value());
+            map.put("message", "Garmin API access has been disabled.");
+            return ResponseEntity.badRequest().body(gson.toJson(map));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(garminSyncService.sync(date)));
+        final ItemSyncCount syncCount = garminSyncService.sync(date);
+
+        if(itemsWereSynced(syncCount)) {
+            return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(syncCount));
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            map.put("status", HttpStatus.OK.value());
+            map.put("message", "No items available for sync");
+            return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(map));
+        }
+    }
+
+    private Boolean itemsWereSynced(ItemSyncCount itemSyncCount) {
+        if(itemSyncCount == null) {
+            return false;
+        }
+
+        return itemSyncCount.getHrData() > 0 ||
+                itemSyncCount.getMovementData() > 0 ||
+                itemSyncCount.getSleepMovementData() > 0;
     }
 
 }
