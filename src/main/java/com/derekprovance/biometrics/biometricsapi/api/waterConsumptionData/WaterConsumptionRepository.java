@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface WaterConsumptionRepository extends CrudRepository<WaterConsumption, Integer> {
     WaterConsumption findByDate(LocalDate date);
-    List<WaterConsumption> findAllByDateBetween(LocalDateTime start, LocalDateTime end);
+    List<WaterConsumption> findAllByDateBetween(LocalDate start, LocalDate end);
 }

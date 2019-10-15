@@ -45,7 +45,7 @@ public class WaterConsumptionController extends AbstractApiController {
     public Iterable<WaterConsumption> getWaterConsumptionByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return waterConsumptionRepository.findAllByDateBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        return waterConsumptionRepository.findAllByDateBetween(date, date);
     }
 
     @RequestMapping(value="/water-consumption/date/{startDate}/{endDate}", method=RequestMethod.GET)
@@ -53,6 +53,6 @@ public class WaterConsumptionController extends AbstractApiController {
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return waterConsumptionRepository.findAllByDateBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+        return waterConsumptionRepository.findAllByDateBetween(startDate, endDate);
     }
 }

@@ -43,7 +43,7 @@ public class DailyStatisticsController extends AbstractApiController {
     public Iterable<DailyStatistics> getDailyStatisticsByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return dailyStatisticsRepository.findAllByEntryDateBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        return dailyStatisticsRepository.findAllByEntryDateBetween(date, date);
     }
 
     @RequestMapping(value="/daily-statistics/date/{startDate}/{endDate}", method=RequestMethod.GET)
@@ -51,6 +51,6 @@ public class DailyStatisticsController extends AbstractApiController {
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return dailyStatisticsRepository.findAllByEntryDateBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+        return dailyStatisticsRepository.findAllByEntryDateBetween(startDate, endDate);
     }
 }

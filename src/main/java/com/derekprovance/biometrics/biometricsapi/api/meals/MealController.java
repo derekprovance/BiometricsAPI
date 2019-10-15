@@ -43,7 +43,7 @@ public class MealController extends AbstractApiController {
     public Iterable<MealEntry> getMealEntryByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return mealRepository.findAllByDateBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        return mealRepository.findAllByDateBetween(date, date);
     }
 
     @RequestMapping(value="/meal/date/{startDate}/{endDate}", method=RequestMethod.GET)
@@ -51,6 +51,6 @@ public class MealController extends AbstractApiController {
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return mealRepository.findAllByDateBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+        return mealRepository.findAllByDateBetween(startDate, endDate);
     }
 }

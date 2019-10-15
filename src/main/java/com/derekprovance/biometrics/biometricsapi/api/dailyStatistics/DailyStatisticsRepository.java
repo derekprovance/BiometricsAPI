@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface DailyStatisticsRepository extends CrudRepository<DailyStatistics, Integer> {
     DailyStatistics findByEntryDate(LocalDate date);
-    List<DailyStatistics> findAllByEntryDateBetween(LocalDateTime start, LocalDateTime end);
+    List<DailyStatistics> findAllByEntryDateBetween(LocalDate start, LocalDate end);
 }
