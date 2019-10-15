@@ -1,9 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.waterConsumptionData;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
-import com.derekprovance.biometrics.biometricsapi.services.fitbit.WaterLogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @RestController
 public class WaterConsumptionController extends AbstractApiController {

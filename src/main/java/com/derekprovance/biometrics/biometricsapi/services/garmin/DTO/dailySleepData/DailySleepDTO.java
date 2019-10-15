@@ -2,8 +2,6 @@ package com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySlee
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 public class DailySleepDTO {
     private Long id;

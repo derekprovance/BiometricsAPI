@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @RestController
 public class DailyStatisticsController extends AbstractApiController {

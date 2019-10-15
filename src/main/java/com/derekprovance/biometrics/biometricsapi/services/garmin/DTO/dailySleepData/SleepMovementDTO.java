@@ -1,7 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class SleepMovementDTO {
     private Timestamp startGMT;
