@@ -39,10 +39,10 @@ public class DailyStatisticsController extends AbstractApiController {
     }
 
     @RequestMapping(value="/daily-statistics/date/{date}", method=RequestMethod.GET)
-    public Iterable<DailyStatistics> getDailyStatisticsByDate(
+    public DailyStatistics getDailyStatisticsByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return dailyStatisticsRepository.findAllByEntryDateBetween(date, date);
+        return dailyStatisticsRepository.findByEntryDate(date);
     }
 
     @RequestMapping(value="/daily-statistics/date/{startDate}/{endDate}", method=RequestMethod.GET)

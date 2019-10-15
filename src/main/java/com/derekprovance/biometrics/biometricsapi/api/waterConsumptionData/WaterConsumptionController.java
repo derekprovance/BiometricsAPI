@@ -39,10 +39,10 @@ public class WaterConsumptionController extends AbstractApiController {
     }
 
     @RequestMapping(value="/water-consumption/date/{date}", method=RequestMethod.GET)
-    public Iterable<WaterConsumption> getWaterConsumptionByDate(
+    public WaterConsumption getWaterConsumptionByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return waterConsumptionRepository.findAllByDateBetween(date, date);
+        return waterConsumptionRepository.findByDate(date);
     }
 
     @RequestMapping(value="/water-consumption/date/{startDate}/{endDate}", method=RequestMethod.GET)
