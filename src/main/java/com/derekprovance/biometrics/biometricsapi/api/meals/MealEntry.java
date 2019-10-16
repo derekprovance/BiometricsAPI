@@ -34,7 +34,8 @@ public class MealEntry {
     private Float sodium;
 
     @NotNull
-    private Integer mealTypeId;
+    @Column(name="meal_type_id")
+    private DayBlock mealType;
 
     @NotNull
     @Column(unique=true)
@@ -128,12 +129,12 @@ public class MealEntry {
         this.sodium = sodium;
     }
 
-    public Integer getMealTypeId() {
-        return mealTypeId;
+    public DayBlock getMealType() {
+        return mealType;
     }
 
-    public void setMealTypeId(Integer mealTypeId) {
-        this.mealTypeId = mealTypeId;
+    public void setMealType(DayBlock mealType) {
+        this.mealType = mealType;
     }
 
     public Long getLogId() {

@@ -1,5 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.services.fitbit;
 
+import com.derekprovance.biometrics.biometricsapi.api.meals.DayBlock;
 import com.derekprovance.biometrics.biometricsapi.api.meals.MealEntry;
 import com.derekprovance.biometrics.biometricsapi.api.meals.MealRepository;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.FitbitFoodEndpointDTO;
@@ -61,7 +62,7 @@ public class FoodLogService {
                     mealEntry.setName(mealEntryDTO.getLoggedFood().getName());
                     mealEntry.setCalories(mealEntryDTO.getLoggedFood().getCalories());
                     mealEntry.setUnit(mealEntryDTO.getLoggedFood().getUnit().getName());
-                    mealEntry.setMealTypeId(mealEntryDTO.getLoggedFood().getMealTypeId());
+                    mealEntry.setMealType(DayBlock.valueOf(mealEntryDTO.getLoggedFood().getMealTypeId()));
                 }
 
                 mealEntry.setDate(mealEntryDTO.getLogDate());

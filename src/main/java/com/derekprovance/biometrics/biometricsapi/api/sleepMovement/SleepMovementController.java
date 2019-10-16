@@ -37,14 +37,14 @@ public class SleepMovementController extends AbstractApiController {
         return sleepMovementRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/sleep/date/{date}", method=RequestMethod.GET)
+    @RequestMapping(value="/sleep-movement/date/{date}", method=RequestMethod.GET)
     public Iterable<SleepMovement> getSleepMovementDataByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return sleepMovementRepository.findAllByStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
-    @RequestMapping(value="/sleep/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/sleep-movement/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<SleepMovement> getSleepMovementDataBetweenDate(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
