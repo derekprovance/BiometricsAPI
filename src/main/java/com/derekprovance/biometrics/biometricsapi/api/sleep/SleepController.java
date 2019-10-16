@@ -38,10 +38,10 @@ public class SleepController extends AbstractApiController {
     }
 
     @RequestMapping(value="/sleep/date/{date}", method=RequestMethod.GET)
-    public Iterable<Sleep> getSleepDataByDate(
+    public Sleep getSleepDataByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return sleepRepository.findAllBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        return sleepRepository.findBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
     @RequestMapping(value="/sleep/date/{startDate}/{endDate}", method=RequestMethod.GET)
