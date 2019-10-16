@@ -1,5 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.meals;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -38,6 +40,7 @@ public class MealEntry {
     private MealBlock mealBlock;
 
     @NotNull
+    @JsonIgnore
     @Column(unique=true)
     private Long logId;
 
