@@ -3,7 +3,7 @@ package com.derekprovance.biometrics.biometricsapi.api.meals;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum DayBlock {
+public enum MealBlock {
     ANYTIME(0),
     BREAKFAST(1),
     MORNING_SNACK(2),
@@ -13,7 +13,7 @@ public enum DayBlock {
     EVENING_SNACK(6);
 
     private Integer value;
-    private static Map<Integer, DayBlock> map = new HashMap<>();
+    private static Map<Integer, MealBlock> map = new HashMap<>();
 
     public Integer getValue()
     {
@@ -21,16 +21,16 @@ public enum DayBlock {
     }
 
     static {
-        for (DayBlock dayBlock : DayBlock.values()) {
-            map.put(dayBlock.value, dayBlock);
+        for (MealBlock mealBlock : MealBlock.values()) {
+            map.put(mealBlock.value, mealBlock);
         }
     }
 
-    public static DayBlock valueOf(Integer dayBlock) {
-        return map.get(dayBlock);
+    public static MealBlock valueOf(Integer mealBlock) {
+        return map.get(mealBlock);
     }
 
-    DayBlock(Integer value)
+    MealBlock(Integer value)
     {
         this.value = value;
     }
