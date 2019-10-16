@@ -2,11 +2,14 @@ package com.derekprovance.biometrics.biometricsapi.api.sleepMovement;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @RestController
 public class SleepMovementController extends AbstractApiController {
@@ -32,5 +35,20 @@ public class SleepMovementController extends AbstractApiController {
     @PostMapping("/sleep-movement")
     public SleepMovement newSleepMovementDataEntry(@RequestBody SleepMovement newEntry) {
         return sleepMovementRepository.save(newEntry);
+    }
+
+    @RequestMapping(value="/sleep/date/{date}", method=RequestMethod.GET)
+    public Iterable<SleepMovement> getSleepMovementDataByDate(
+            @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+    ) {
+        return sleepMovementRepository.findAllByStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+    }
+
+    @RequestMapping(value="/sleep/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    public Iterable<SleepMovement> getSleepMovementDataBetweenDate(
+            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+    ) {
+        return sleepMovementRepository.findAllByStartBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 }
