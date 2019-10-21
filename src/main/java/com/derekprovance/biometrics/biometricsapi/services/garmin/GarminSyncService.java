@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.CredentialNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,17 +61,21 @@ public class GarminSyncService extends AbstractService {
         ItemSyncCount itemSyncCount = new ItemSyncCount();
         itemSyncCount.setDate(date);
 
-        if(!dataAlreadySynced(date)) {
-            log.info("Syncing data from Garmin for " + date);
-            syncDailyStatistics(date);
+        try {
+            if(!dataAlreadySynced(date)) {
+                log.info("Syncing data from Garmin for " + date);
+                syncDailyStatistics(date);
 
-            itemSyncCount.setHrData(syncHrData(date).size());
-            itemSyncCount.setMovementData(syncMovementData(date).size());
-            itemSyncCount.setSleepMovementData(syncSleepData(date));
-        } else {
-            itemSyncCount.setHrData(0);
-            itemSyncCount.setMovementData(0);
-            itemSyncCount.setSleepMovementData(0);
+                itemSyncCount.setHrData(syncHrData(date).size());
+                itemSyncCount.setMovementData(syncMovementData(date).size());
+                itemSyncCount.setSleepMovementData(syncSleepData(date));
+            } else {
+                itemSyncCount.setHrData(0);
+                itemSyncCount.setMovementData(0);
+                itemSyncCount.setSleepMovementData(0);
+            }
+        } catch (CredentialNotFoundException e) {
+            e.printStackTrace();
         }
 
         return itemSyncCount;
@@ -95,7 +100,7 @@ public class GarminSyncService extends AbstractService {
                 dailyStatistics.getTotalSteps() == null);
     }
 
-    private void syncDailyStatistics(LocalDate date) {
+    private void syncDailyStatistics(LocalDate date) throws CredentialNotFoundException {
         DailyStatistics dailyStatisticsEntry = dailyStatisticsRepository.findByEntryDate(date);
         if(dailyStatisticsEntry == null) {
             dailyStatisticsEntry = new DailyStatistics();
@@ -119,7 +124,7 @@ public class GarminSyncService extends AbstractService {
         dailyStatisticsRepository.save(dailyStatisticsEntry);
     }
 
-    private int syncSleepData(LocalDate date) {
+    private int syncSleepData(LocalDate date) throws CredentialNotFoundException {
         final DailySleepData dailySleepData = garminApiService.getDailySleepData(date);
         Sleep sleep = null;
 
@@ -181,7 +186,7 @@ public class GarminSyncService extends AbstractService {
         return sleepMovementData;
     }
 
-    private List<MovementData> syncMovementData(LocalDate date) {
+    private List<MovementData> syncMovementData(LocalDate date) throws CredentialNotFoundException {
         final DailyMovementData dailyMovement = garminApiService.getDailyMovement(date);
         Object[][] dailyMovementValues = dailyMovement.getMovementValues();
         List<MovementData> movementData = new ArrayList<>();
@@ -200,7 +205,7 @@ public class GarminSyncService extends AbstractService {
         return movementData;
     }
 
-    private List<HrData> syncHrData(LocalDate date) {
+    private List<HrData> syncHrData(LocalDate date) throws CredentialNotFoundException {
         final DailyHeartRate dailyHrData = garminApiService.getDailyHrData(date);
         List<HrData> hrData = new ArrayList<>();
         Object[][] heartRateValues = dailyHrData.getHeartRateValues();

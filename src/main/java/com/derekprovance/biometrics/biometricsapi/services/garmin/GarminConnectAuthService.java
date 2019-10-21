@@ -5,7 +5,6 @@ import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.Connect
 import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApiAccess;
 import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApiAccessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.CredentialNotFoundException;
@@ -18,25 +17,38 @@ public class GarminConnectAuthService {
     private ConnectedApiAccessRepository connectedApiAccessRepository;
 
     @Autowired
-    public GarminConnectAuthService(
-            @Value("${garmin.user.id}") String userId,
-            ConnectedApiAccessRepository connectedApiAccessRepository
-    ) throws CredentialNotFoundException {
-        this.userId = userId;
+    public GarminConnectAuthService(ConnectedApiAccessRepository connectedApiAccessRepository) throws CredentialNotFoundException {
         this.connectedApiAccessRepository = connectedApiAccessRepository;
 
         getSessionToken();
     }
 
-    String getUserId() {
+    String getSessionCookie() throws CredentialNotFoundException {
+        String session = getSessionToken();
+        return String.format("SESSIONID=%s", session);
+    }
+
+    String getUserId() throws CredentialNotFoundException {
+        if(this.userId != null) {
+            return this.userId;
+        }
+
+        final ConnectedApiAccess accessEntity = connectedApiAccessRepository.findByApiAndType(ConnectedApi.GARMIN, AccessType.USER_ID);
+
+        if(accessEntity != null) {
+            this.userId = accessEntity.getToken();
+        } else {
+            throw new CredentialNotFoundException("Garmin API Token not set for user");
+        }
+
         return this.userId;
     }
 
-    String getSessionCookie() {
-        return String.format("SESSIONID=%s", this.session);
-    }
+    private String getSessionToken() throws CredentialNotFoundException {
+        if(this.session != null) {
+            return this.session;
+        }
 
-    private void getSessionToken() throws CredentialNotFoundException {
         final ConnectedApiAccess accessEntity = connectedApiAccessRepository.findByApiAndType(ConnectedApi.GARMIN, AccessType.ACCESS_TOKEN);
 
         if(accessEntity != null) {
@@ -44,5 +56,7 @@ public class GarminConnectAuthService {
         } else {
             throw new CredentialNotFoundException("Garmin API Token not set for user");
         }
+
+        return this.session;
     }
 }
