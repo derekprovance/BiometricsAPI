@@ -16,6 +16,8 @@ public class GarminConnectAuthService {
 
     private ConnectedApiAccessRepository connectedApiAccessRepository;
 
+    private static final String CREDENTIAL_NOT_FOUND_ERROR = "Garmin API Token not set for user";
+
     @Autowired
     public GarminConnectAuthService(ConnectedApiAccessRepository connectedApiAccessRepository) throws CredentialNotFoundException {
         this.connectedApiAccessRepository = connectedApiAccessRepository;
@@ -38,7 +40,7 @@ public class GarminConnectAuthService {
         if(accessEntity != null) {
             this.userId = accessEntity.getToken();
         } else {
-            throw new CredentialNotFoundException("Garmin API Token not set for user");
+            throw new CredentialNotFoundException(CREDENTIAL_NOT_FOUND_ERROR);
         }
 
         return this.userId;
@@ -54,7 +56,7 @@ public class GarminConnectAuthService {
         if(accessEntity != null) {
             session = accessEntity.getToken();
         } else {
-            throw new CredentialNotFoundException("Garmin API Token not set for user");
+            throw new CredentialNotFoundException(CREDENTIAL_NOT_FOUND_ERROR);
         }
 
         return this.session;
