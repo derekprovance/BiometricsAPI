@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.security.auth.login.CredentialNotFoundException;
 
-//TODO - handle AUTH_CODE type and scenario
+//TODO - handle bad auth codes
 
 @Service
 public class FitBitAccessTokenService {
@@ -97,15 +97,17 @@ public class FitBitAccessTokenService {
 
     private void saveOrCreateAccessEntity() {
         ConnectedApiAccess accessEntity = connectedApiAccessRepository.findByApiAndType(ConnectedApi.FITBIT, AccessType.REFRESH_TOKEN);
+
         if(accessEntity != null) {
             accessEntity.setToken(refreshTokenDTO.getRefreshToken());
-            connectedApiAccessRepository.save(accessEntity);
         } else {
             accessEntity = new ConnectedApiAccess();
             accessEntity.setApi(ConnectedApi.FITBIT);
             accessEntity.setType(AccessType.REFRESH_TOKEN);
             accessEntity.setToken(refreshTokenDTO.getRefreshToken());
         }
+
+        connectedApiAccessRepository.save(accessEntity);
     }
 
     private String getUrlForAuthentication(FitBitAuthType authType, String token) {
