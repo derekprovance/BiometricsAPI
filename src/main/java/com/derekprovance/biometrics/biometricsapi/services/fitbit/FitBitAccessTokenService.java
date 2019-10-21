@@ -62,7 +62,7 @@ public class FitBitAccessTokenService {
         refreshTokenDTO = callApiForAuthentication(getUrlForAuthentication(FitBitAuthType.REFRESH_TOKEN, apiCredentials.getToken()));
 
         if (refreshTokenDTO != null && refreshTokenDTO.getAccessToken() != null) {
-            apiCredentials.setToken(refreshTokenDTO.getAccessToken());
+            apiCredentials.setToken(refreshTokenDTO.getRefreshToken());
             connectedApiAccessRepository.save(apiCredentials);
         }
     }
