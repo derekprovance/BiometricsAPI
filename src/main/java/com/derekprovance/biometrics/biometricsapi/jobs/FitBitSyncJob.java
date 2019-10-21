@@ -5,6 +5,8 @@ import com.derekprovance.biometrics.biometricsapi.services.fitbit.FoodLogService
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.WaterLogService;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import javax.security.auth.login.CredentialNotFoundException;
+
 public class FitBitSyncJob extends AbstractSyncJob {
 
     private FoodLogService foodLogService;
@@ -30,7 +32,7 @@ public class FitBitSyncJob extends AbstractSyncJob {
     }
 
     @Scheduled(fixedRate = 18000000)
-    public void runTokenRefresh() {
+    public void runTokenRefresh() throws CredentialNotFoundException {
         fitbitAccessTokenService.refreshAccessToken();
     }
 }

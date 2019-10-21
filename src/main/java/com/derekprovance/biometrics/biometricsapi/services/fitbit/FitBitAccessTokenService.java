@@ -13,6 +13,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.security.auth.login.CredentialNotFoundException;
+
 //TODO - handle AUTH_CODE type and scenario
 
 @Service
@@ -45,21 +47,37 @@ public class FitBitAccessTokenService {
     public void updateRefreshToken(String code) {
         log.info("Resetting Refresh Tokens");
         refreshTokenDTO = callApiForAuthentication(getUrlForAuthentication(FitBitAuthType.AUTH_CODE, code));
+        saveOrCreateAccessEntity();
     }
 
-    String getAccessToken() {
-        return refreshTokenDTO.getAccessToken();
+    String getAccessToken() throws CredentialNotFoundException {
+        if(refreshTokenDTO != null) {
+            return refreshTokenDTO.getAccessToken();
+        } else {
+            refreshAccessToken();
+            return refreshTokenDTO.getAccessToken();
+        }
     }
 
-    String getUserId() {
-        return refreshTokenDTO.getUserId();
+    String getUserId() throws CredentialNotFoundException {
+        if(refreshTokenDTO != null) {
+            return refreshTokenDTO.getUserId();
+        } else {
+            refreshAccessToken();
+            return refreshTokenDTO.getUserId();
+        }
     }
 
-    public void refreshAccessToken() {
+    public void refreshAccessToken() throws CredentialNotFoundException {
         log.info("Refreshing access token");
 
         ConnectedApiAccess apiCredentials = connectedApiAccessRepository.findByApiAndType(ConnectedApi.FITBIT, AccessType.REFRESH_TOKEN);
-        refreshTokenDTO = callApiForAuthentication(getUrlForAuthentication(FitBitAuthType.REFRESH_TOKEN, apiCredentials.getToken()));
+
+        if(apiCredentials != null) {
+            refreshTokenDTO = callApiForAuthentication(getUrlForAuthentication(FitBitAuthType.REFRESH_TOKEN, apiCredentials.getToken()));
+        } else {
+            throw new CredentialNotFoundException("FitBit Credentials not set for user");
+        }
 
         if (refreshTokenDTO != null && refreshTokenDTO.getAccessToken() != null) {
             apiCredentials.setToken(refreshTokenDTO.getRefreshToken());
@@ -74,6 +92,19 @@ public class FitBitAccessTokenService {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private void saveOrCreateAccessEntity() {
+        ConnectedApiAccess accessEntity = connectedApiAccessRepository.findByApiAndType(ConnectedApi.FITBIT, AccessType.REFRESH_TOKEN);
+        if(accessEntity != null) {
+            accessEntity.setToken(refreshTokenDTO.getRefreshToken());
+            connectedApiAccessRepository.save(accessEntity);
+        } else {
+            accessEntity = new ConnectedApiAccess();
+            accessEntity.setApi(ConnectedApi.FITBIT);
+            accessEntity.setType(AccessType.REFRESH_TOKEN);
+            accessEntity.setToken(refreshTokenDTO.getRefreshToken());
         }
     }
 

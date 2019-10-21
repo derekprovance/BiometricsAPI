@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.security.auth.login.CredentialNotFoundException;
 import java.time.LocalDate;
 
 @Service
@@ -31,21 +32,33 @@ public class FitBitAPIService extends AbstractService {
         String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 
-        return (FitbitFoodEndpointDTO) performApiCall(formatEndpoint(FOOD_LOG_API, dateStr), FitbitFoodEndpointDTO.class);
+        try {
+            return (FitbitFoodEndpointDTO) performApiCall(formatEndpoint(FOOD_LOG_API, dateStr), FitbitFoodEndpointDTO.class);
+        } catch (CredentialNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     WaterLogDTO performWaterLog(LocalDate date) {
         String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 
-        return (WaterLogDTO) performApiCall(formatEndpoint(WATER_LOG_API, dateStr), WaterLogDTO.class);
+        try {
+            return (WaterLogDTO) performApiCall(formatEndpoint(WATER_LOG_API, dateStr), WaterLogDTO.class);
+        } catch (CredentialNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
-    private String formatEndpoint(String endpoint, String dateStr) {
+    private String formatEndpoint(String endpoint, String dateStr) throws CredentialNotFoundException {
         return String.format(endpoint, fitbitAccessTokenService.getUserId(), dateStr);
     }
 
-    private Object performApiCall(String uri, Class dto) {
+    private Object performApiCall(String uri, Class dto) throws CredentialNotFoundException {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(fitbitAccessTokenService.getAccessToken());
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
