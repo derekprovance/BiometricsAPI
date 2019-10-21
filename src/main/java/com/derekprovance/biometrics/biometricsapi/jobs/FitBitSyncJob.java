@@ -31,6 +31,6 @@ public class FitBitSyncJob extends AbstractSyncJob {
 
     @Scheduled(fixedRate = 18000000)
     public void runTokenRefresh() {
-        fitbitAccessTokenService.performTokenRefresh();
+        fitbitAccessTokenService.refreshAccessToken();
     }
 }

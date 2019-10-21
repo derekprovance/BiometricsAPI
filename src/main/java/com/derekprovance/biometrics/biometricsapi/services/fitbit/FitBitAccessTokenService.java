@@ -1,5 +1,9 @@
 package com.derekprovance.biometrics.biometricsapi.services.fitbit;
 
+import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApiAccess;
+import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.AccessType;
+import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApi;
+import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApiAccessRepository;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.RefreshTokenDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
+
+//TODO - handle AUTH_CODE type and scenario
 
 @Service
 public class FitBitAccessTokenService {
@@ -16,8 +21,8 @@ public class FitBitAccessTokenService {
 
     private RefreshTokenDTO refreshTokenDTO;
     private final RestTemplate restTemplate = new RestTemplate();
-    private final HttpEntity<String> entity;
-    private final String initialRefreshToken;
+    private final ConnectedApiAccessRepository connectedApiAccessRepository;
+    private HttpEntity<String> entity;
     private final String redirectUri;
 
     private static final String FITBIT_API = "https://api.fitbit.com/oauth2/token";
@@ -28,25 +33,18 @@ public class FitBitAccessTokenService {
     public FitBitAccessTokenService(
             @Value("${fitbit.application.client.id}") String clientId,
             @Value("${fitbit.application.client.secret}") String clientSecret,
-            @Value("${fitbit.access.refresh}") String initialRefreshToken,
-            @Value("${fitbit.access.redirect_uri}") String redirectUri
+            @Value("${fitbit.access.redirect_uri}") String redirectUri,
+            ConnectedApiAccessRepository connectedApiAccessRepository
     ) {
-        if(System.getenv("ACCESS_TOKEN_OVERRIDE") == null) {
-            Assert.notNull(initialRefreshToken, "Error! Property fitbit.access.refresh not set");
-        }
+        initializeHttpEntity(clientId, clientSecret);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth(clientId, clientSecret);
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        entity = new HttpEntity<>(null, headers);
-
-        this.initialRefreshToken = initialRefreshToken;
         this.redirectUri = redirectUri;
+        this.connectedApiAccessRepository = connectedApiAccessRepository;
     }
 
     public void updateRefreshToken(String code) {
         log.info("Resetting Refresh Tokens");
-        refreshTokenDTO = performTokenRefresh(code, FitBitAuthType.AUTH_CODE);
+        refreshTokenDTO = callApiForAuthentication(getUrlForAuthentication(FitBitAuthType.AUTH_CODE, code));
     }
 
     String getAccessToken() {
@@ -57,23 +55,32 @@ public class FitBitAccessTokenService {
         return refreshTokenDTO.getUserId();
     }
 
-    public void performTokenRefresh() {
+    public void refreshAccessToken() {
         log.info("Refreshing access token");
 
-        String refreshToken = refreshTokenDTO != null && refreshTokenDTO.getRefreshToken() != null ? refreshTokenDTO.getRefreshToken() : initialRefreshToken;
-        refreshTokenDTO = performTokenRefresh(refreshToken, FitBitAuthType.REFRESH_TOKEN);
+        ConnectedApiAccess apiCredentials = connectedApiAccessRepository.findByApiAndType(ConnectedApi.FITBIT, AccessType.REFRESH_TOKEN);
+        refreshTokenDTO = callApiForAuthentication(getUrlForAuthentication(FitBitAuthType.REFRESH_TOKEN, apiCredentials.getToken()));
+
+        if (refreshTokenDTO != null && refreshTokenDTO.getAccessToken() != null) {
+            apiCredentials.setToken(refreshTokenDTO.getAccessToken());
+            connectedApiAccessRepository.save(apiCredentials);
+        }
     }
 
-    private RefreshTokenDTO performTokenRefresh(String token, FitBitAuthType fitBitAuthType) {
-        if(System.getenv("ACCESS_TOKEN_OVERRIDE") != null) {
-            RefreshTokenDTO refreshTokenDTO = new RefreshTokenDTO();
-            refreshTokenDTO.setAccessToken(System.getenv("ACCESS_TOKEN_OVERRIDE"));
-
-            return refreshTokenDTO;
+    private RefreshTokenDTO callApiForAuthentication(String callUrl) {
+        try {
+            final ResponseEntity<RefreshTokenDTO> exchange = restTemplate.exchange(callUrl, HttpMethod.POST, entity, RefreshTokenDTO.class);
+            return exchange.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
+    }
 
+    private String getUrlForAuthentication(FitBitAuthType authType, String token) {
         String callUrl = null;
-        switch(fitBitAuthType) {
+
+        switch(authType) {
             case AUTH_CODE:
                 callUrl = String.format(FITBIT_AUTH_CODE_URI, redirectUri, token);
                 break;
@@ -82,12 +89,13 @@ public class FitBitAccessTokenService {
                 break;
         }
 
-        try {
-            final ResponseEntity<RefreshTokenDTO> exchange = restTemplate.exchange(callUrl, HttpMethod.POST, entity, RefreshTokenDTO.class);
-            return exchange.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return callUrl;
+    }
+
+    private void initializeHttpEntity(String clientId, String clientSecret) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBasicAuth(clientId, clientSecret);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        entity = new HttpEntity<>(null, headers);
     }
 }
