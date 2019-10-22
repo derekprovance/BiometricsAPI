@@ -29,7 +29,7 @@ public class DailyLogController extends AbstractApiController {
         return ResponseEntity.ok().body(gson.toJson(dailyLog));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public DailyLog newDailyLogEntry(@RequestBody DailyLog newEntry) {
         if(newEntry.getDate() == null) {
             newEntry.setDate(LocalDate.now());

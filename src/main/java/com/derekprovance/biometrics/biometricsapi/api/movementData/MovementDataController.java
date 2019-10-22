@@ -30,7 +30,7 @@ public class MovementDataController extends AbstractApiController {
         return ResponseEntity.ok().body(gson.toJson(movementData));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public MovementData newMovementDataEntry(@RequestBody MovementData newEntry) {
         newEntry.setEventTime(LocalDateTime.now());
 

@@ -30,7 +30,7 @@ public class BloodSugarController extends AbstractApiController {
         return ResponseEntity.ok().body(gson.toJson(bloodSugar));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public BloodSugar newBloodSugarEntry(@RequestBody BloodSugar newEntry) {
         if(newEntry.getDatetime() == null) {
             newEntry.setDatetime(LocalDateTime.now());

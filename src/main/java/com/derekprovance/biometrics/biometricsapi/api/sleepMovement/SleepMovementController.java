@@ -29,7 +29,7 @@ public class SleepMovementController extends AbstractApiController {
         return ResponseEntity.ok().body(gson.toJson(sleepMovement));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public SleepMovement newSleepMovementDataEntry(@RequestBody SleepMovement newEntry) {
         return sleepMovementRepository.save(newEntry);
     }

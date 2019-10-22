@@ -28,7 +28,7 @@ public class DailyStatisticsController extends AbstractApiController {
         return ResponseEntity.ok().body(gson.toJson(dailyStatistics));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public DailyStatistics newDailyStatisticsEntry(@RequestBody DailyStatistics newEntry) {
         newEntry.setEntryDate(LocalDate.now());
 
@@ -43,7 +43,7 @@ public class DailyStatisticsController extends AbstractApiController {
         if(byEntryDate == null) {
             throw new EntityNotFoundException();
         }
-        
+
         return byEntryDate;
     }
 

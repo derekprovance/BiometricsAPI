@@ -30,7 +30,7 @@ public class WaterConsumptionController extends AbstractApiController {
         return ResponseEntity.ok().body(gson.toJson(waterConsumption));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public WaterConsumption newWaterConsumptionDataEntry(@RequestBody WaterConsumption newEntry) {
         return waterConsumptionRepository.save(newEntry);
     }

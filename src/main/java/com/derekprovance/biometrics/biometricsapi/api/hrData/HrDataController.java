@@ -30,7 +30,7 @@ public class HrDataController extends AbstractApiController {
         return ResponseEntity.ok().body(gson.toJson(hrData));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public HrData newHrDataEntry(@RequestBody HrData newEntry) {
         newEntry.setEventTime(LocalDateTime.now());
 
