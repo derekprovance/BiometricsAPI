@@ -13,7 +13,9 @@ public class DailyLog {
 
     private LocalDate date;
     private String logEntry;
+    private String tags;
     private DayRating dayRating;
+    private DayRating productivityRating;
 
     public Integer getId() {
         return id;
@@ -39,11 +41,27 @@ public class DailyLog {
         this.logEntry = logEntry;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     public DayRating getDayRating() {
         return dayRating;
     }
 
     public void setDayRating(DayRating dayRating) {
         this.dayRating = dayRating;
+    }
+
+    public DayRating getProductivityRating() {
+        return productivityRating;
+    }
+
+    public void setProductivityRating(DayRating productivityRating) {
+        this.productivityRating = productivityRating;
     }
 }

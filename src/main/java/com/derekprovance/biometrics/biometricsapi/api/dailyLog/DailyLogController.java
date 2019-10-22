@@ -24,10 +24,10 @@ public class DailyLogController extends AbstractApiController {
     @RequestMapping(value="/{id}", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleDailyLogEntry(@PathVariable Integer id) {
         try {
-            final DailyLog DailyLog = dailyLogRepository.findById(id)
+            final DailyLog dailyLog = dailyLogRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
 
-            return ResponseEntity.ok().body(gson.toJson(DailyLog));
+            return ResponseEntity.ok().body(gson.toJson(dailyLog));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
@@ -42,10 +42,20 @@ public class DailyLogController extends AbstractApiController {
     }
 
     @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
-    public Iterable<DailyLog> getDailyLogByDate(
+    public ResponseEntity<String> getDailyLogByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return dailyLogRepository.findByDateBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        try {
+            final DailyLog dailyLog = dailyLogRepository.findByDate(date);
+
+            if(dailyLog == null) {
+                throw new EntityNotFoundException("Not Found: " + date);
+            }
+
+            return ResponseEntity.ok().body(gson.toJson(dailyLog));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
