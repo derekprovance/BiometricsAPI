@@ -24,14 +24,10 @@ public class MovementDataController extends AbstractApiController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleBloodSugarEntry(@PathVariable Integer id) {
-        try {
-            final MovementData movementData = movementDataRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
+        final MovementData movementData = movementDataRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
 
-            return ResponseEntity.ok().body(gson.toJson(movementData));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok().body(gson.toJson(movementData));
     }
 
     @PostMapping("/")

@@ -23,14 +23,10 @@ public class SleepController extends AbstractApiController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleSleepEntry(@PathVariable Integer id) {
-        try {
-            final Sleep sleep = sleepRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
+        final Sleep sleep = sleepRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
 
-            return ResponseEntity.ok().body(gson.toJson(sleep));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok().body(gson.toJson(sleep));
     }
 
     @PostMapping("/")
@@ -42,7 +38,12 @@ public class SleepController extends AbstractApiController {
     public Sleep getSleepDataByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return sleepRepository.findBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        final Sleep bySleepStartBetween = sleepRepository.findBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        if(bySleepStartBetween == null) {
+            throw new EntityNotFoundException();
+        }
+
+        return bySleepStartBetween;
     }
 
     @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)

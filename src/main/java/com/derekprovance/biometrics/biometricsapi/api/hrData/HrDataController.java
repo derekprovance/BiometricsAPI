@@ -24,14 +24,10 @@ public class HrDataController extends AbstractApiController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleHrDataEntry(@PathVariable Integer id) {
-        try {
-            final HrData hrData = hrDataRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
+        final HrData hrData = hrDataRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
 
-            return ResponseEntity.ok().body(gson.toJson(hrData));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok().body(gson.toJson(hrData));
     }
 
     @PostMapping("/")

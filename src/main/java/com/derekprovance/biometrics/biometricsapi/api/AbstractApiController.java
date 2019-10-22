@@ -5,11 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.persistence.EntityNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -25,5 +27,12 @@ public abstract class AbstractApiController {
         Map<String, Object> message = new HashMap<>();
         message.put("message", String.format("%s is invalid: %s", e.getName(), e.getValue()));
         return message;
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(value= HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ResponseEntity<String> requestHandlingNoHandlerFound() {
+        return ResponseEntity.notFound().build();
     }
 }

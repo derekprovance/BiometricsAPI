@@ -23,14 +23,10 @@ public class SleepMovementController extends AbstractApiController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleSleepMovementEntry(@PathVariable Integer id) {
-        try {
-            final SleepMovement sleepMovement = sleepMovementRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
+        final SleepMovement sleepMovement = sleepMovementRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
 
-            return ResponseEntity.ok().body(gson.toJson(sleepMovement));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok().body(gson.toJson(sleepMovement));
     }
 
     @PostMapping("/")

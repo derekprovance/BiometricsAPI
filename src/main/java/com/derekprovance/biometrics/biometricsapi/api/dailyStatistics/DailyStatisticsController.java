@@ -22,14 +22,10 @@ public class DailyStatisticsController extends AbstractApiController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleDailyStatisticsEntry(@PathVariable Integer id) {
-        try {
-            final DailyStatistics dailyStatistics = dailyStatisticsRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
+        final DailyStatistics dailyStatistics = dailyStatisticsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
 
-            return ResponseEntity.ok().body(gson.toJson(dailyStatistics));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok().body(gson.toJson(dailyStatistics));
     }
 
     @PostMapping("/")
@@ -43,7 +39,12 @@ public class DailyStatisticsController extends AbstractApiController {
     public DailyStatistics getDailyStatisticsByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return dailyStatisticsRepository.findByEntryDate(date);
+        final DailyStatistics byEntryDate = dailyStatisticsRepository.findByEntryDate(date);
+        if(byEntryDate == null) {
+            throw new EntityNotFoundException();
+        }
+        
+        return byEntryDate;
     }
 
     @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)

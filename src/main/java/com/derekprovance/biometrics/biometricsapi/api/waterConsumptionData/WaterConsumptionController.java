@@ -24,14 +24,10 @@ public class WaterConsumptionController extends AbstractApiController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleWaterConsumptionEntry(@PathVariable Integer id) {
-        try {
-            final WaterConsumption waterConsumption = waterConsumptionRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
+        final WaterConsumption waterConsumption = waterConsumptionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
 
-            return ResponseEntity.ok().body(gson.toJson(waterConsumption));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok().body(gson.toJson(waterConsumption));
     }
 
     @PostMapping("/")
@@ -43,7 +39,12 @@ public class WaterConsumptionController extends AbstractApiController {
     public WaterConsumption getWaterConsumptionByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return waterConsumptionRepository.findByDate(date);
+        final WaterConsumption byDate = waterConsumptionRepository.findByDate(date);
+        if(byDate == null) {
+            throw new EntityNotFoundException();
+        }
+
+        return byDate;
     }
 
     @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
