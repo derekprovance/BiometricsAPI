@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.hrData;
+package com.derekprovance.biometrics.biometricsapi.api.dailyLog;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,50 +9,50 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @RestController
-@RequestMapping("/hr-data")
-public class HrDataController extends AbstractApiController {
-    private HrDataRepository hrDataRepository;
+@RequestMapping("/daily-log")
+public class DailyLogController extends AbstractApiController {
+    private DailyLogRepository dailyLogRepository;
 
     @Autowired
-    public HrDataController(HrDataRepository hrDataRepository) {
-        this.hrDataRepository = hrDataRepository;
+    public DailyLogController(DailyLogRepository dailyLogRepository) {
+        this.dailyLogRepository = dailyLogRepository;
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getSingleHrDataEntry(@PathVariable Integer id) {
+    @RequestMapping(value="/{id}", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getSingleDailyLogEntry(@PathVariable Integer id) {
         try {
-            final HrData hrData = hrDataRepository.findById(id)
+            final DailyLog DailyLog = dailyLogRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
 
-            return ResponseEntity.ok().body(gson.toJson(hrData));
+            return ResponseEntity.ok().body(gson.toJson(DailyLog));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping("/")
-    public HrData newHrDataEntry(@RequestBody HrData newEntry) {
-        newEntry.setEventTime(LocalDateTime.now());
-
-        return hrDataRepository.save(newEntry);
+    public DailyLog newDailyLogEntry(@RequestBody DailyLog newEntry) {
+        if(newEntry.getDate() == null) {
+            newEntry.setDate(LocalDate.now());
+        }
+        return dailyLogRepository.save(newEntry);
     }
 
     @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
-    public Iterable<HrData> getHrDataByDate(
+    public Iterable<DailyLog> getDailyLogByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        return hrDataRepository.findAllByEventTimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        return dailyLogRepository.findByDateBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
     @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
-    public Iterable<HrData> getHrDataBetweenDate(
+    public Iterable<DailyLog> getDailyLogBetweenDate(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return hrDataRepository.findAllByEventTimeBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+        return dailyLogRepository.findByDateBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 }

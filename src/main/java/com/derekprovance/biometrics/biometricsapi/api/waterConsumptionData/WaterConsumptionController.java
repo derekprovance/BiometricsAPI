@@ -11,6 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 
 @RestController
+@RequestMapping("/water-consumption")
 public class WaterConsumptionController extends AbstractApiController {
     private WaterConsumptionRepository waterConsumptionRepository;
 
@@ -21,7 +22,7 @@ public class WaterConsumptionController extends AbstractApiController {
         this.waterConsumptionRepository = waterConsumptionRepository;
     }
 
-    @RequestMapping(value="/water-consumption/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleWaterConsumptionEntry(@PathVariable Integer id) {
         try {
             final WaterConsumption waterConsumption = waterConsumptionRepository.findById(id)
@@ -33,19 +34,19 @@ public class WaterConsumptionController extends AbstractApiController {
         }
     }
 
-    @PostMapping("/water-consumption")
+    @PostMapping("/")
     public WaterConsumption newWaterConsumptionDataEntry(@RequestBody WaterConsumption newEntry) {
         return waterConsumptionRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/water-consumption/date/{date}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
     public WaterConsumption getWaterConsumptionByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return waterConsumptionRepository.findByDate(date);
     }
 
-    @RequestMapping(value="/water-consumption/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<WaterConsumption> getWaterConsumptionBetweenDate(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate

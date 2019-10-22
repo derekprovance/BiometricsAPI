@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @RestController
+@RequestMapping("/movement-data")
 public class MovementDataController extends AbstractApiController {
     private MovementDataRepository movementDataRepository;
 
@@ -21,7 +22,7 @@ public class MovementDataController extends AbstractApiController {
         this.movementDataRepository = movementDataRepository;
     }
 
-    @RequestMapping(value="/movement-data/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleBloodSugarEntry(@PathVariable Integer id) {
         try {
             final MovementData movementData = movementDataRepository.findById(id)
@@ -33,21 +34,21 @@ public class MovementDataController extends AbstractApiController {
         }
     }
 
-    @PostMapping("/movement-data")
+    @PostMapping("/")
     public MovementData newMovementDataEntry(@RequestBody MovementData newEntry) {
         newEntry.setEventTime(LocalDateTime.now());
 
         return movementDataRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/movement-data/date/{date}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
     public Iterable<MovementData> getMovementDataByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return movementDataRepository.findAllByEventTimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
-    @RequestMapping(value="/movement-data/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<MovementData> getMovementDataBetweenDate(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate

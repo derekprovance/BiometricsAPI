@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/garmin")
 public class GarminController extends AbstractApiController {
 
     private GarminSyncService garminSyncService;
@@ -30,7 +31,7 @@ public class GarminController extends AbstractApiController {
 
     }
 
-    @RequestMapping(value = "/garmin/sync/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/sync/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getGarminData(@PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if(!garminEnabled) {
             Map<String, Object> map = new HashMap<>();

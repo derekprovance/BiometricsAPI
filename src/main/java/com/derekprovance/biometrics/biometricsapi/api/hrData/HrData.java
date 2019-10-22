@@ -5,8 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class HrData {
-    private @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
+    private @Id @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 
     private LocalDateTime eventTime;
     private Integer hrValue;

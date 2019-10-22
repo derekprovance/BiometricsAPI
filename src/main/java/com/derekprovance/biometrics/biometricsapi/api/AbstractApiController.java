@@ -1,6 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.api;
 
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,8 +15,8 @@ import java.util.*;
 
 public abstract class AbstractApiController {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     protected final Gson gson = new Gson();
-    protected final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @ResponseBody
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)

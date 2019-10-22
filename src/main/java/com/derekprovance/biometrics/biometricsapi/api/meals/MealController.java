@@ -11,6 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 
 @RestController
+@RequestMapping("/meal")
 public class MealController extends AbstractApiController {
     private MealRepository mealRepository;
 
@@ -19,7 +20,7 @@ public class MealController extends AbstractApiController {
         this.mealRepository = mealRepository;
     }
 
-    @RequestMapping(value="/meal/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleMealEntryEntry(@PathVariable Integer id) {
         try {
             final MealEntry mealEntry = mealRepository.findById(id)
@@ -31,19 +32,19 @@ public class MealController extends AbstractApiController {
         }
     }
 
-    @PostMapping("/meal")
+    @PostMapping("/")
     public MealEntry newMealEntry(@RequestBody MealEntry newEntry) {
         return mealRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/meal/date/{date}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
     public Iterable<MealEntry> getMealEntryByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return mealRepository.findAllByDateBetween(date, date);
     }
 
-    @RequestMapping(value="/meal/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<MealEntry> getMealEntryBetweenDates(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate

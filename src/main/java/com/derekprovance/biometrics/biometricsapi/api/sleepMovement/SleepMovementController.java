@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @RestController
+@RequestMapping("/sleep-movement")
 public class SleepMovementController extends AbstractApiController {
     private SleepMovementRepository sleepMovementRepository;
 
@@ -20,7 +21,7 @@ public class SleepMovementController extends AbstractApiController {
         this.sleepMovementRepository = sleepMovementRepository;
     }
 
-    @RequestMapping(value="/sleep-movement/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleSleepMovementEntry(@PathVariable Integer id) {
         try {
             final SleepMovement sleepMovement = sleepMovementRepository.findById(id)
@@ -32,19 +33,19 @@ public class SleepMovementController extends AbstractApiController {
         }
     }
 
-    @PostMapping("/sleep-movement")
+    @PostMapping("/")
     public SleepMovement newSleepMovementDataEntry(@RequestBody SleepMovement newEntry) {
         return sleepMovementRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/sleep-movement/date/{date}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
     public Iterable<SleepMovement> getSleepMovementDataByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return sleepMovementRepository.findAllByStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
-    @RequestMapping(value="/sleep-movement/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<SleepMovement> getSleepMovementDataBetweenDate(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @RestController
+@RequestMapping("/sleep")
 public class SleepController extends AbstractApiController {
     private SleepRepository sleepRepository;
 
@@ -20,7 +21,7 @@ public class SleepController extends AbstractApiController {
         this.sleepRepository = sleepRepository;
     }
 
-    @RequestMapping(value="/sleep/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleSleepEntry(@PathVariable Integer id) {
         try {
             final Sleep sleep = sleepRepository.findById(id)
@@ -32,19 +33,19 @@ public class SleepController extends AbstractApiController {
         }
     }
 
-    @PostMapping("/sleep")
+    @PostMapping("/")
     public Sleep newSleepDataEntry(@RequestBody Sleep newEntry) {
         return sleepRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/sleep/date/{date}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
     public Sleep getSleepDataByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return sleepRepository.findBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
-    @RequestMapping(value="/sleep/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<Sleep> getSleepDataBetweenDate(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate

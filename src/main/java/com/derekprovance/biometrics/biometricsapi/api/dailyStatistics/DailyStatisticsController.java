@@ -11,6 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 
 @RestController
+@RequestMapping("/daily-statistics")
 public class DailyStatisticsController extends AbstractApiController {
     private DailyStatisticsRepository dailyStatisticsRepository;
 
@@ -19,7 +20,7 @@ public class DailyStatisticsController extends AbstractApiController {
         this.dailyStatisticsRepository = dailyStatisticsRepository;
     }
 
-    @RequestMapping(value="/daily-statistics/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleDailyStatisticsEntry(@PathVariable Integer id) {
         try {
             final DailyStatistics dailyStatistics = dailyStatisticsRepository.findById(id)
@@ -31,21 +32,21 @@ public class DailyStatisticsController extends AbstractApiController {
         }
     }
 
-    @PostMapping("/daily-statistics")
+    @PostMapping("/")
     public DailyStatistics newDailyStatisticsEntry(@RequestBody DailyStatistics newEntry) {
         newEntry.setEntryDate(LocalDate.now());
 
         return dailyStatisticsRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/daily-statistics/date/{date}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
     public DailyStatistics getDailyStatisticsByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return dailyStatisticsRepository.findByEntryDate(date);
     }
 
-    @RequestMapping(value="/daily-statistics/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<DailyStatistics> getDailyStatisticsBetweenDate(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate

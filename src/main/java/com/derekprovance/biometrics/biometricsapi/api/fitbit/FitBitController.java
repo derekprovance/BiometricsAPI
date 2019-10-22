@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/fitbit")
 public class FitBitController extends AbstractApiController {
 
     private Boolean fitBitEnabled;
@@ -36,7 +37,7 @@ public class FitBitController extends AbstractApiController {
         this.fitBitAccessTokenService = fitBitAccessTokenService;
     }
 
-    @RequestMapping(value = "/fitbit/sync/water-consumption/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/sync/water-consumption/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> pullWaterByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
@@ -57,7 +58,7 @@ public class FitBitController extends AbstractApiController {
 
     }
 
-    @RequestMapping(value = "/fitbit/sync/meal/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/sync/meal/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> pullMealsFromFitbitByDate(
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
@@ -70,7 +71,7 @@ public class FitBitController extends AbstractApiController {
         return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(map));
     }
 
-    @RequestMapping(value = "/fitbit/authorize", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/authorize", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> authorizeFitBit(
             @PathParam("code") String code
     ) {

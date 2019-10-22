@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @RestController
+@RequestMapping("/blood-sugar")
 public class BloodSugarController extends AbstractApiController {
     private BloodSugarRepository bloodSugarRepository;
 
@@ -21,7 +22,7 @@ public class BloodSugarController extends AbstractApiController {
         this.bloodSugarRepository = bloodSugarRepository;
     }
 
-    @RequestMapping(value="/blood-sugar/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getSingleBloodSugarEntry(@PathVariable Integer id) {
         try {
             final BloodSugar bloodSugar = bloodSugarRepository.findById(id)
@@ -33,7 +34,7 @@ public class BloodSugarController extends AbstractApiController {
         }
     }
 
-    @PostMapping("/blood-sugar")
+    @PostMapping("/")
     public BloodSugar newBloodSugarEntry(@RequestBody BloodSugar newEntry) {
         if(newEntry.getDatetime() == null) {
             newEntry.setDatetime(LocalDateTime.now());
@@ -41,14 +42,14 @@ public class BloodSugarController extends AbstractApiController {
         return bloodSugarRepository.save(newEntry);
     }
 
-    @RequestMapping(value="/blood-sugar/date/{date}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
     public Iterable<BloodSugar> getBloodSugarByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return bloodSugarRepository.findByDatetimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
     }
 
-    @RequestMapping(value="/blood-sugar/date/{startDate}/{endDate}", method=RequestMethod.GET)
+    @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
     public Iterable<BloodSugar> getBloodSugarBetweenDate(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
