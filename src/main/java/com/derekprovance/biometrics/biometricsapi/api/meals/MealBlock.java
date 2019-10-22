@@ -13,7 +13,7 @@ public enum MealBlock {
     EVENING_SNACK(6);
 
     private Integer value;
-    private static Map<Integer, MealBlock> map = new HashMap<>();
+    private static final Map<Integer, MealBlock> map = new HashMap<>();
 
     public Integer getValue()
     {

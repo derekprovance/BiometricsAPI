@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @RestController
 @RequestMapping("/sleep-movement")
 public class SleepMovementController extends AbstractApiController {
-    private SleepMovementRepository sleepMovementRepository;
+    private final SleepMovementRepository sleepMovementRepository;
 
     @Autowired
     public SleepMovementController(SleepMovementRepository sleepMovementRepository) {

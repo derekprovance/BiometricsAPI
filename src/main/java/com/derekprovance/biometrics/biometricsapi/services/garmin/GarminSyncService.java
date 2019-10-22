@@ -31,12 +31,12 @@ import java.util.List;
 
 @Service
 public class GarminSyncService extends AbstractService {
-    private GarminApiService garminApiService;
-    private DailyStatisticsRepository dailyStatisticsRepository;
-    private HrDataRepository hrDataRepository;
-    private MovementDataRepository movementDataRepository;
-    private SleepMovementRepository sleepMovementRepository;
-    private SleepRepository sleepRepository;
+    private final GarminApiService garminApiService;
+    private final DailyStatisticsRepository dailyStatisticsRepository;
+    private final HrDataRepository hrDataRepository;
+    private final MovementDataRepository movementDataRepository;
+    private final SleepMovementRepository sleepMovementRepository;
+    private final SleepRepository sleepRepository;
 
     private static final Logger log = LoggerFactory.getLogger(GarminSyncService.class);
 
@@ -57,25 +57,21 @@ public class GarminSyncService extends AbstractService {
         this.sleepRepository = sleepRepository;
     }
 
-    public ItemSyncCount sync(LocalDate date) {
+    public ItemSyncCount sync(LocalDate date) throws CredentialNotFoundException {
         ItemSyncCount itemSyncCount = new ItemSyncCount();
         itemSyncCount.setDate(date);
 
-        try {
-            if(!dataAlreadySynced(date)) {
-                log.info("Syncing data from Garmin for " + date);
-                syncDailyStatistics(date);
+        if(!dataAlreadySynced(date)) {
+            log.info("Syncing data from Garmin for " + date);
+            syncDailyStatistics(date);
 
-                itemSyncCount.setHrData(syncHrData(date).size());
-                itemSyncCount.setMovementData(syncMovementData(date).size());
-                itemSyncCount.setSleepMovementData(syncSleepData(date));
-            } else {
-                itemSyncCount.setHrData(0);
-                itemSyncCount.setMovementData(0);
-                itemSyncCount.setSleepMovementData(0);
-            }
-        } catch (CredentialNotFoundException e) {
-            e.printStackTrace();
+            itemSyncCount.setHrData(syncHrData(date).size());
+            itemSyncCount.setMovementData(syncMovementData(date).size());
+            itemSyncCount.setSleepMovementData(syncSleepData(date));
+        } else {
+            itemSyncCount.setHrData(0);
+            itemSyncCount.setMovementData(0);
+            itemSyncCount.setSleepMovementData(0);
         }
 
         return itemSyncCount;

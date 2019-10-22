@@ -14,7 +14,7 @@ public class GarminConnectAuthService {
     private String session;
     private String userId;
 
-    private ConnectedApiAccessRepository connectedApiAccessRepository;
+    private final ConnectedApiAccessRepository connectedApiAccessRepository;
 
     private static final String CREDENTIAL_NOT_FOUND_ERROR = "Garmin API Token not set for user";
 

@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @RestController
 @RequestMapping("/daily-log")
 public class DailyLogController extends AbstractApiController {
-    private DailyLogRepository dailyLogRepository;
+    private final DailyLogRepository dailyLogRepository;
 
     @Autowired
     public DailyLogController(DailyLogRepository dailyLogRepository) {

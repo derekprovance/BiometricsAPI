@@ -4,8 +4,10 @@ import com.derekprovance.biometrics.biometricsapi.services.garmin.GarminConnectA
 import com.derekprovance.biometrics.biometricsapi.services.garmin.GarminSyncService;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import javax.security.auth.login.CredentialNotFoundException;
+
 public class GarminSyncJob extends AbstractSyncJob {
-    private GarminSyncService garminSyncService;
+    private final GarminSyncService garminSyncService;
 
     public GarminSyncJob(GarminConnectAuthService garminConnectAuthService, GarminSyncService garminSyncService) {
         //TODO(DEREK) - Implement
@@ -13,7 +15,7 @@ public class GarminSyncJob extends AbstractSyncJob {
     }
 
     @Scheduled(cron = "0 0 0/3 * * ?")
-    public void runGarminSyncJobs() {
+    public void runGarminSyncJobs() throws CredentialNotFoundException {
         garminSyncService.sync(getYesterdayDate().toLocalDate());
     }
 }

@@ -15,11 +15,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class ScheduledJobs {
 
-    private FoodLogService foodLogService;
-    private WaterLogService waterLogService;
-    private FitBitAccessTokenService fitbitAccessTokenService;
-    private GarminConnectAuthService garminConnectAuthService;
-    private GarminSyncService garminSyncService;
+    private final FoodLogService foodLogService;
+    private final WaterLogService waterLogService;
+    private final FitBitAccessTokenService fitbitAccessTokenService;
+    private final GarminConnectAuthService garminConnectAuthService;
+    private final GarminSyncService garminSyncService;
 
     @Autowired
     public ScheduledJobs(

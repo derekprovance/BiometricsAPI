@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.CredentialException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,8 @@ public class FoodLogService {
 
     private static final Logger log = LoggerFactory.getLogger(FoodLogService.class);
 
-    private MealRepository mealRepository;
-    private FitBitAPIService fitbitAPIService;
+    private final MealRepository mealRepository;
+    private final FitBitAPIService fitbitAPIService;
 
     @Autowired
     public FoodLogService(MealRepository mealRepository, FitBitAPIService fitbitAPIService) {
@@ -28,11 +29,11 @@ public class FoodLogService {
         this.fitbitAPIService = fitbitAPIService;
     }
 
-    public Integer syncWithDatabase() {
-        return syncWithDatabase(LocalDate.now());
+    public void syncWithDatabase() throws CredentialException {
+        syncWithDatabase(LocalDate.now());
     }
 
-    public Integer syncWithDatabase(LocalDate date) {
+    public Integer syncWithDatabase(LocalDate date) throws CredentialException {
         final FitbitFoodEndpointDTO entriesForDate = fitbitAPIService.performFoodApiCall(date);
 
         if(entriesForDate != null) {

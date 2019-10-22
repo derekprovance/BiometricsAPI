@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.security.auth.login.CredentialException;
 import javax.websocket.server.PathParam;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -24,10 +25,10 @@ import java.util.Map;
 @RequestMapping("/fitbit")
 public class FitBitController extends AbstractApiController {
 
-    private Boolean fitBitEnabled;
-    private WaterLogService waterLogService;
-    private FoodLogService foodLogService;
-    private FitBitAccessTokenService fitBitAccessTokenService;
+    private final Boolean fitBitEnabled;
+    private final WaterLogService waterLogService;
+    private final FoodLogService foodLogService;
+    private final FitBitAccessTokenService fitBitAccessTokenService;
 
     @Autowired
     public FitBitController(@Value("${fitbit.enabled}") Boolean fitBitEnabled, WaterLogService waterLogService, FoodLogService foodLogService, FitBitAccessTokenService fitBitAccessTokenService) {
@@ -40,7 +41,7 @@ public class FitBitController extends AbstractApiController {
     @RequestMapping(value = "/sync/water-consumption/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> pullWaterByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
+    ) throws CredentialException {
         Map<String, Object> map = new HashMap<>();
 
         if(!fitBitEnabled) {
@@ -61,7 +62,7 @@ public class FitBitController extends AbstractApiController {
     @RequestMapping(value = "/sync/meal/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> pullMealsFromFitbitByDate(
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
+    ) throws CredentialException {
         Integer count = foodLogService.syncWithDatabase(date);
 
         Map<String, Object> map = new HashMap<>();
@@ -74,7 +75,7 @@ public class FitBitController extends AbstractApiController {
     @RequestMapping(value = "/authorize", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> authorizeFitBit(
             @PathParam("code") String code
-    ) {
+    ) throws CredentialException {
         fitBitAccessTokenService.updateRefreshToken(code);
 
         Map<String, Object> map = new HashMap<>();

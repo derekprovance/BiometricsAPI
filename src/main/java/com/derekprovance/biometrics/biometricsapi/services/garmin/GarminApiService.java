@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class GarminApiService extends AbstractService {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private GarminConnectAuthService garminConnectAuthService;
+    private final GarminConnectAuthService garminConnectAuthService;
     private HttpEntity<String> entity;
 
     private static final String GARMIN_API_URL = "https://connect.garmin.com/modern/proxy";

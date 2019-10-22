@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/water-consumption")
 public class WaterConsumptionController extends AbstractApiController {
-    private WaterConsumptionRepository waterConsumptionRepository;
+    private final WaterConsumptionRepository waterConsumptionRepository;
 
     @Autowired
     public WaterConsumptionController(

@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @RestController
 @RequestMapping("/blood-sugar")
 public class BloodSugarController extends AbstractApiController {
-    private BloodSugarRepository bloodSugarRepository;
+    private final BloodSugarRepository bloodSugarRepository;
 
     @Autowired
     public BloodSugarController(BloodSugarRepository bloodSugarRepository) {

@@ -10,7 +10,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.security.auth.login.CredentialNotFoundException;
+import javax.security.auth.login.CredentialException;
 import java.time.LocalDate;
 
 @Service
@@ -19,7 +19,7 @@ public class FitBitAPIService extends AbstractService {
     //TODO - send error message to api
 
     private static final Logger log = LoggerFactory.getLogger(FitBitAPIService.class);
-    private FitBitAccessTokenService fitbitAccessTokenService;
+    private final FitBitAccessTokenService fitbitAccessTokenService;
     private final RestTemplate restTemplate = new RestTemplate();
 
     private static final String FOOD_LOG_API = "https://api.fitbit.com/1/user/%s/foods/log/date/%s.json";
@@ -30,37 +30,25 @@ public class FitBitAPIService extends AbstractService {
         this.fitbitAccessTokenService = fitbitAccessTokenService;
     }
 
-    FitbitFoodEndpointDTO performFoodApiCall(LocalDate date) {
+    FitbitFoodEndpointDTO performFoodApiCall(LocalDate date) throws CredentialException {
         String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 
-        try {
-            return (FitbitFoodEndpointDTO) performApiCall(formatEndpoint(FOOD_LOG_API, dateStr), FitbitFoodEndpointDTO.class);
-        } catch (CredentialNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return (FitbitFoodEndpointDTO) performApiCall(formatEndpoint(FOOD_LOG_API, dateStr), FitbitFoodEndpointDTO.class);
     }
 
-    WaterLogDTO performWaterLog(LocalDate date) {
+    WaterLogDTO performWaterLog(LocalDate date) throws CredentialException {
         String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 
-        try {
-            return (WaterLogDTO) performApiCall(formatEndpoint(WATER_LOG_API, dateStr), WaterLogDTO.class);
-        } catch (CredentialNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return (WaterLogDTO) performApiCall(formatEndpoint(WATER_LOG_API, dateStr), WaterLogDTO.class);
     }
 
-    private String formatEndpoint(String endpoint, String dateStr) throws CredentialNotFoundException {
+    private String formatEndpoint(String endpoint, String dateStr) throws CredentialException {
         return String.format(endpoint, fitbitAccessTokenService.getUserId(), dateStr);
     }
 
-    private Object performApiCall(String uri, Class dto) throws CredentialNotFoundException {
+    private Object performApiCall(String uri, Class dto) throws CredentialException {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(fitbitAccessTokenService.getAccessToken());
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

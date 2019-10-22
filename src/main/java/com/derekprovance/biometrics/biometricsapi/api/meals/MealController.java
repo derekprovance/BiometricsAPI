@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/meal")
 public class MealController extends AbstractApiController {
-    private MealRepository mealRepository;
+    private final MealRepository mealRepository;
 
     @Autowired
     public MealController(MealRepository mealRepository) {

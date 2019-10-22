@@ -10,8 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
 
     @Autowired
     public SecurityConfig(

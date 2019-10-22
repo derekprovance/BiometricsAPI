@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public abstract class AbstractService {
-    private static DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     protected static LocalDateTime convertTimestamp(Long timestamp) {
         Timestamp stamp = new Timestamp(timestamp);

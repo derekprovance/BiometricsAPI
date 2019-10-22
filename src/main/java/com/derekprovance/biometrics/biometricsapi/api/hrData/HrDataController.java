@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @RestController
 @RequestMapping("/hr-data")
 public class HrDataController extends AbstractApiController {
-    private HrDataRepository hrDataRepository;
+    private final HrDataRepository hrDataRepository;
 
     @Autowired
     public HrDataController(HrDataRepository hrDataRepository) {

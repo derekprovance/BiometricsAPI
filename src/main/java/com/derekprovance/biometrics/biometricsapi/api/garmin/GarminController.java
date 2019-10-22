@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.CredentialNotFoundException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +19,8 @@ import java.util.Map;
 @RequestMapping("/garmin")
 public class GarminController extends AbstractApiController {
 
-    private GarminSyncService garminSyncService;
-    private Boolean garminEnabled;
+    private final GarminSyncService garminSyncService;
+    private final Boolean garminEnabled;
 
     @Autowired
     public GarminController(
@@ -32,7 +33,7 @@ public class GarminController extends AbstractApiController {
     }
 
     @RequestMapping(value = "/sync/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getGarminData(@PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ResponseEntity<String> getGarminData(@PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) throws CredentialNotFoundException {
         if(!garminEnabled) {
             Map<String, Object> map = new HashMap<>();
             map.put("status", HttpStatus.BAD_REQUEST.value());

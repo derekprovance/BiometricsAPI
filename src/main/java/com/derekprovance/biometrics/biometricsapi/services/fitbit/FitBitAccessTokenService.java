@@ -13,6 +13,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.security.auth.login.CredentialException;
+import javax.security.auth.login.CredentialExpiredException;
 import javax.security.auth.login.CredentialNotFoundException;
 
 //TODO - handle bad auth codes
@@ -44,13 +46,13 @@ public class FitBitAccessTokenService {
         this.connectedApiAccessRepository = connectedApiAccessRepository;
     }
 
-    public void updateRefreshToken(String code) {
+    public void updateRefreshToken(String code) throws CredentialExpiredException {
         log.info("Resetting Refresh Tokens");
         refreshTokenDTO = callApiForAuthentication(getUrlForAuthentication(FitBitAuthType.AUTH_CODE, code));
         saveOrCreateAccessEntity();
     }
 
-    String getAccessToken() throws CredentialNotFoundException {
+    String getAccessToken() throws CredentialException {
         if(refreshTokenDTO != null) {
             return refreshTokenDTO.getAccessToken();
         } else {
@@ -59,7 +61,7 @@ public class FitBitAccessTokenService {
         }
     }
 
-    String getUserId() throws CredentialNotFoundException {
+    String getUserId() throws CredentialException {
         if(refreshTokenDTO != null) {
             return refreshTokenDTO.getUserId();
         } else {
@@ -68,7 +70,7 @@ public class FitBitAccessTokenService {
         }
     }
 
-    public void refreshAccessToken() throws CredentialNotFoundException {
+    public void refreshAccessToken() throws CredentialException {
         log.info("Refreshing access token");
 
         ConnectedApiAccess apiCredentials = connectedApiAccessRepository.findByApiAndType(ConnectedApi.FITBIT, AccessType.REFRESH_TOKEN);
@@ -85,13 +87,12 @@ public class FitBitAccessTokenService {
         }
     }
 
-    private RefreshTokenDTO callApiForAuthentication(String callUrl) {
+    private RefreshTokenDTO callApiForAuthentication(String callUrl) throws CredentialExpiredException {
         try {
             final ResponseEntity<RefreshTokenDTO> exchange = restTemplate.exchange(callUrl, HttpMethod.POST, entity, RefreshTokenDTO.class);
             return exchange.getBody();
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new CredentialExpiredException("FitBit Credentials Expired");
         }
     }
 

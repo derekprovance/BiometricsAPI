@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @RestController
 @RequestMapping("/sleep")
 public class SleepController extends AbstractApiController {
-    private SleepRepository sleepRepository;
+    private final SleepRepository sleepRepository;
 
     @Autowired
     public SleepController(SleepRepository sleepRepository) {

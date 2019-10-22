@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/daily-statistics")
 public class DailyStatisticsController extends AbstractApiController {
-    private DailyStatisticsRepository dailyStatisticsRepository;
+    private final DailyStatisticsRepository dailyStatisticsRepository;
 
     @Autowired
     public DailyStatisticsController(DailyStatisticsRepository dailyStatisticsRepository) {

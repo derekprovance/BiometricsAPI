@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.CredentialException;
 import java.time.LocalDate;
 
 @Service
@@ -15,8 +16,8 @@ public class WaterLogService {
 
     private static final Logger log = LoggerFactory.getLogger(WaterLogService.class);
 
-    private WaterConsumptionRepository waterConsumptionRepository;
-    private FitBitAPIService fitbitAPIService;
+    private final WaterConsumptionRepository waterConsumptionRepository;
+    private final FitBitAPIService fitbitAPIService;
 
     @Autowired
     public WaterLogService(WaterConsumptionRepository waterConsumptionRepository, FitBitAPIService fitbitAPIService) {
@@ -24,11 +25,11 @@ public class WaterLogService {
         this.fitbitAPIService = fitbitAPIService;
     }
 
-    public void syncWithDatabase() {
+    public void syncWithDatabase() throws CredentialException {
         syncWithDatabase(LocalDate.now());
     }
 
-    public void syncWithDatabase(LocalDate date) {
+    public void syncWithDatabase(LocalDate date) throws CredentialException {
         final WaterLogDTO entriesForDate = fitbitAPIService.performWaterLog(date);
 
         if(entriesForDate != null) {

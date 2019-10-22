@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @RestController
 @RequestMapping("/movement-data")
 public class MovementDataController extends AbstractApiController {
-    private MovementDataRepository movementDataRepository;
+    private final MovementDataRepository movementDataRepository;
 
     @Autowired
     public MovementDataController(MovementDataRepository movementDataRepository) {
