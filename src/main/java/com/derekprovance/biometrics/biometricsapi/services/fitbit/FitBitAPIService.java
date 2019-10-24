@@ -15,9 +15,6 @@ import java.time.LocalDate;
 
 @Service
 public class FitBitAPIService extends AbstractService {
-
-    //TODO - send error message to api
-
     private static final Logger log = LoggerFactory.getLogger(FitBitAPIService.class);
     private final FitBitAccessTokenService fitbitAccessTokenService;
     private final RestTemplate restTemplate = new RestTemplate();

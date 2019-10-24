@@ -10,7 +10,6 @@ public class GarminSyncJob extends AbstractSyncJob {
     private final GarminSyncService garminSyncService;
 
     public GarminSyncJob(GarminConnectAuthService garminConnectAuthService, GarminSyncService garminSyncService) {
-        //TODO(DEREK) - Implement
         this.garminSyncService = garminSyncService;
     }
 
