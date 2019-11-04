@@ -1,7 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.services.fitbit;
 
-import com.derekprovance.biometrics.biometricsapi.api.waterConsumptionData.WaterConsumption;
-import com.derekprovance.biometrics.biometricsapi.api.waterConsumptionData.WaterConsumptionRepository;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.waterConsumptionData.WaterConsumption;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.waterConsumptionData.WaterConsumptionRepository;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.water.WaterLogDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

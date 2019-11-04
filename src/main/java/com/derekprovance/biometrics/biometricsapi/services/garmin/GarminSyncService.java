@@ -1,16 +1,16 @@
 package com.derekprovance.biometrics.biometricsapi.services.garmin;
 
-import com.derekprovance.biometrics.biometricsapi.api.dailyStatistics.DailyStatistics;
-import com.derekprovance.biometrics.biometricsapi.api.dailyStatistics.DailyStatisticsRepository;
-import com.derekprovance.biometrics.biometricsapi.api.garmin.ItemSyncCount;
-import com.derekprovance.biometrics.biometricsapi.api.hrData.HrData;
-import com.derekprovance.biometrics.biometricsapi.api.hrData.HrDataRepository;
-import com.derekprovance.biometrics.biometricsapi.api.movementData.MovementData;
-import com.derekprovance.biometrics.biometricsapi.api.movementData.MovementDataRepository;
-import com.derekprovance.biometrics.biometricsapi.api.sleep.Sleep;
-import com.derekprovance.biometrics.biometricsapi.api.sleep.SleepRepository;
-import com.derekprovance.biometrics.biometricsapi.api.sleepMovement.SleepMovement;
-import com.derekprovance.biometrics.biometricsapi.api.sleepMovement.SleepMovementRepository;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyStatistics.DailyStatistics;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyStatistics.DailyStatisticsRepository;
+import com.derekprovance.biometrics.biometricsapi.api.utility.garmin.ItemSyncCount;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.hrData.HrData;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.hrData.HrDataRepository;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.movementData.MovementData;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.movementData.MovementDataRepository;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.sleep.Sleep;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.sleep.SleepRepository;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.sleepMovement.SleepMovement;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.sleepMovement.SleepMovementRepository;
 import com.derekprovance.biometrics.biometricsapi.services.AbstractService;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyHeartRate;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyMovementData;

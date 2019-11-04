@@ -1,8 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.services.fitbit;
 
-import com.derekprovance.biometrics.biometricsapi.api.meals.MealBlock;
-import com.derekprovance.biometrics.biometricsapi.api.meals.MealEntry;
-import com.derekprovance.biometrics.biometricsapi.api.meals.MealRepository;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.meals.MealBlock;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.meals.MealEntry;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.meals.MealRepository;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.FitbitFoodEndpointDTO;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.MealEntryDTO;
 import org.slf4j.Logger;

@@ -17,8 +17,6 @@ import javax.security.auth.login.CredentialException;
 import javax.security.auth.login.CredentialExpiredException;
 import javax.security.auth.login.CredentialNotFoundException;
 
-//TODO - handle bad auth codes
-
 @Service
 public class FitBitAccessTokenService {
     private static final Logger log = LoggerFactory.getLogger(FitBitAccessTokenService.class);
