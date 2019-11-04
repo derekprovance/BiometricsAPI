@@ -1,6 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.movementData;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -14,20 +15,12 @@ import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/movement-data")
-public class MovementDataController extends AbstractApiController {
+public class MovementDataController extends AbstractDataTrackingApi {
     private final MovementDataRepository movementDataRepository;
 
     @Autowired
     public MovementDataController(MovementDataRepository movementDataRepository) {
         this.movementDataRepository = movementDataRepository;
-    }
-
-    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getSingleBloodSugarEntry(@PathVariable Integer id) {
-        final MovementData movementData = movementDataRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
-
-        return ResponseEntity.ok().body(gson.toJson(movementData));
     }
 
     @PostMapping("")
@@ -50,5 +43,9 @@ public class MovementDataController extends AbstractApiController {
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         return movementDataRepository.findAllByEventTimeBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+    }
+
+    protected MovementDataRepository getRepository() {
+        return this.movementDataRepository;
     }
 }

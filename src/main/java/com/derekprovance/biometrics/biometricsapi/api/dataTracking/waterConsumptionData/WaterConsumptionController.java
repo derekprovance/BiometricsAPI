@@ -1,6 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.waterConsumptionData;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/water-consumption")
-public class WaterConsumptionController extends AbstractApiController {
+public class WaterConsumptionController extends AbstractDataTrackingApi {
     private final WaterConsumptionRepository waterConsumptionRepository;
 
     @Autowired
@@ -20,14 +21,6 @@ public class WaterConsumptionController extends AbstractApiController {
             WaterConsumptionRepository waterConsumptionRepository
     ) {
         this.waterConsumptionRepository = waterConsumptionRepository;
-    }
-
-    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getSingleWaterConsumptionEntry(@PathVariable Integer id) {
-        final WaterConsumption waterConsumption = waterConsumptionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
-
-        return ResponseEntity.ok().body(gson.toJson(waterConsumption));
     }
 
     @PostMapping("")
@@ -53,5 +46,9 @@ public class WaterConsumptionController extends AbstractApiController {
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         return waterConsumptionRepository.findAllByDateBetween(startDate, endDate);
+    }
+
+    protected WaterConsumptionRepository getRepository() {
+        return this.waterConsumptionRepository;
     }
 }

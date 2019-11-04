@@ -1,6 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.sleepMovement;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -13,20 +14,12 @@ import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/sleep-movement")
-public class SleepMovementController extends AbstractApiController {
+public class SleepMovementController extends AbstractDataTrackingApi {
     private final SleepMovementRepository sleepMovementRepository;
 
     @Autowired
     public SleepMovementController(SleepMovementRepository sleepMovementRepository) {
         this.sleepMovementRepository = sleepMovementRepository;
-    }
-
-    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getSingleSleepMovementEntry(@PathVariable Integer id) {
-        final SleepMovement sleepMovement = sleepMovementRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
-
-        return ResponseEntity.ok().body(gson.toJson(sleepMovement));
     }
 
     @PostMapping("")
@@ -47,5 +40,9 @@ public class SleepMovementController extends AbstractApiController {
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         return sleepMovementRepository.findAllByStartBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+    }
+
+    protected SleepMovementRepository getRepository() {
+        return this.sleepMovementRepository;
     }
 }

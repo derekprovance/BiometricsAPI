@@ -1,7 +1,9 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyStatistics;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,20 +14,12 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/daily-statistics")
-public class DailyStatisticsController extends AbstractApiController {
+public class DailyStatisticsController extends AbstractDataTrackingApi {
     private final DailyStatisticsRepository dailyStatisticsRepository;
 
     @Autowired
     public DailyStatisticsController(DailyStatisticsRepository dailyStatisticsRepository) {
         this.dailyStatisticsRepository = dailyStatisticsRepository;
-    }
-
-    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getSingleDailyStatisticsEntry(@PathVariable Integer id) {
-        final DailyStatistics dailyStatistics = dailyStatisticsRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
-
-        return ResponseEntity.ok().body(gson.toJson(dailyStatistics));
     }
 
     @PostMapping("")
@@ -53,5 +47,10 @@ public class DailyStatisticsController extends AbstractApiController {
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         return dailyStatisticsRepository.findAllByEntryDateBetween(startDate, endDate);
+    }
+
+    @Override
+    protected DailyStatisticsRepository getRepository() {
+        return this.dailyStatisticsRepository;
     }
 }

@@ -1,6 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.meals;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -12,24 +13,12 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/meal")
-public class MealController extends AbstractApiController {
+public class MealController extends AbstractDataTrackingApi {
     private final MealRepository mealRepository;
 
     @Autowired
     public MealController(MealRepository mealRepository) {
         this.mealRepository = mealRepository;
-    }
-
-    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getSingleMealEntryEntry(@PathVariable Integer id) {
-        try {
-            final MealEntry mealEntry = mealRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
-
-            return ResponseEntity.ok().body(gson.toJson(mealEntry));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @PostMapping("/")
@@ -50,5 +39,9 @@ public class MealController extends AbstractApiController {
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         return mealRepository.findAllByDateBetween(startDate, endDate);
+    }
+
+    protected MealRepository getRepository() {
+        return this.mealRepository;
     }
 }

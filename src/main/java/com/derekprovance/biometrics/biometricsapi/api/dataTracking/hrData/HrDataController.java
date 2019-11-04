@@ -1,6 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.hrData;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -14,20 +15,12 @@ import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/hr-data")
-public class HrDataController extends AbstractApiController {
+public class HrDataController extends AbstractDataTrackingApi {
     private final HrDataRepository hrDataRepository;
 
     @Autowired
     public HrDataController(HrDataRepository hrDataRepository) {
         this.hrDataRepository = hrDataRepository;
-    }
-
-    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getSingleHrDataEntry(@PathVariable Integer id) {
-        final HrData hrData = hrDataRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
-
-        return ResponseEntity.ok().body(gson.toJson(hrData));
     }
 
     @PostMapping("")
@@ -50,5 +43,9 @@ public class HrDataController extends AbstractApiController {
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         return hrDataRepository.findAllByEventTimeBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+    }
+
+    protected HrDataRepository getRepository() {
+        return this.hrDataRepository;
     }
 }

@@ -1,6 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyLog;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
+import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -13,20 +14,12 @@ import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/daily-log")
-public class DailyLogController extends AbstractApiController {
+public class DailyLogController extends AbstractDataTrackingApi {
     private final DailyLogRepository dailyLogRepository;
 
     @Autowired
     public DailyLogController(DailyLogRepository dailyLogRepository) {
         this.dailyLogRepository = dailyLogRepository;
-    }
-
-    @RequestMapping(value="/{id}", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getSingleDailyLogEntry(@PathVariable Integer id) {
-        final DailyLog dailyLog = dailyLogRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + id.toString()));
-
-        return ResponseEntity.ok().body(gson.toJson(dailyLog));
     }
 
     @PostMapping("")
@@ -56,5 +49,9 @@ public class DailyLogController extends AbstractApiController {
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         return dailyLogRepository.findByDateBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+    }
+
+    protected DailyLogRepository getRepository() {
+        return this.dailyLogRepository;
     }
 }
