@@ -1,11 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.meals;
 
-import org.springframework.data.repository.CrudRepository;
+import com.derekprovance.biometrics.biometricsapi.api.singleEntity.CrudSingleRepository;
 
-import java.time.LocalDate;
-import java.util.List;
-
-public interface MealRepository extends CrudRepository<MealEntry, Integer> {
+public interface MealRepository extends CrudSingleRepository<MealEntry, Integer> {
     MealEntry findByLogId(Long logId);
-    List<MealEntry> findAllByDateBetween(LocalDate start, LocalDate end);
 }

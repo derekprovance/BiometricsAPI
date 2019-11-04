@@ -1,17 +1,14 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.movementData;
 
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
+import com.derekprovance.biometrics.biometricsapi.api.rangeEntity.AbstractRangeEntityApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/movement-data")
-public class MovementDataController extends AbstractDataTrackingApi {
+public class MovementDataController extends AbstractRangeEntityApi {
     private final MovementDataRepository movementDataRepository;
 
     @Autowired
@@ -21,24 +18,9 @@ public class MovementDataController extends AbstractDataTrackingApi {
 
     @PostMapping("")
     public MovementData newMovementDataEntry(@RequestBody MovementData newEntry) {
-        newEntry.setEventTime(LocalDateTime.now());
+        newEntry.setDatetime(LocalDateTime.now());
 
         return movementDataRepository.save(newEntry);
-    }
-
-    @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
-    public Iterable<MovementData> getMovementDataByDate(
-            @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
-        return movementDataRepository.findAllByEventTimeBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
-    }
-
-    @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
-    public Iterable<MovementData> getMovementDataBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-    ) {
-        return movementDataRepository.findAllByEventTimeBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 
     protected MovementDataRepository getRepository() {

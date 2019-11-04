@@ -1,16 +1,14 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyStatistics;
 
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
+import com.derekprovance.biometrics.biometricsapi.api.singleEntity.AbstractSingleEntityApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/daily-statistics")
-public class DailyStatisticsController extends AbstractDataTrackingApi {
+public class DailyStatisticsController extends AbstractSingleEntityApi {
     private final DailyStatisticsRepository dailyStatisticsRepository;
 
     @Autowired
@@ -20,29 +18,9 @@ public class DailyStatisticsController extends AbstractDataTrackingApi {
 
     @PostMapping("")
     public DailyStatistics newDailyStatisticsEntry(@RequestBody DailyStatistics newEntry) {
-        newEntry.setEntryDate(LocalDate.now());
+        newEntry.setDate(LocalDate.now());
 
         return dailyStatisticsRepository.save(newEntry);
-    }
-
-    @RequestMapping(value="/date/{date}", method=RequestMethod.GET)
-    public DailyStatistics getDailyStatisticsByDate(
-            @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
-        final DailyStatistics byEntryDate = dailyStatisticsRepository.findByEntryDate(date);
-        if(byEntryDate == null) {
-            throw new EntityNotFoundException();
-        }
-
-        return byEntryDate;
-    }
-
-    @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET)
-    public Iterable<DailyStatistics> getDailyStatisticsBetweenDate(
-            @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-    ) {
-        return dailyStatisticsRepository.findAllByEntryDateBetween(startDate, endDate);
     }
 
     @Override

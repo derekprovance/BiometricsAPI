@@ -1,9 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.singleEntity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @MappedSuperclass
@@ -11,6 +9,7 @@ public class BaseSingleEntity {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 
+    @NotNull @Column(unique=true)
     private LocalDate date;
 
     public Integer getId() {

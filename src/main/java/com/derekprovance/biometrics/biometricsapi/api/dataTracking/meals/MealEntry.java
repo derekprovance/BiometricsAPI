@@ -1,19 +1,13 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.meals;
 
+import com.derekprovance.biometrics.biometricsapi.api.singleEntity.BaseSingleEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @Entity
-public class MealEntry {
-    private @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
-
-    @NotNull
-    private LocalDate date;
-
+public class MealEntry extends BaseSingleEntity {
     @NotNull
     private String name;
 
@@ -43,22 +37,6 @@ public class MealEntry {
     @JsonIgnore
     @Column(unique=true)
     private Long logId;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 
     public String getName() {
         return name;

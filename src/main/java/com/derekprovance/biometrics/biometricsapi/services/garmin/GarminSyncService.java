@@ -78,7 +78,7 @@ public class GarminSyncService extends AbstractService {
     }
 
     private Boolean dataAlreadySynced(LocalDate date) {
-        final DailyStatistics dailyStatistics = dailyStatisticsRepository.findByEntryDate(date);
+        final DailyStatistics dailyStatistics = (DailyStatistics) dailyStatisticsRepository.findByDate(date);
 
         if(dailyStatistics == null) {
             return false;
@@ -97,14 +97,14 @@ public class GarminSyncService extends AbstractService {
     }
 
     private void syncDailyStatistics(LocalDate date) throws CredentialNotFoundException {
-        DailyStatistics dailyStatisticsEntry = dailyStatisticsRepository.findByEntryDate(date);
+        DailyStatistics dailyStatisticsEntry = (DailyStatistics) dailyStatisticsRepository.findByDate(date);
         if(dailyStatisticsEntry == null) {
             dailyStatisticsEntry = new DailyStatistics();
         }
 
         final DailyUserSummary userSummary = garminApiService.getUserSummary(date);
 
-        dailyStatisticsEntry.setEntryDate(userSummary.getCalendarDate());
+        dailyStatisticsEntry.setDate(userSummary.getCalendarDate());
         dailyStatisticsEntry.setHighlyActiveSeconds(userSummary.getHighlyActiveSeconds());
         dailyStatisticsEntry.setSedentarySeconds(userSummary.getSedentarySeconds());
         dailyStatisticsEntry.setSleepingSeconds(userSummary.getSleepingSeconds());
@@ -190,7 +190,7 @@ public class GarminSyncService extends AbstractService {
         if(dailyMovementValues != null) {
             for(Object[] dailyMovementValue : dailyMovementValues) {
                 MovementData movementDataEntry = new MovementData();
-                movementDataEntry.setEventTime(convertTimestamp((Long) dailyMovementValue[0]));
+                movementDataEntry.setDatetime(convertTimestamp((Long) dailyMovementValue[0]));
                 movementDataEntry.setMovement((Double) dailyMovementValue[1]);
                 movementData.add(movementDataEntry);
             }
@@ -209,7 +209,7 @@ public class GarminSyncService extends AbstractService {
         if(heartRateValues != null) {
             for (Object[] heartRateValue : heartRateValues) {
                 HrData newEntry = new HrData();
-                newEntry.setEventTime(convertTimestamp((Long) heartRateValue[0]));
+                newEntry.setDatetime(convertTimestamp((Long) heartRateValue[0]));
                 newEntry.setHrValue((Integer) heartRateValue[1]);
                 hrData.add(newEntry);
             }

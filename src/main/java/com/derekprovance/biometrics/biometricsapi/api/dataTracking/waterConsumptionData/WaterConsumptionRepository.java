@@ -1,11 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.waterConsumptionData;
 
-import org.springframework.data.repository.CrudRepository;
+import com.derekprovance.biometrics.biometricsapi.api.singleEntity.CrudSingleRepository;
 
-import java.time.LocalDate;
-import java.util.List;
-
-public interface WaterConsumptionRepository extends CrudRepository<WaterConsumption, Integer> {
-    WaterConsumption findByDate(LocalDate date);
-    List<WaterConsumption> findAllByDateBetween(LocalDate start, LocalDate end);
+public interface WaterConsumptionRepository extends CrudSingleRepository<WaterConsumption, Integer> {
 }

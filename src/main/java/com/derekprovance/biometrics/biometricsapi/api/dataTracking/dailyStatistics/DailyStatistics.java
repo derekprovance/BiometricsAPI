@@ -1,15 +1,11 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyStatistics;
 
+import com.derekprovance.biometrics.biometricsapi.api.singleEntity.BaseSingleEntity;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
-public class DailyStatistics {
-    private @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY) Integer id;
-
-    private LocalDate entryDate;
-
+public class DailyStatistics extends BaseSingleEntity {
     private Integer maxHr;
     private Integer minHr;
     private Integer restingHr;
@@ -21,22 +17,6 @@ public class DailyStatistics {
     private Integer lowStressDuration;
     private Integer mediumStressDuration;
     private Integer highStressDuration;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public LocalDate getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
-    }
 
     public Integer getMaxHr() {
         return maxHr;

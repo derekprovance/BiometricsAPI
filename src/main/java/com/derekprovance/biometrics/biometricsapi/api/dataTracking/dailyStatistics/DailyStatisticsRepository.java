@@ -1,11 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyStatistics;
 
-import org.springframework.data.repository.CrudRepository;
+import com.derekprovance.biometrics.biometricsapi.api.singleEntity.CrudSingleRepository;
 
-import java.time.LocalDate;
-import java.util.List;
-
-public interface DailyStatisticsRepository extends CrudRepository<DailyStatistics, Integer> {
-    DailyStatistics findByEntryDate(LocalDate date);
-    List<DailyStatistics> findAllByEntryDateBetween(LocalDate start, LocalDate end);
+public interface DailyStatisticsRepository extends CrudSingleRepository<DailyStatistics, Integer> {
 }

@@ -1,10 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.hrData;
 
-import org.springframework.data.repository.CrudRepository;
+import com.derekprovance.biometrics.biometricsapi.api.rangeEntity.CrudRangeRepository;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-public interface HrDataRepository extends CrudRepository<HrData, Integer> {
-    List<HrData> findAllByEventTimeBetween(LocalDateTime start, LocalDateTime end);
+public interface HrDataRepository extends CrudRangeRepository<HrData, Integer> {
 }

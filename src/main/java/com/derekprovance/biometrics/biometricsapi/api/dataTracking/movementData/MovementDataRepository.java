@@ -1,10 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.movementData;
 
-import org.springframework.data.repository.CrudRepository;
+import com.derekprovance.biometrics.biometricsapi.api.rangeEntity.CrudRangeRepository;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-public interface MovementDataRepository extends CrudRepository<MovementData, Integer> {
-    List<MovementData> findAllByEventTimeBetween(LocalDateTime start, LocalDateTime end);
+public interface MovementDataRepository extends CrudRangeRepository<MovementData, Integer> {
 }
