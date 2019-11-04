@@ -1,37 +1,15 @@
 package com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyLog;
 
+import com.derekprovance.biometrics.biometricsapi.api.singleEntity.BaseSingleEntity;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.time.LocalDate;
 
 @Entity
-public class DailyLog {
-    private @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
-
-    private LocalDate date;
+public class DailyLog extends BaseSingleEntity {
     private String logEntry;
     private String tags;
     private DayRating dayRating;
     private DayRating productivityRating;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 
     public String getLogEntry() {
         return logEntry;
