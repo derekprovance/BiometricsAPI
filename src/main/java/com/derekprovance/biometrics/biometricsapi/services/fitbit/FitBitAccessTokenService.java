@@ -1,9 +1,9 @@
 package com.derekprovance.biometrics.biometricsapi.services.fitbit;
 
-import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApiAccess;
-import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.AccessType;
-import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApi;
-import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApiAccessRepository;
+import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.ConnectedApiAccess;
+import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.AccessType;
+import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.ConnectedApi;
+import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.ConnectedApiAccessRepository;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.RefreshTokenDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

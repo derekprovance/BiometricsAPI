@@ -1,16 +1,16 @@
 package com.derekprovance.biometrics.biometricsapi.services.garmin;
 
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyStatistics.DailyStatistics;
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.dailyStatistics.DailyStatisticsRepository;
+import com.derekprovance.biometrics.biometricsapi.api.physio.dailyStatistics.DailyStatistics;
+import com.derekprovance.biometrics.biometricsapi.api.physio.dailyStatistics.DailyStatisticsRepository;
 import com.derekprovance.biometrics.biometricsapi.api.utility.garmin.ItemSyncCount;
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.hrData.HrData;
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.hrData.HrDataRepository;
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.movementData.MovementData;
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.movementData.MovementDataRepository;
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.sleep.Sleep;
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.sleep.SleepRepository;
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.sleepMovement.SleepMovement;
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.sleepMovement.SleepMovementRepository;
+import com.derekprovance.biometrics.biometricsapi.api.physio.heartRate.HeartRate;
+import com.derekprovance.biometrics.biometricsapi.api.physio.heartRate.HeartRateRepository;
+import com.derekprovance.biometrics.biometricsapi.api.physio.movement.Movement;
+import com.derekprovance.biometrics.biometricsapi.api.physio.movement.MovementRepository;
+import com.derekprovance.biometrics.biometricsapi.api.physio.sleep.Sleep;
+import com.derekprovance.biometrics.biometricsapi.api.physio.sleep.SleepRepository;
+import com.derekprovance.biometrics.biometricsapi.api.physio.sleepMovement.SleepMovement;
+import com.derekprovance.biometrics.biometricsapi.api.physio.sleepMovement.SleepMovementRepository;
 import com.derekprovance.biometrics.biometricsapi.services.AbstractService;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyHeartRate;
 import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyMovementData;
@@ -33,8 +33,8 @@ import java.util.List;
 public class GarminSyncService extends AbstractService {
     private final GarminApiService garminApiService;
     private final DailyStatisticsRepository dailyStatisticsRepository;
-    private final HrDataRepository hrDataRepository;
-    private final MovementDataRepository movementDataRepository;
+    private final HeartRateRepository heartRateRepository;
+    private final MovementRepository movementRepository;
     private final SleepMovementRepository sleepMovementRepository;
     private final SleepRepository sleepRepository;
 
@@ -44,15 +44,15 @@ public class GarminSyncService extends AbstractService {
     public GarminSyncService(
             GarminApiService garminApiService,
             DailyStatisticsRepository dailyStatisticsRepository,
-            HrDataRepository hrDataRepository,
-            MovementDataRepository movementDataRepository,
+            HeartRateRepository heartRateRepository,
+            MovementRepository movementRepository,
             SleepMovementRepository sleepMovementRepository,
             SleepRepository sleepRepository
     ) {
         this.garminApiService = garminApiService;
         this.dailyStatisticsRepository = dailyStatisticsRepository;
-        this.hrDataRepository = hrDataRepository;
-        this.movementDataRepository = movementDataRepository;
+        this.heartRateRepository = heartRateRepository;
+        this.movementRepository = movementRepository;
         this.sleepMovementRepository = sleepMovementRepository;
         this.sleepRepository = sleepRepository;
     }
@@ -182,39 +182,39 @@ public class GarminSyncService extends AbstractService {
         return sleepMovementData;
     }
 
-    private List<MovementData> syncMovementData(LocalDate date) throws CredentialNotFoundException {
+    private List<Movement> syncMovementData(LocalDate date) throws CredentialNotFoundException {
         final DailyMovementData dailyMovement = garminApiService.getDailyMovement(date);
         Object[][] dailyMovementValues = dailyMovement.getMovementValues();
-        List<MovementData> movementData = new ArrayList<>();
+        List<Movement> movementData = new ArrayList<>();
 
         if(dailyMovementValues != null) {
             for(Object[] dailyMovementValue : dailyMovementValues) {
-                MovementData movementDataEntry = new MovementData();
-                movementDataEntry.setDatetime(convertTimestamp((Long) dailyMovementValue[0]));
-                movementDataEntry.setMovement((Double) dailyMovementValue[1]);
-                movementData.add(movementDataEntry);
+                Movement movementEntry = new Movement();
+                movementEntry.setDatetime(convertTimestamp((Long) dailyMovementValue[0]));
+                movementEntry.setMovement((Double) dailyMovementValue[1]);
+                movementData.add(movementEntry);
             }
 
-            movementDataRepository.saveAll(movementData);
+            movementRepository.saveAll(movementData);
         }
 
         return movementData;
     }
 
-    private List<HrData> syncHrData(LocalDate date) throws CredentialNotFoundException {
+    private List<HeartRate> syncHrData(LocalDate date) throws CredentialNotFoundException {
         final DailyHeartRate dailyHrData = garminApiService.getDailyHrData(date);
-        List<HrData> hrData = new ArrayList<>();
+        List<HeartRate> hrData = new ArrayList<>();
         Object[][] heartRateValues = dailyHrData.getHeartRateValues();
 
         if(heartRateValues != null) {
             for (Object[] heartRateValue : heartRateValues) {
-                HrData newEntry = new HrData();
+                HeartRate newEntry = new HeartRate();
                 newEntry.setDatetime(convertTimestamp((Long) heartRateValue[0]));
                 newEntry.setHrValue((Integer) heartRateValue[1]);
                 hrData.add(newEntry);
             }
 
-            hrDataRepository.saveAll(hrData);
+            heartRateRepository.saveAll(hrData);
         }
 
         return hrData;

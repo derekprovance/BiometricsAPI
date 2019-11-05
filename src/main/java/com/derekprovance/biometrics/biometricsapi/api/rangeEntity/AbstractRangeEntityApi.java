@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.rangeEntity;
 
-import com.derekprovance.biometrics.biometricsapi.api.dataTracking.AbstractDataTrackingApi;
+import com.derekprovance.biometrics.biometricsapi.api.AbstractDataTrackingApi;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 

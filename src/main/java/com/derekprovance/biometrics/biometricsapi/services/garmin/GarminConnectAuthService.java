@@ -1,9 +1,9 @@
 package com.derekprovance.biometrics.biometricsapi.services.garmin;
 
-import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.AccessType;
-import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApi;
-import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApiAccess;
-import com.derekprovance.biometrics.biometricsapi.api.connectedApiAccess.ConnectedApiAccessRepository;
+import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.AccessType;
+import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.ConnectedApi;
+import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.ConnectedApiAccess;
+import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.ConnectedApiAccessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
