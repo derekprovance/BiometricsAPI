@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.singleEntity;
+package com.derekprovance.biometrics.biometricsapi.api.genericEntities.single;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;

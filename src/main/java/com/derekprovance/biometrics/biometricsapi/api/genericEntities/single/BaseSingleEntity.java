@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.singleEntity;
+package com.derekprovance.biometrics.biometricsapi.api.genericEntities.single;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

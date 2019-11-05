@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.rangeEntity;
+package com.derekprovance.biometrics.biometricsapi.api.genericEntities.range;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
