@@ -4,6 +4,9 @@ import com.derekprovance.biometrics.biometricsapi.api.genericEntities.single.Abs
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/water-consumption")
 public class WaterConsumptionController extends AbstractSingleEntityApi {
@@ -18,6 +21,15 @@ public class WaterConsumptionController extends AbstractSingleEntityApi {
 
     @PostMapping("")
     public WaterConsumption newWaterConsumptionDataEntry(@RequestBody WaterConsumption newEntry) {
+        if(newEntry.getDate() == null) {
+            newEntry.setDate(LocalDate.now());
+        }
+
+        final WaterConsumption waterConsumption = (WaterConsumption) waterConsumptionRepository.findByDate(newEntry.getDate());
+        if(waterConsumption != null) {
+            newEntry.setId(waterConsumption.getId());
+        }
+
         return waterConsumptionRepository.save(newEntry);
     }
 

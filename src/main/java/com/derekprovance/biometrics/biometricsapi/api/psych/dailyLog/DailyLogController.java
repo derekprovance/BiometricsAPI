@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/daily-log")
@@ -21,7 +22,13 @@ public class DailyLogController extends AbstractSingleEntityApi {
         if(newEntry.getDate() == null) {
             newEntry.setDate(LocalDate.now());
         }
-        return dailyLogRepository.save(newEntry);
+
+        final DailyLog existingDateEntry = (DailyLog) dailyLogRepository.findByDate(newEntry.getDate());
+        if(existingDateEntry != null) {
+            newEntry.setId(existingDateEntry.getId());
+        }
+
+        return dailyLogRepository.save(Objects.requireNonNullElse(existingDateEntry, newEntry));
     }
 
     protected DailyLogRepository getRepository() {

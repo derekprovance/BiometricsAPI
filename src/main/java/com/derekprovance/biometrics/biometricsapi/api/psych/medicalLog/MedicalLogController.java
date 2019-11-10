@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/medical-log")
@@ -27,7 +28,12 @@ public class MedicalLogController extends AbstractSingleEntityApi {
 
         newEntry.setStatus(Status.ACTIVE);
 
-        return medicalLogRepository.save(newEntry);
+        final MedicalLog existingDateEntry = (MedicalLog) medicalLogRepository.findByDate(newEntry.getDate());
+        if(existingDateEntry != null) {
+            newEntry.setId(existingDateEntry.getId());
+        }
+
+        return medicalLogRepository.save(Objects.requireNonNullElse(existingDateEntry, newEntry));
     }
 
     protected MedicalLogRepository getRepository() {

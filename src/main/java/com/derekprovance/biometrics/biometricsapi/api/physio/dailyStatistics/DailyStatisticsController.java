@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/daily-statistics")
@@ -18,9 +19,16 @@ public class DailyStatisticsController extends AbstractSingleEntityApi {
 
     @PostMapping("")
     public DailyStatistics newDailyStatisticsEntry(@RequestBody DailyStatistics newEntry) {
-        newEntry.setDate(LocalDate.now());
+        if(newEntry.getDate() == null) {
+            newEntry.setDate(LocalDate.now());
+        }
 
-        return dailyStatisticsRepository.save(newEntry);
+        final DailyStatistics existingDateEntry = (DailyStatistics) dailyStatisticsRepository.findByDate(newEntry.getDate());
+        if(existingDateEntry != null) {
+            newEntry.setId(existingDateEntry.getId());
+        }
+
+        return dailyStatisticsRepository.save(Objects.requireNonNullElse(existingDateEntry, newEntry));
     }
 
     @Override
