@@ -1,7 +1,9 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.heartRate;
 
 import com.derekprovance.biometrics.biometricsapi.api.genericEntities.range.AbstractRangeEntityApi;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -17,8 +19,12 @@ public class HeartRateController extends AbstractRangeEntityApi {
     }
 
     @PostMapping("")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
     public HeartRate newHrDataEntry(@RequestBody HeartRate newEntry) {
-        newEntry.setDatetime(LocalDateTime.now());
+        if(newEntry.getDatetime() == null) {
+            newEntry.setDatetime(LocalDateTime.now());
+        }
 
         return heartRateRepository.save(newEntry);
     }

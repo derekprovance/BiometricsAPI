@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 abstract public class AbstractSingleEntityApi extends AbstractDataTrackingApi {
     protected abstract CrudSingleRepository<?, Integer> getRepository();
