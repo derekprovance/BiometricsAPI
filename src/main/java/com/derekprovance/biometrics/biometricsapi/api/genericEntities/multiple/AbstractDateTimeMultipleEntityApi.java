@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.genericEntities.range;
+package com.derekprovance.biometrics.biometricsapi.api.genericEntities.multiple;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractDataTrackingApi;
 import org.springframework.format.annotation.DateTimeFormat;

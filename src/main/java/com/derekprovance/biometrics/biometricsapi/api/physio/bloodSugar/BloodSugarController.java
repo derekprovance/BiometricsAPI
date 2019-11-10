@@ -1,7 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.range.AbstractDateTimeMultipleEntityApi;
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.range.BaseRangeEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.multiple.AbstractDateTimeMultipleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.multiple.BaseRangeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -6,13 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.PreUpdate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Entity
 public class MedicalLog extends BaseSingleEntity {
     private LocalDate dateChanged;
     private String bodyLocation;
-    private ArrayList<String> symptoms;
+    private String symptoms;
     private String snoMedCtCode;
     private String icdCode;
     private String notes;
@@ -38,12 +37,12 @@ public class MedicalLog extends BaseSingleEntity {
         this.bodyLocation = bodyLocation;
     }
 
-    public ArrayList<String> getSymptoms() {
+    public String getSymptoms() {
         return symptoms;
     }
 
-    public void setSymptoms(ArrayList<String> symptoms) {
-        this.symptoms = symptoms;
+    public void setSymptoms(String[] symptoms) {
+        this.symptoms =  String.join(",", symptoms);
     }
 
     public String getSnoMedCtCode() {

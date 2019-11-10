@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.movement;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.range.BaseRangeEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.multiple.BaseRangeEntity;
 
 import javax.persistence.Entity;
 
