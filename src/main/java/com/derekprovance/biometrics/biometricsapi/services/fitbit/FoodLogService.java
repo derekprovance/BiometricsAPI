@@ -1,8 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.services.fitbit;
 
-import com.derekprovance.biometrics.biometricsapi.api.physio.meals.MealBlock;
-import com.derekprovance.biometrics.biometricsapi.api.physio.meals.MealEntry;
-import com.derekprovance.biometrics.biometricsapi.api.physio.meals.MealRepository;
+import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
+import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealLog;
+import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealLogRepository;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.FitbitFoodEndpointDTO;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.MealEntryDTO;
 import org.slf4j.Logger;
@@ -20,12 +20,12 @@ public class FoodLogService {
 
     private static final Logger log = LoggerFactory.getLogger(FoodLogService.class);
 
-    private final MealRepository mealRepository;
+    private final MealLogRepository mealLogRepository;
     private final FitBitAPIService fitbitAPIService;
 
     @Autowired
-    public FoodLogService(MealRepository mealRepository, FitBitAPIService fitbitAPIService) {
-        this.mealRepository = mealRepository;
+    public FoodLogService(MealLogRepository mealLogRepository, FitBitAPIService fitbitAPIService) {
+        this.mealLogRepository = mealLogRepository;
         this.fitbitAPIService = fitbitAPIService;
     }
 
@@ -44,38 +44,38 @@ public class FoodLogService {
     }
 
     private Integer processEntries(FitbitFoodEndpointDTO fitbitFoodEndpointDTO) {
-        List<MealEntry> mealEntries = new ArrayList<>();
+        List<MealLog> mealEntries = new ArrayList<>();
 
         for(MealEntryDTO mealEntryDTO : fitbitFoodEndpointDTO.getFoods()) {
-            if(mealRepository.findByLogId(mealEntryDTO.getLogId()) == null) {
-                MealEntry mealEntry = new MealEntry();
+            if(mealLogRepository.findByLogId(mealEntryDTO.getLogId()) == null) {
+                MealLog mealLog = new MealLog();
 
                 if(mealEntryDTO.getNutritionalValues() != null) {
-                    mealEntry.setCarbs(mealEntryDTO.getNutritionalValues().getCarbs());
-                    mealEntry.setFat(mealEntryDTO.getNutritionalValues().getFat());
-                    mealEntry.setFiber(mealEntryDTO.getNutritionalValues().getFiber());
-                    mealEntry.setProtein(mealEntryDTO.getNutritionalValues().getProtein());
-                    mealEntry.setSodium(mealEntryDTO.getNutritionalValues().getSodium());
+                    mealLog.setCarbs(mealEntryDTO.getNutritionalValues().getCarbs());
+                    mealLog.setFat(mealEntryDTO.getNutritionalValues().getFat());
+                    mealLog.setFiber(mealEntryDTO.getNutritionalValues().getFiber());
+                    mealLog.setProtein(mealEntryDTO.getNutritionalValues().getProtein());
+                    mealLog.setSodium(mealEntryDTO.getNutritionalValues().getSodium());
                 }
 
                 if(mealEntryDTO.getLoggedFood() != null) {
-                    mealEntry.setAmount(mealEntryDTO.getLoggedFood().getAmount());
-                    mealEntry.setName(mealEntryDTO.getLoggedFood().getName());
-                    mealEntry.setCalories(mealEntryDTO.getLoggedFood().getCalories());
-                    mealEntry.setUnit(mealEntryDTO.getLoggedFood().getUnit().getName());
-                    mealEntry.setMealBlock(MealBlock.valueOf(mealEntryDTO.getLoggedFood().getMealTypeId()));
+                    mealLog.setAmount(mealEntryDTO.getLoggedFood().getAmount());
+                    mealLog.setName(mealEntryDTO.getLoggedFood().getName());
+                    mealLog.setCalories(mealEntryDTO.getLoggedFood().getCalories());
+                    mealLog.setUnit(mealEntryDTO.getLoggedFood().getUnit().getName());
+                    mealLog.setMealBlock(MealBlock.valueOf(mealEntryDTO.getLoggedFood().getMealTypeId()));
                 }
 
-                mealEntry.setDate(mealEntryDTO.getLogDate());
-                mealEntry.setLogId(mealEntryDTO.getLogId());
+                mealLog.setDate(mealEntryDTO.getLogDate());
+                mealLog.setLogId(mealEntryDTO.getLogId());
 
-                mealEntries.add(mealEntry);
+                mealEntries.add(mealLog);
             }
         }
 
         if(mealEntries.size() > 0) {
             log.info(String.format("Saving %s food entries to database", mealEntries.size()));
-            mealRepository.saveAll(mealEntries);
+            mealLogRepository.saveAll(mealEntries);
         }
 
         return mealEntries.size();

@@ -2,10 +2,8 @@ package com.derekprovance.biometrics.biometricsapi.api.psych.medicalLog;
 
 import com.derekprovance.biometrics.biometricsapi.api.genericEntities.single.AbstractSingleEntityApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -18,6 +16,11 @@ public class MedicalLogController extends AbstractSingleEntityApi {
     @Autowired
     public MedicalLogController(MedicalLogRepository medicalLogRepository) {
         this.medicalLogRepository = medicalLogRepository;
+    }
+
+    @RequestMapping(value = "", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<MedicalLog> getActiveMedicalLogEntries() {
+        return medicalLogRepository.findAllByStatus(Status.ACTIVE);
     }
 
     @PostMapping("")

@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.physio.meals;
+package com.derekprovance.biometrics.biometricsapi.api.physio.mealLog;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.physio.meals;
+package com.derekprovance.biometrics.biometricsapi.api.physio.mealLog;
 
 import com.derekprovance.biometrics.biometricsapi.api.genericEntities.single.BaseSingleEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class MealEntry extends BaseSingleEntity {
+public class MealLog extends BaseSingleEntity {
     @NotNull
     private String name;
 
