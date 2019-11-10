@@ -33,6 +33,6 @@ abstract public class AbstractSingleEntityApi extends AbstractDataTrackingApi {
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return getRepository().findByDateBetween(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+        return getRepository().findByDateBetween(startDate, endDate);
     }
 }
