@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.psych.medicalLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.BaseSingleEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.PreUpdate;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-public class MedicalLog extends BaseSingleEntity {
+public class MedicalLog extends DateEntity {
     private LocalDate dateChanged;
     private String bodyLocation;
     private String symptoms;

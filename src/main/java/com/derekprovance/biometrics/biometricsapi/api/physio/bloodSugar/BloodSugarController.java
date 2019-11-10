@@ -1,7 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar;
 
 import com.derekprovance.biometrics.biometricsapi.api.genericEntities.datetime.AbstractDateTimeMultipleEntityApi;
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.BaseRangeEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateTimeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ public class BloodSugarController extends AbstractDateTimeMultipleEntityApi {
     }
 
     @PostMapping("")
-    public BaseRangeEntity newEntry(@RequestBody BloodSugar newEntry) {
+    public DateTimeEntity newEntry(@RequestBody BloodSugar newEntry) {
         if(newEntry.getDatetime() == null) {
             newEntry.setDatetime(LocalDateTime.now());
         }

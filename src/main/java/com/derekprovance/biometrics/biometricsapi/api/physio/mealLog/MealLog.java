@@ -1,13 +1,13 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.mealLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.BaseSingleEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class MealLog extends BaseSingleEntity {
+public class MealLog extends DateEntity {
     @NotNull
     private String name;
 

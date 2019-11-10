@@ -1,11 +1,11 @@
 package com.derekprovance.biometrics.biometricsapi.api.psych.dailyLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.BaseSingleEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateEntity;
 
 import javax.persistence.Entity;
 
 @Entity
-public class DailyLog extends BaseSingleEntity {
+public class DailyLog extends DateEntity {
     private String logEntry;
     private String tags;
     private DayRating dayRating;

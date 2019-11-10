@@ -19,8 +19,6 @@ public class HeartRateController extends AbstractDateTimeMultipleEntityApi {
     }
 
     @PostMapping("")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
     public HeartRate newHrDataEntry(@RequestBody HeartRate newEntry) {
         if(newEntry.getDatetime() == null) {
             newEntry.setDatetime(LocalDateTime.now());

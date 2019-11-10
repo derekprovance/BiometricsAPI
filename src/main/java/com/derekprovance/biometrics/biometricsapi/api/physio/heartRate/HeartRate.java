@@ -1,11 +1,11 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.heartRate;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.BaseRangeEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateTimeEntity;
 
 import javax.persistence.*;
 
 @Entity
-public class HeartRate extends BaseRangeEntity {
+public class HeartRate extends DateTimeEntity {
     private Integer hrValue;
 
     public Integer getHrValue() {

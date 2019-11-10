@@ -1,5 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.api.genericEntities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -7,9 +10,12 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public class BaseRangeEntity {
+public class DateTimeEntity {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime datetime;
 
     public Integer getId() {

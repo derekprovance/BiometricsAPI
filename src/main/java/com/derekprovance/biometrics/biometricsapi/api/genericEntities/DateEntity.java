@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @MappedSuperclass
-public class BaseSingleEntity {
+public class DateEntity {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 

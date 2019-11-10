@@ -1,12 +1,12 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.waterConsumption;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.BaseSingleEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class WaterConsumption extends BaseSingleEntity {
+public class WaterConsumption extends DateEntity {
     @NotNull
     private Integer amount;
 
