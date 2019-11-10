@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.psych.medicalLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.single.AbstractSingleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.single.AbstractDateSingleEntityApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/medical-log")
-public class MedicalLogController extends AbstractSingleEntityApi {
+public class MedicalLogController extends AbstractDateSingleEntityApi {
     private final MedicalLogRepository medicalLogRepository;
 
     @Autowired

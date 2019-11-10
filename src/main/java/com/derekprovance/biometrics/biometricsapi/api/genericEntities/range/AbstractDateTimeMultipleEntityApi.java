@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-abstract public class AbstractRangeEntityApi extends AbstractDataTrackingApi {
+abstract public class AbstractDateTimeMultipleEntityApi extends AbstractDataTrackingApi {
     protected abstract CrudRangeRepository<?, Integer> getRepository();
 
     @RequestMapping(value="/date/{date}", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 
-abstract public class AbstractSingleEntityApi extends AbstractDataTrackingApi {
+abstract public class AbstractDateSingleEntityApi extends AbstractDataTrackingApi {
     protected abstract CrudSingleRepository<?, Integer> getRepository();
 
     @RequestMapping(value="/date/{date}", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
