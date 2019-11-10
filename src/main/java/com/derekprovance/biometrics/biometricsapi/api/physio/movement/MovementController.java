@@ -18,7 +18,9 @@ public class MovementController extends AbstractDateTimeMultipleEntityApi {
 
     @PostMapping("")
     public Movement newMovementDataEntry(@RequestBody Movement newEntry) {
-        newEntry.setDatetime(LocalDateTime.now());
+        if(newEntry.getDatetime() == null) {
+            newEntry.setDatetime(LocalDateTime.now());
+        }
 
         return movementRepository.save(newEntry);
     }

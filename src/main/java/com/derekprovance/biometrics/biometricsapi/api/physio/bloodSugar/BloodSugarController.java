@@ -22,6 +22,7 @@ public class BloodSugarController extends AbstractDateTimeMultipleEntityApi {
         if(newEntry.getDatetime() == null) {
             newEntry.setDatetime(LocalDateTime.now());
         }
+
         return bloodSugarRepository.save(newEntry);
     }
 
