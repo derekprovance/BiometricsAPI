@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.heartRate;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.multiple.AbstractDateTimeMultipleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.datetime.AbstractDateTimeMultipleEntityApi;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

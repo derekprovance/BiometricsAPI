@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.waterConsumption;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.single.BaseSingleEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.BaseSingleEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.heartRate;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.multiple.BaseRangeEntity;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.BaseRangeEntity;
 
 import javax.persistence.*;
 

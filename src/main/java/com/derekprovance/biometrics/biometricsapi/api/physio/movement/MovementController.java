@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.movement;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.multiple.AbstractDateTimeMultipleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.datetime.AbstractDateTimeMultipleEntityApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

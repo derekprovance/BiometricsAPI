@@ -1,16 +1,15 @@
 package com.derekprovance.biometrics.biometricsapi.api.psych.medicalLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.single.AbstractDateSingleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.genericEntities.date.AbstractDateMultipleEntityApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/medical-log")
-public class MedicalLogController extends AbstractDateSingleEntityApi {
+public class MedicalLogController extends AbstractDateMultipleEntityApi {
     private final MedicalLogRepository medicalLogRepository;
 
     @Autowired
@@ -31,12 +30,7 @@ public class MedicalLogController extends AbstractDateSingleEntityApi {
 
         newEntry.setStatus(Status.ACTIVE);
 
-        final MedicalLog existingDateEntry = (MedicalLog) medicalLogRepository.findByDate(newEntry.getDate());
-        if(existingDateEntry != null) {
-            newEntry.setId(existingDateEntry.getId());
-        }
-
-        return medicalLogRepository.save(Objects.requireNonNullElse(existingDateEntry, newEntry));
+        return medicalLogRepository.save(newEntry);
     }
 
     protected MedicalLogRepository getRepository() {

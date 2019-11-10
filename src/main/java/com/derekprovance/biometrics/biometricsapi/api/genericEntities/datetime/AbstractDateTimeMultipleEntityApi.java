@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.genericEntities.multiple;
+package com.derekprovance.biometrics.biometricsapi.api.genericEntities.datetime;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractDataTrackingApi;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 abstract public class AbstractDateTimeMultipleEntityApi extends AbstractDataTrackingApi {
-    protected abstract CrudRangeRepository<?, Integer> getRepository();
+    protected abstract CrudDateTimeRepository<?, Integer> getRepository();
 
     @RequestMapping(value="/date/{date}", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<?> getByDate(
