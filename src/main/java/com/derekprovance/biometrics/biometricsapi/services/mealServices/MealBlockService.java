@@ -4,7 +4,7 @@ import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
 
 import java.time.LocalDateTime;
 
-public class mealBlockService {
+public class MealBlockService {
 
     public static MealBlock getMealBlock(LocalDateTime dateTime) {
         int hour = dateTime.getHour();
