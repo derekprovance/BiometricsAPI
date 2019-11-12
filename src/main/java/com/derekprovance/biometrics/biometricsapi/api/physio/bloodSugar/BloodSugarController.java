@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/blood-sugar")
@@ -31,9 +33,7 @@ public class BloodSugarController extends AbstractDateTimeMultipleEntityApi {
         final BloodSugar entity = this.bloodSugarRepository.findById(requestId)
                 .orElseThrow(() -> new EntityNotFoundException("Not Found: " + requestId.toString()));
 
-        final MealBlock analyze = bloodSugarAnalysisService.analyze(entity);
-
-        return ResponseEntity.ok().body(analyze != null ? analyze.toString() : "");
+        return ResponseEntity.ok().body(gson.toJson(bloodSugarAnalysisService.analyze(entity)));
     }
 
     @PostMapping("")

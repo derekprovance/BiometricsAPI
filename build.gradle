@@ -21,6 +21,7 @@ dependencies {
 	implementation 'com.squareup.okhttp3:okhttp:4.2.1'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 	compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
 }
 

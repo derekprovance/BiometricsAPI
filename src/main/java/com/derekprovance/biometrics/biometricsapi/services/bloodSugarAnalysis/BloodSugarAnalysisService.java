@@ -3,16 +3,12 @@ package com.derekprovance.biometrics.biometricsapi.services.bloodSugarAnalysis;
 import com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar.BloodSugar;
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealLogRepository;
+import com.derekprovance.biometrics.biometricsapi.services.mealServices.MealBlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BloodSugarAnalysisService {
-
-    //Fasting blood sugar (in the morning, before eating): under 100 mg/dL
-    //1 hour after a meal: 90 to 130 mg/dL
-    //2 hours after a meal: 90 to 110 mg/dL
-    //5 or more hours after eating: 70 to 90 mg/dL
 
     private MealLogRepository mealLogRepository;
 
@@ -21,10 +17,44 @@ public class BloodSugarAnalysisService {
         this.mealLogRepository = mealLogRepository;
     }
 
-    public MealBlock analyze(BloodSugar bloodSugar) {
-        final MealBlock latestMeal = mealLogRepository.findLatestMeal(bloodSugar.getDatetime().toLocalDate());
+    public BloodSugarAnalysis analyze(BloodSugar bloodSugar) {
+        final MealBlock lastMeal = mealLogRepository.findLatestMeal(bloodSugar.getDatetime().toLocalDate());
+        MealBlock currentTime = MealBlockService.getMealBlock(bloodSugar.getDatetime());
 
-        return latestMeal;
+        if(lastMeal == null) {
+            final HealthStatus healthStatus = fastingDifference(bloodSugar.getMgDl());
+            return new BloodSugarAnalysis(null, currentTime, healthStatus, bloodSugar);
+        }
+
+        int timeDifference = currentTime.getValue() - lastMeal.getValue();
+        final HealthStatus healthStatus = determineHealthStatusByMealBlock(timeDifference, bloodSugar.getMgDl());
+
+        return new BloodSugarAnalysis(lastMeal, currentTime, healthStatus, bloodSugar);
     }
 
+    private HealthStatus determineHealthStatusByMealBlock(int timeDifference, int mgDl) {
+        HealthStatus result;
+
+        if(timeDifference == 1) {
+            result = lastOneHourMealDifference(mgDl);
+        } else if (timeDifference == 2) {
+            result = lastTwoHourMealDifference(mgDl);
+        } else {
+            result = fastingDifference(mgDl);
+        }
+
+        return result;
+    }
+
+    private HealthStatus lastOneHourMealDifference(int mgDl) {
+        return (mgDl >= 90 && mgDl <= 130) ? HealthStatus.NORMAL : HealthStatus.ABNORMAL;
+    }
+
+    private HealthStatus lastTwoHourMealDifference(int mgDl) {
+        return (mgDl >= 90 && mgDl <= 110) ? HealthStatus.NORMAL : HealthStatus.ABNORMAL;
+    }
+
+    private HealthStatus fastingDifference(int mgDl) {
+        return (mgDl >= 70 && mgDl <= 90) ? HealthStatus.NORMAL : HealthStatus.ABNORMAL;
+    }
 }
