@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.psych.medicalLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.date.CrudDateRepository;
+import com.derekprovance.biometrics.biometricsapi.api.generic.date.CrudDateRepository;
 
 import java.util.List;
 

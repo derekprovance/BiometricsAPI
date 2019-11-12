@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.psych.medicalLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateEntity;
+import com.derekprovance.biometrics.biometricsapi.api.generic.DateEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.PreUpdate;

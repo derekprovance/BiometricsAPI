@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.mealLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateEntity;
+import com.derekprovance.biometrics.biometricsapi.api.generic.DateEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

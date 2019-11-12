@@ -1,6 +1,6 @@
-package com.derekprovance.biometrics.biometricsapi.api.genericEntities.date;
+package com.derekprovance.biometrics.biometricsapi.api.generic.date;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateEntity;
+import com.derekprovance.biometrics.biometricsapi.api.generic.DateEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 

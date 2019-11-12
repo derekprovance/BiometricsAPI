@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.mealLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.date.AbstractDateMultipleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.generic.date.AbstractDateMultipleEntityApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

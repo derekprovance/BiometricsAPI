@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.psych.dailyLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.date.AbstractDateSingleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.generic.date.AbstractDateSingleEntityApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

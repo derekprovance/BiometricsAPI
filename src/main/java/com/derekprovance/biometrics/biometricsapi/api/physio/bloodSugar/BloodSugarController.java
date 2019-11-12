@@ -1,10 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.datetime.AbstractDateTimeMultipleEntityApi;
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateTimeEntity;
-import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
+import com.derekprovance.biometrics.biometricsapi.api.generic.datetime.AbstractDateTimeMultipleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.generic.DateTimeEntity;
 import com.derekprovance.biometrics.biometricsapi.services.bloodSugarAnalysis.BloodSugarAnalysisService;
-import com.derekprovance.biometrics.biometricsapi.services.bloodSugarAnalysis.HealthStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/blood-sugar")

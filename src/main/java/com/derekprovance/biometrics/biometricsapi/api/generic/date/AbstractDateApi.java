@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.genericEntities.date;
+package com.derekprovance.biometrics.biometricsapi.api.generic.date;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractDataTrackingApi;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.TimeZone;
 
 abstract class AbstractDateApi extends AbstractDataTrackingApi {
 

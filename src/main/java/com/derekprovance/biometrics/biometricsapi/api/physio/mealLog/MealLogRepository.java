@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.mealLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.date.CrudDateRepository;
+import com.derekprovance.biometrics.biometricsapi.api.generic.date.CrudDateRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;

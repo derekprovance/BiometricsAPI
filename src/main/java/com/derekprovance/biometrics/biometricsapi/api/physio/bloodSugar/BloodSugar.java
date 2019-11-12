@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.DateTimeEntity;
+import com.derekprovance.biometrics.biometricsapi.api.generic.DateTimeEntity;
 
 import javax.persistence.Entity;
 

@@ -1,6 +1,5 @@
-package com.derekprovance.biometrics.biometricsapi.api.genericEntities.date;
+package com.derekprovance.biometrics.biometricsapi.api.generic.date;
 
-import com.derekprovance.biometrics.biometricsapi.api.genericEntities.date.AbstractDateApi;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
