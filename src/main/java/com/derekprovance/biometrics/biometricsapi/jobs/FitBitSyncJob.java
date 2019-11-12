@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.jobs;
 
-import com.derekprovance.biometrics.biometricsapi.services.fitbit.FitBitAccessTokenService;
+import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.FitBitAccessTokenService;
 import com.derekprovance.biometrics.biometricsapi.services.sync.FoodLogService;
 import com.derekprovance.biometrics.biometricsapi.services.sync.WaterLogService;
 import org.springframework.scheduling.annotation.Scheduled;

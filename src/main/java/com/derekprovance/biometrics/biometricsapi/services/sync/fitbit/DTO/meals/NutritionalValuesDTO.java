@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals;
+package com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.DTO.meals;
 
 public class NutritionalValuesDTO {
     private Integer calories;

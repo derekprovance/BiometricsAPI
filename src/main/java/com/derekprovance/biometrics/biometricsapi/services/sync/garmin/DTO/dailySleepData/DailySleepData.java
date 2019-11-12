@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData;
+package com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData;
 
 public class DailySleepData {
     private DailySleepDTO dailySleepDTO;

@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.services.garmin.DTO;
+package com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO;
 
 import java.time.LocalDate;
 

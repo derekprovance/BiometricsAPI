@@ -1,7 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.utility.garmin;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.GarminSyncService;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.GarminSyncService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;

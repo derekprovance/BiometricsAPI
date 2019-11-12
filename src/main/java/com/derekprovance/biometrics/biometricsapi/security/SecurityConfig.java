@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.services.security;
+package com.derekprovance.biometrics.biometricsapi.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

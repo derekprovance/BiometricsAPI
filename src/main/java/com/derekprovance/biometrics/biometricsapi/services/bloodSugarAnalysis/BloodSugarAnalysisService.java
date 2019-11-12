@@ -3,7 +3,7 @@ package com.derekprovance.biometrics.biometricsapi.services.bloodSugarAnalysis;
 import com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar.BloodSugar;
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealLogRepository;
-import com.derekprovance.biometrics.biometricsapi.services.mealServices.MealBlockService;
+import com.derekprovance.biometrics.biometricsapi.services.MealBlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

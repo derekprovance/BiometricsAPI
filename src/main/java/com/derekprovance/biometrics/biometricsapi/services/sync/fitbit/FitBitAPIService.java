@@ -1,8 +1,8 @@
-package com.derekprovance.biometrics.biometricsapi.services.fitbit;
+package com.derekprovance.biometrics.biometricsapi.services.sync.fitbit;
 
 import com.derekprovance.biometrics.biometricsapi.services.AbstractService;
-import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.FitbitFoodEndpointDTO;
-import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.water.WaterLogDTO;
+import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.DTO.meals.FitbitFoodEndpointDTO;
+import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.DTO.water.WaterLogDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

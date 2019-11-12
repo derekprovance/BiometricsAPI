@@ -1,10 +1,10 @@
 package com.derekprovance.biometrics.biometricsapi.jobs;
 
-import com.derekprovance.biometrics.biometricsapi.services.fitbit.FitBitAccessTokenService;
+import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.FitBitAccessTokenService;
 import com.derekprovance.biometrics.biometricsapi.services.sync.FoodLogService;
 import com.derekprovance.biometrics.biometricsapi.services.sync.WaterLogService;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.GarminConnectAuthService;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.GarminSyncService;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.GarminConnectAuthService;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.GarminSyncService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;

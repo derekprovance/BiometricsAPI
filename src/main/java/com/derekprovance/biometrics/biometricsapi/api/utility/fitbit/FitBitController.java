@@ -1,7 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.api.utility.fitbit;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractApiController;
-import com.derekprovance.biometrics.biometricsapi.services.fitbit.FitBitAccessTokenService;
+import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.FitBitAccessTokenService;
 import com.derekprovance.biometrics.biometricsapi.services.sync.FoodLogService;
 import com.derekprovance.biometrics.biometricsapi.services.sync.WaterLogService;
 import org.springframework.beans.factory.annotation.Autowired;

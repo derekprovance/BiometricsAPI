@@ -1,10 +1,10 @@
-package com.derekprovance.biometrics.biometricsapi.services.garmin;
+package com.derekprovance.biometrics.biometricsapi.services.sync.garmin;
 
 import com.derekprovance.biometrics.biometricsapi.services.AbstractService;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyHeartRate;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyMovementData;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyUserSummary;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepData;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.DailyHeartRate;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.DailyMovementData;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.DailyUserSummary;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.DailySleepData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;

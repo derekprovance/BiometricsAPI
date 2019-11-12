@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.water;
+package com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.DTO.water;
 
 public class WaterLogDTO {
     private SummaryDTO summary;

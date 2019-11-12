@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.services.garmin;
+package com.derekprovance.biometrics.biometricsapi.services.sync.garmin;
 
 import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.AccessType;
 import com.derekprovance.biometrics.biometricsapi.api.utility.connectedApiAccess.ConnectedApi;

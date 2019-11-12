@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.services.mealServices;
+package com.derekprovance.biometrics.biometricsapi.services;
 
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
 

@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO;
+package com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

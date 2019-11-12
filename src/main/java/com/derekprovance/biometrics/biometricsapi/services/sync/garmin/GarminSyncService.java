@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.services.garmin;
+package com.derekprovance.biometrics.biometricsapi.services.sync.garmin;
 
 import com.derekprovance.biometrics.biometricsapi.api.physio.dailyStatistics.DailyStatistics;
 import com.derekprovance.biometrics.biometricsapi.api.physio.dailyStatistics.DailyStatisticsRepository;
@@ -12,12 +12,12 @@ import com.derekprovance.biometrics.biometricsapi.api.physio.sleep.SleepReposito
 import com.derekprovance.biometrics.biometricsapi.api.physio.sleepMovement.SleepMovement;
 import com.derekprovance.biometrics.biometricsapi.api.physio.sleepMovement.SleepMovementRepository;
 import com.derekprovance.biometrics.biometricsapi.services.AbstractService;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyHeartRate;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyMovementData;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.DailyUserSummary;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepDTO;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.DailySleepData;
-import com.derekprovance.biometrics.biometricsapi.services.garmin.DTO.dailySleepData.SleepMovementDTO;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.DailyHeartRate;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.DailyMovementData;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.DailyUserSummary;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.DailySleepDTO;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.DailySleepData;
+import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.SleepMovementDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
