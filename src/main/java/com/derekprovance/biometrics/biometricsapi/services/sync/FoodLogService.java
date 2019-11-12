@@ -1,10 +1,11 @@
-package com.derekprovance.biometrics.biometricsapi.services.fitbit;
+package com.derekprovance.biometrics.biometricsapi.services.sync;
 
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealLog;
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealLogRepository;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.FitbitFoodEndpointDTO;
 import com.derekprovance.biometrics.biometricsapi.services.fitbit.DTO.meals.MealEntryDTO;
+import com.derekprovance.biometrics.biometricsapi.services.fitbit.FitBitAPIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

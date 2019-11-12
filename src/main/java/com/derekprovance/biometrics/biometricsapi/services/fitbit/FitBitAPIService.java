@@ -27,14 +27,14 @@ public class FitBitAPIService extends AbstractService {
         this.fitbitAccessTokenService = fitbitAccessTokenService;
     }
 
-    FitbitFoodEndpointDTO performFoodApiCall(LocalDate date) throws CredentialException {
+    public FitbitFoodEndpointDTO performFoodApiCall(LocalDate date) throws CredentialException {
         String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 
         return (FitbitFoodEndpointDTO) performApiCall(formatEndpoint(FOOD_LOG_API, dateStr), FitbitFoodEndpointDTO.class);
     }
 
-    WaterLogDTO performWaterLog(LocalDate date) throws CredentialException {
+    public WaterLogDTO performWaterLog(LocalDate date) throws CredentialException {
         String dateStr = convertDateToString(date);
         log.info("Calling FitBit API for food data entries on " + dateStr);
 
