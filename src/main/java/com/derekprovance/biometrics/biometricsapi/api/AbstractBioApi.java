@@ -15,10 +15,10 @@ abstract public class AbstractBioApi extends AbstractApiController {
 
     @RequestMapping(value = "/{requestId}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> get(@PathVariable Integer requestId) {
+    public ResponseEntity<?> get(@PathVariable Integer requestId) {
         final Object entity = getRepository().findById(requestId)
                 .orElseThrow(() -> new EntityNotFoundException("Not Found: " + requestId.toString()));
 
-        return ResponseEntity.ok().body(gson.toJson(entity));
+        return ResponseEntity.ok().body(entity);
     }
 }

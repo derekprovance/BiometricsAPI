@@ -9,5 +9,4 @@ import java.util.List;
 public interface SleepRepository extends CrudRepository<Sleep, Integer> {
     Sleep findBySleepStartBetween(LocalDateTime start, LocalDateTime end);
     List<Sleep> findAllBySleepStartBetween(LocalDateTime start, LocalDateTime end);
-
 }

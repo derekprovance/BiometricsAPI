@@ -19,7 +19,7 @@ public class MedicalLogController extends AbstractBioDateMultipleEntityApi {
         this.medicalLogRepository = medicalLogRepository;
     }
 
-    @RequestMapping(value = "", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public Iterable<MedicalLog> getActiveMedicalLogEntries() {
         return medicalLogRepository.findAllByStatus(Status.ACTIVE);
     }
@@ -33,6 +33,21 @@ public class MedicalLogController extends AbstractBioDateMultipleEntityApi {
         newEntry.setStatus(Status.ACTIVE);
 
         return medicalLogRepository.save(newEntry);
+    }
+
+    @RequestMapping(value = "/{logId}/symptom", method= RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    public void addSymptom(@PathVariable Integer logId) {
+        //TODO - implement
+    }
+
+    @RequestMapping(value = "/{logId}/symptom/{symptomId}", method=RequestMethod.DELETE, produces=MediaType.APPLICATION_JSON_VALUE)
+    public void removeSymptom(@PathVariable Integer logId, @PathVariable Integer symptomId) {
+        //TODO - implement
+    }
+
+    @RequestMapping(value = "/{logId}/symptom/{symptomId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+    public void getSpecificSymptom(@PathVariable Integer logId, @PathVariable Integer symptomId) {
+        //TODO - implement
     }
 
     protected MedicalLogRepository getRepository() {
