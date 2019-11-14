@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 
-public interface MealLogRepositoryGeneric extends GenericCrudDateRepository<MealLog, Integer> {
+public interface MealLogRepository extends GenericCrudDateRepository<MealLog, Integer> {
     MealLog findByLogId(Long logId);
 
     @Query(value = "SELECT MAX(meal_type_id) FROM biometrics.meal_log WHERE date = ?1", nativeQuery = true)

@@ -5,6 +5,6 @@ import com.derekprovance.biometrics.biometricsapi.database.entity.MedicalLog;
 
 import java.util.List;
 
-public interface MedicalLogRepositoryGeneric extends GenericCrudDateRepository<MedicalLog, Integer> {
+public interface MedicalLogRepository extends GenericCrudDateRepository<MedicalLog, Integer> {
     List<MedicalLog> findAllByStatus(Status status);
 }

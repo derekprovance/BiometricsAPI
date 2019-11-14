@@ -2,7 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.api.physio.movement;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractBioDateTimeMultipleEntityApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.Movement;
-import com.derekprovance.biometrics.biometricsapi.database.repository.MovementRepositoryGeneric;
+import com.derekprovance.biometrics.biometricsapi.database.repository.MovementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/movement-data")
 public class MovementController extends AbstractBioDateTimeMultipleEntityApi {
-    private final MovementRepositoryGeneric movementRepository;
+    private final MovementRepository movementRepository;
 
     @Autowired
-    public MovementController(MovementRepositoryGeneric movementRepository) {
+    public MovementController(MovementRepository movementRepository) {
         this.movementRepository = movementRepository;
     }
 
@@ -27,7 +27,7 @@ public class MovementController extends AbstractBioDateTimeMultipleEntityApi {
         return movementRepository.save(newEntry);
     }
 
-    protected MovementRepositoryGeneric getRepository() {
+    protected MovementRepository getRepository() {
         return this.movementRepository;
     }
 }

@@ -3,7 +3,7 @@ package com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar;
 import com.derekprovance.biometrics.biometricsapi.api.AbstractBioDateTimeMultipleEntityApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.AbstractDateTimeEntity;
 import com.derekprovance.biometrics.biometricsapi.database.entity.BloodSugar;
-import com.derekprovance.biometrics.biometricsapi.database.repository.BloodSugarRepositoryGeneric;
+import com.derekprovance.biometrics.biometricsapi.database.repository.BloodSugarRepository;
 import com.derekprovance.biometrics.biometricsapi.services.bloodSugarAnalysis.BloodSugarAnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/blood-sugar")
 public class BloodSugarController extends AbstractBioDateTimeMultipleEntityApi {
-    private final BloodSugarRepositoryGeneric bloodSugarRepository;
+    private final BloodSugarRepository bloodSugarRepository;
     private final BloodSugarAnalysisService bloodSugarAnalysisService;
 
     @Autowired
-    public BloodSugarController(BloodSugarRepositoryGeneric bloodSugarRepository, BloodSugarAnalysisService bloodSugarAnalysisService) {
+    public BloodSugarController(BloodSugarRepository bloodSugarRepository, BloodSugarAnalysisService bloodSugarAnalysisService) {
         this.bloodSugarRepository = bloodSugarRepository;
         this.bloodSugarAnalysisService = bloodSugarAnalysisService;
     }
@@ -43,7 +43,7 @@ public class BloodSugarController extends AbstractBioDateTimeMultipleEntityApi {
         return bloodSugarRepository.save(newEntry);
     }
 
-    protected BloodSugarRepositoryGeneric getRepository() {
+    protected BloodSugarRepository getRepository() {
         return this.bloodSugarRepository;
     }
 }

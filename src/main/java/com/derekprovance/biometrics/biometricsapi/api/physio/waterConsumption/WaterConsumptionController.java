@@ -2,7 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.api.physio.waterConsumption;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractBioDateSingleEntityApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.WaterConsumption;
-import com.derekprovance.biometrics.biometricsapi.database.repository.WaterConsumptionRepositoryGeneric;
+import com.derekprovance.biometrics.biometricsapi.database.repository.WaterConsumptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +11,11 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/water-consumption")
 public class WaterConsumptionController extends AbstractBioDateSingleEntityApi {
-    private final WaterConsumptionRepositoryGeneric waterConsumptionRepository;
+    private final WaterConsumptionRepository waterConsumptionRepository;
 
     @Autowired
     public WaterConsumptionController(
-            WaterConsumptionRepositoryGeneric waterConsumptionRepository
+            WaterConsumptionRepository waterConsumptionRepository
     ) {
         this.waterConsumptionRepository = waterConsumptionRepository;
     }
@@ -34,7 +34,7 @@ public class WaterConsumptionController extends AbstractBioDateSingleEntityApi {
         return waterConsumptionRepository.save(newEntry);
     }
 
-    protected WaterConsumptionRepositoryGeneric getRepository() {
+    protected WaterConsumptionRepository getRepository() {
         return this.waterConsumptionRepository;
     }
 }

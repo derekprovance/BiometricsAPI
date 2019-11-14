@@ -1,12 +1,12 @@
 package com.derekprovance.biometrics.biometricsapi.services.sync.garmin;
 
 import com.derekprovance.biometrics.biometricsapi.database.entity.DailyStatistics;
-import com.derekprovance.biometrics.biometricsapi.database.repository.DailyStatisticsRepositoryGeneric;
+import com.derekprovance.biometrics.biometricsapi.database.repository.DailyStatisticsRepository;
 import com.derekprovance.biometrics.biometricsapi.api.utility.garmin.ItemSyncCount;
 import com.derekprovance.biometrics.biometricsapi.database.entity.HeartRate;
-import com.derekprovance.biometrics.biometricsapi.database.repository.HeartRateRepositoryGeneric;
+import com.derekprovance.biometrics.biometricsapi.database.repository.HeartRateRepository;
 import com.derekprovance.biometrics.biometricsapi.database.entity.Movement;
-import com.derekprovance.biometrics.biometricsapi.database.repository.MovementRepositoryGeneric;
+import com.derekprovance.biometrics.biometricsapi.database.repository.MovementRepository;
 import com.derekprovance.biometrics.biometricsapi.database.entity.Sleep;
 import com.derekprovance.biometrics.biometricsapi.database.repository.SleepRepository;
 import com.derekprovance.biometrics.biometricsapi.database.entity.SleepMovement;
@@ -32,9 +32,9 @@ import java.util.List;
 @Service
 public class GarminSyncService extends AbstractService {
     private final GarminApiService garminApiService;
-    private final DailyStatisticsRepositoryGeneric dailyStatisticsRepository;
-    private final HeartRateRepositoryGeneric heartRateRepository;
-    private final MovementRepositoryGeneric movementRepository;
+    private final DailyStatisticsRepository dailyStatisticsRepository;
+    private final HeartRateRepository heartRateRepository;
+    private final MovementRepository movementRepository;
     private final SleepMovementRepository sleepMovementRepository;
     private final SleepRepository sleepRepository;
 
@@ -43,9 +43,9 @@ public class GarminSyncService extends AbstractService {
     @Autowired
     public GarminSyncService(
             GarminApiService garminApiService,
-            DailyStatisticsRepositoryGeneric dailyStatisticsRepository,
-            HeartRateRepositoryGeneric heartRateRepository,
-            MovementRepositoryGeneric movementRepository,
+            DailyStatisticsRepository dailyStatisticsRepository,
+            HeartRateRepository heartRateRepository,
+            MovementRepository movementRepository,
             SleepMovementRepository sleepMovementRepository,
             SleepRepository sleepRepository
     ) {

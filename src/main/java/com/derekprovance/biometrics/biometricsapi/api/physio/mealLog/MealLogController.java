@@ -2,7 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.api.physio.mealLog;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractBioDateMultipleEntityApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.MealLog;
-import com.derekprovance.biometrics.biometricsapi.database.repository.MealLogRepositoryGeneric;
+import com.derekprovance.biometrics.biometricsapi.database.repository.MealLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +12,10 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/meal")
 public class MealLogController extends AbstractBioDateMultipleEntityApi {
-    private final MealLogRepositoryGeneric mealLogRepository;
+    private final MealLogRepository mealLogRepository;
 
     @Autowired
-    public MealLogController(MealLogRepositoryGeneric mealLogRepository) {
+    public MealLogController(MealLogRepository mealLogRepository) {
         this.mealLogRepository = mealLogRepository;
     }
 
@@ -32,7 +32,7 @@ public class MealLogController extends AbstractBioDateMultipleEntityApi {
         return mealLogRepository.save(Objects.requireNonNullElse(existingDateEntry, newEntry));
     }
 
-    protected MealLogRepositoryGeneric getRepository() {
+    protected MealLogRepository getRepository() {
         return this.mealLogRepository;
     }
 }

@@ -1,7 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.services.sync;
 
 import com.derekprovance.biometrics.biometricsapi.database.entity.WaterConsumption;
-import com.derekprovance.biometrics.biometricsapi.database.repository.WaterConsumptionRepositoryGeneric;
+import com.derekprovance.biometrics.biometricsapi.database.repository.WaterConsumptionRepository;
 import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.DTO.water.WaterLogDTO;
 import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.FitBitAPIService;
 import org.slf4j.Logger;
@@ -17,11 +17,11 @@ public class WaterLogService {
 
     private static final Logger log = LoggerFactory.getLogger(WaterLogService.class);
 
-    private final WaterConsumptionRepositoryGeneric waterConsumptionRepository;
+    private final WaterConsumptionRepository waterConsumptionRepository;
     private final FitBitAPIService fitbitAPIService;
 
     @Autowired
-    public WaterLogService(WaterConsumptionRepositoryGeneric waterConsumptionRepository, FitBitAPIService fitbitAPIService) {
+    public WaterLogService(WaterConsumptionRepository waterConsumptionRepository, FitBitAPIService fitbitAPIService) {
         this.waterConsumptionRepository = waterConsumptionRepository;
         this.fitbitAPIService = fitbitAPIService;
     }
