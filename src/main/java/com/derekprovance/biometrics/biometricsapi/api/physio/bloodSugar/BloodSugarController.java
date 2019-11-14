@@ -1,7 +1,9 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar;
 
 import com.derekprovance.biometrics.biometricsapi.api.generic.datetime.AbstractDateTimeMultipleEntityApi;
-import com.derekprovance.biometrics.biometricsapi.api.generic.DateTimeEntity;
+import com.derekprovance.biometrics.biometricsapi.database.entity.AbstractDateTimeEntity;
+import com.derekprovance.biometrics.biometricsapi.database.entity.BloodSugar;
+import com.derekprovance.biometrics.biometricsapi.database.repository.BloodSugarRepositoryGeneric;
 import com.derekprovance.biometrics.biometricsapi.services.bloodSugarAnalysis.BloodSugarAnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,11 +16,11 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/blood-sugar")
 public class BloodSugarController extends AbstractDateTimeMultipleEntityApi {
-    private final BloodSugarRepository bloodSugarRepository;
+    private final BloodSugarRepositoryGeneric bloodSugarRepository;
     private final BloodSugarAnalysisService bloodSugarAnalysisService;
 
     @Autowired
-    public BloodSugarController(BloodSugarRepository bloodSugarRepository, BloodSugarAnalysisService bloodSugarAnalysisService) {
+    public BloodSugarController(BloodSugarRepositoryGeneric bloodSugarRepository, BloodSugarAnalysisService bloodSugarAnalysisService) {
         this.bloodSugarRepository = bloodSugarRepository;
         this.bloodSugarAnalysisService = bloodSugarAnalysisService;
     }
@@ -33,7 +35,7 @@ public class BloodSugarController extends AbstractDateTimeMultipleEntityApi {
     }
 
     @PostMapping("")
-    public DateTimeEntity newEntry(@RequestBody BloodSugar newEntry) {
+    public AbstractDateTimeEntity newEntry(@RequestBody BloodSugar newEntry) {
         if(newEntry.getDatetime() == null) {
             newEntry.setDatetime(LocalDateTime.now());
         }
@@ -41,7 +43,7 @@ public class BloodSugarController extends AbstractDateTimeMultipleEntityApi {
         return bloodSugarRepository.save(newEntry);
     }
 
-    protected BloodSugarRepository getRepository() {
+    protected BloodSugarRepositoryGeneric getRepository() {
         return this.bloodSugarRepository;
     }
 }

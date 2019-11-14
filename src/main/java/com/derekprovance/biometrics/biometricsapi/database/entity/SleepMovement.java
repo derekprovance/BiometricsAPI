@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.physio.sleepMovement;
+package com.derekprovance.biometrics.biometricsapi.database.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

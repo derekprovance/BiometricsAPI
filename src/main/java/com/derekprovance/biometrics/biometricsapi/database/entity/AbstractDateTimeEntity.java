@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.generic;
+package com.derekprovance.biometrics.biometricsapi.database.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public class DateTimeEntity {
+public class AbstractDateTimeEntity {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 

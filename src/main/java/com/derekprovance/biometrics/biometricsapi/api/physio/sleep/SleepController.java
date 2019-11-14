@@ -1,6 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.sleep;
 
 import com.derekprovance.biometrics.biometricsapi.api.AbstractDataTrackingApi;
+import com.derekprovance.biometrics.biometricsapi.database.entity.Sleep;
+import com.derekprovance.biometrics.biometricsapi.database.repository.SleepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;

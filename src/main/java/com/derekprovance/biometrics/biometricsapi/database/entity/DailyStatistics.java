@@ -1,11 +1,9 @@
-package com.derekprovance.biometrics.biometricsapi.api.physio.dailyStatistics;
-
-import com.derekprovance.biometrics.biometricsapi.api.generic.DateEntity;
+package com.derekprovance.biometrics.biometricsapi.database.entity;
 
 import javax.persistence.*;
 
 @Entity
-public class DailyStatistics extends DateEntity {
+public class DailyStatistics extends AbstractDateEntity {
     private Integer maxHr;
     private Integer minHr;
     private Integer restingHr;

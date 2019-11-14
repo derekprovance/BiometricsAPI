@@ -1,5 +1,6 @@
-package com.derekprovance.biometrics.biometricsapi.api.physio.sleepMovement;
+package com.derekprovance.biometrics.biometricsapi.database.repository;
 
+import com.derekprovance.biometrics.biometricsapi.database.entity.SleepMovement;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDateTime;

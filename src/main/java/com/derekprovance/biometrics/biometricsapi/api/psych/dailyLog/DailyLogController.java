@@ -1,6 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.api.psych.dailyLog;
 
 import com.derekprovance.biometrics.biometricsapi.api.generic.date.AbstractDateSingleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.database.entity.DailyLog;
+import com.derekprovance.biometrics.biometricsapi.database.repository.DailyLogRepositoryGeneric;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +12,10 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/daily-log")
 public class DailyLogController extends AbstractDateSingleEntityApi {
-    private final DailyLogRepository dailyLogRepository;
+    private final DailyLogRepositoryGeneric dailyLogRepository;
 
     @Autowired
-    public DailyLogController(DailyLogRepository dailyLogRepository) {
+    public DailyLogController(DailyLogRepositoryGeneric dailyLogRepository) {
         this.dailyLogRepository = dailyLogRepository;
     }
 
@@ -31,7 +33,7 @@ public class DailyLogController extends AbstractDateSingleEntityApi {
         return dailyLogRepository.save(Objects.requireNonNullElse(existingDateEntry, newEntry));
     }
 
-    protected DailyLogRepository getRepository() {
+    protected DailyLogRepositoryGeneric getRepository() {
         return this.dailyLogRepository;
     }
 }

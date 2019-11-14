@@ -1,11 +1,11 @@
-package com.derekprovance.biometrics.biometricsapi.api.generic;
+package com.derekprovance.biometrics.biometricsapi.database.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @MappedSuperclass
-public class DateEntity {
+public class AbstractDateEntity {
     private @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) Integer id;
 

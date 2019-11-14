@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.services.bloodSugarAnalysis;
 
-import com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar.BloodSugar;
+import com.derekprovance.biometrics.biometricsapi.database.entity.BloodSugar;
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
 
 public class BloodSugarAnalysis {

@@ -1,11 +1,9 @@
-package com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar;
-
-import com.derekprovance.biometrics.biometricsapi.api.generic.DateTimeEntity;
+package com.derekprovance.biometrics.biometricsapi.database.entity;
 
 import javax.persistence.Entity;
 
 @Entity
-public class BloodSugar extends DateTimeEntity {
+public class BloodSugar extends AbstractDateTimeEntity {
     private Integer mgDl;
     private String notes;
 

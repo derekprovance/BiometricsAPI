@@ -1,8 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.services.bloodSugarAnalysis;
 
-import com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar.BloodSugar;
+import com.derekprovance.biometrics.biometricsapi.database.entity.BloodSugar;
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
-import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealLogRepository;
+import com.derekprovance.biometrics.biometricsapi.database.repository.MealLogRepositoryGeneric;
 import com.derekprovance.biometrics.biometricsapi.services.MealBlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class BloodSugarAnalysisService {
 
-    private MealLogRepository mealLogRepository;
+    private MealLogRepositoryGeneric mealLogRepository;
 
     @Autowired
-    public BloodSugarAnalysisService(MealLogRepository mealLogRepository) {
+    public BloodSugarAnalysisService(MealLogRepositoryGeneric mealLogRepository) {
         this.mealLogRepository = mealLogRepository;
     }
 

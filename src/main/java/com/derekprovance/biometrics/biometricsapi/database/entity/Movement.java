@@ -1,11 +1,9 @@
-package com.derekprovance.biometrics.biometricsapi.api.physio.movement;
-
-import com.derekprovance.biometrics.biometricsapi.api.generic.DateTimeEntity;
+package com.derekprovance.biometrics.biometricsapi.database.entity;
 
 import javax.persistence.Entity;
 
 @Entity
-public class Movement extends DateTimeEntity {
+public class Movement extends AbstractDateTimeEntity {
     private Double movement;
 
     public Double getMovement() {

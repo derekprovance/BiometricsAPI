@@ -1,6 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.dailyStatistics;
 
 import com.derekprovance.biometrics.biometricsapi.api.generic.date.AbstractDateSingleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.database.entity.DailyStatistics;
+import com.derekprovance.biometrics.biometricsapi.database.repository.DailyStatisticsRepositoryGeneric;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +12,10 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/daily-statistics")
 public class DailyStatisticsController extends AbstractDateSingleEntityApi {
-    private final DailyStatisticsRepository dailyStatisticsRepository;
+    private final DailyStatisticsRepositoryGeneric dailyStatisticsRepository;
 
     @Autowired
-    public DailyStatisticsController(DailyStatisticsRepository dailyStatisticsRepository) {
+    public DailyStatisticsController(DailyStatisticsRepositoryGeneric dailyStatisticsRepository) {
         this.dailyStatisticsRepository = dailyStatisticsRepository;
     }
 
@@ -32,7 +34,7 @@ public class DailyStatisticsController extends AbstractDateSingleEntityApi {
     }
 
     @Override
-    protected DailyStatisticsRepository getRepository() {
+    protected DailyStatisticsRepositoryGeneric getRepository() {
         return this.dailyStatisticsRepository;
     }
 }

@@ -1,8 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.services.sync;
 
 import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealBlock;
-import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealLog;
-import com.derekprovance.biometrics.biometricsapi.api.physio.mealLog.MealLogRepository;
+import com.derekprovance.biometrics.biometricsapi.database.entity.MealLog;
+import com.derekprovance.biometrics.biometricsapi.database.repository.MealLogRepositoryGeneric;
 import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.DTO.meals.FitbitFoodEndpointDTO;
 import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.DTO.meals.MealEntryDTO;
 import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.FitBitAPIService;
@@ -21,11 +21,11 @@ public class FoodLogService {
 
     private static final Logger log = LoggerFactory.getLogger(FoodLogService.class);
 
-    private final MealLogRepository mealLogRepository;
+    private final MealLogRepositoryGeneric mealLogRepository;
     private final FitBitAPIService fitbitAPIService;
 
     @Autowired
-    public FoodLogService(MealLogRepository mealLogRepository, FitBitAPIService fitbitAPIService) {
+    public FoodLogService(MealLogRepositoryGeneric mealLogRepository, FitBitAPIService fitbitAPIService) {
         this.mealLogRepository = mealLogRepository;
         this.fitbitAPIService = fitbitAPIService;
     }
