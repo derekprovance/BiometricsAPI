@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.waterConsumption;
 
-import com.derekprovance.biometrics.biometricsapi.api.generic.date.AbstractDateSingleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.AbstractBioDateSingleEntityApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.WaterConsumption;
 import com.derekprovance.biometrics.biometricsapi.database.repository.WaterConsumptionRepositoryGeneric;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/water-consumption")
-public class WaterConsumptionController extends AbstractDateSingleEntityApi {
+public class WaterConsumptionController extends AbstractBioDateSingleEntityApi {
     private final WaterConsumptionRepositoryGeneric waterConsumptionRepository;
 
     @Autowired

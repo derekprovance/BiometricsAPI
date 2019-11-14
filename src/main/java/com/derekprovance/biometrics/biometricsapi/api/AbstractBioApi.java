@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityNotFoundException;
 
-abstract public class AbstractDataTrackingApi extends AbstractApiController {
+abstract public class AbstractBioApi extends AbstractApiController {
     protected abstract CrudRepository<?, Integer> getRepository();
 
     @RequestMapping(value = "/{requestId}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)

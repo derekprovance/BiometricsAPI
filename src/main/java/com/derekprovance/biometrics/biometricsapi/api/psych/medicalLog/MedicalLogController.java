@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.psych.medicalLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.generic.date.AbstractDateMultipleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.AbstractBioDateMultipleEntityApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.MedicalLog;
 import com.derekprovance.biometrics.biometricsapi.database.repository.MedicalLogRepositoryGeneric;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/medical-log")
-public class MedicalLogController extends AbstractDateMultipleEntityApi {
+public class MedicalLogController extends AbstractBioDateMultipleEntityApi {
     private final MedicalLogRepositoryGeneric medicalLogRepository;
 
     @Autowired

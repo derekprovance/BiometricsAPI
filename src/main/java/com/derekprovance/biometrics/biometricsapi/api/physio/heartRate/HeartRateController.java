@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.heartRate;
 
-import com.derekprovance.biometrics.biometricsapi.api.generic.datetime.AbstractDateTimeMultipleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.AbstractBioDateTimeMultipleEntityApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.HeartRate;
 import com.derekprovance.biometrics.biometricsapi.database.repository.HeartRateRepositoryGeneric;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/hr-data")
-public class HeartRateController extends AbstractDateTimeMultipleEntityApi {
+public class HeartRateController extends AbstractBioDateTimeMultipleEntityApi {
     private final HeartRateRepositoryGeneric heartRateRepository;
 
     @Autowired

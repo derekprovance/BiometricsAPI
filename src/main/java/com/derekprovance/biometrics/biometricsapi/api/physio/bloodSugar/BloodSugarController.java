@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.bloodSugar;
 
-import com.derekprovance.biometrics.biometricsapi.api.generic.datetime.AbstractDateTimeMultipleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.AbstractBioDateTimeMultipleEntityApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.AbstractDateTimeEntity;
 import com.derekprovance.biometrics.biometricsapi.database.entity.BloodSugar;
 import com.derekprovance.biometrics.biometricsapi.database.repository.BloodSugarRepositoryGeneric;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/blood-sugar")
-public class BloodSugarController extends AbstractDateTimeMultipleEntityApi {
+public class BloodSugarController extends AbstractBioDateTimeMultipleEntityApi {
     private final BloodSugarRepositoryGeneric bloodSugarRepository;
     private final BloodSugarAnalysisService bloodSugarAnalysisService;
 

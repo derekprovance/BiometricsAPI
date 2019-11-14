@@ -1,6 +1,5 @@
-package com.derekprovance.biometrics.biometricsapi.api.generic.datetime;
+package com.derekprovance.biometrics.biometricsapi.api;
 
-import com.derekprovance.biometrics.biometricsapi.api.AbstractDataTrackingApi;
 import com.derekprovance.biometrics.biometricsapi.database.repository.GenericCrudDateTimeRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-abstract public class AbstractDateTimeMultipleEntityApi extends AbstractDataTrackingApi {
+abstract public class AbstractBioDateTimeMultipleEntityApi extends AbstractBioApi {
     protected abstract GenericCrudDateTimeRepository<?, Integer> getRepository();
 
     @RequestMapping(value="/date/{date}", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

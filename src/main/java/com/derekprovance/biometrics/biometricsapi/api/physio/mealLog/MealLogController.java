@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.mealLog;
 
-import com.derekprovance.biometrics.biometricsapi.api.generic.date.AbstractDateMultipleEntityApi;
+import com.derekprovance.biometrics.biometricsapi.api.AbstractBioDateMultipleEntityApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.MealLog;
 import com.derekprovance.biometrics.biometricsapi.database.repository.MealLogRepositoryGeneric;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/meal")
-public class MealLogController extends AbstractDateMultipleEntityApi {
+public class MealLogController extends AbstractBioDateMultipleEntityApi {
     private final MealLogRepositoryGeneric mealLogRepository;
 
     @Autowired

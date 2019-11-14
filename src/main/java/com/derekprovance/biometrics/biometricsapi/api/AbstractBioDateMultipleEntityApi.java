@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.api.generic.date;
+package com.derekprovance.biometrics.biometricsapi.api;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -11,7 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
-abstract public class AbstractDateMultipleEntityApi extends AbstractDateApi {
+abstract public class AbstractBioDateMultipleEntityApi extends AbstractBioDateApi {
     @RequestMapping(value="/date/{date}", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getAllByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date

@@ -1,6 +1,6 @@
 package com.derekprovance.biometrics.biometricsapi.api.physio.sleep;
 
-import com.derekprovance.biometrics.biometricsapi.api.AbstractDataTrackingApi;
+import com.derekprovance.biometrics.biometricsapi.api.AbstractBioApi;
 import com.derekprovance.biometrics.biometricsapi.database.entity.Sleep;
 import com.derekprovance.biometrics.biometricsapi.database.repository.SleepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/sleep")
-public class SleepController extends AbstractDataTrackingApi {
+public class SleepController extends AbstractBioApi {
     private final SleepRepository sleepRepository;
 
     @Autowired
