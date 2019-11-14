@@ -52,6 +52,16 @@ public class MedicalLogController extends AbstractBioDateMultipleEntityApi {
 
     @RequestMapping(value = "/{logId}/symptom/{symptomId}", method=RequestMethod.DELETE, produces=MediaType.APPLICATION_JSON_VALUE)
     public void removeSymptom(@PathVariable Integer logId, @PathVariable Integer symptomId) {
+        Symptom symptom = getSymptomIfExistsInMedicalLog(logId, symptomId);
+        symptomRepository.deleteById(symptom.getId());
+    }
+
+    @RequestMapping(value = "/{logId}/symptom/{symptomId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+    public Symptom getSpecificSymptom(@PathVariable Integer logId, @PathVariable Integer symptomId) {
+        return getSymptomIfExistsInMedicalLog(logId, symptomId);
+    }
+
+    private Symptom getSymptomIfExistsInMedicalLog(Integer logId, Integer symptomId) {
         final MedicalLog log = medicalLogRepository.findById(logId)
                 .orElseThrow(() -> new EntityNotFoundException("Not Found: " + logId.toString()));
 
@@ -59,13 +69,10 @@ public class MedicalLogController extends AbstractBioDateMultipleEntityApi {
                 .orElseThrow(() -> new EntityNotFoundException("Not Found: " + symptomId.toString()));
 
         if(log.getSymptoms().contains(symptom)) {
-            symptomRepository.deleteById(symptom.getId());
+            return symptom;
         }
-    }
 
-    @RequestMapping(value = "/{logId}/symptom/{symptomId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-    public void getSpecificSymptom(@PathVariable Integer logId, @PathVariable Integer symptomId) {
-        //TODO - implement
+        throw new EntityNotFoundException("Not Found: " + symptomId.toString());
     }
 
     protected MedicalLogRepository getRepository() {
