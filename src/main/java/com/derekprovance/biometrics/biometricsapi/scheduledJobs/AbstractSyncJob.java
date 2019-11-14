@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.jobs;
+package com.derekprovance.biometrics.biometricsapi.scheduledJobs;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

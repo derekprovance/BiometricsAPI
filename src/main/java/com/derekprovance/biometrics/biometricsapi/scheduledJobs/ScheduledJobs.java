@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.jobs;
+package com.derekprovance.biometrics.biometricsapi.scheduledJobs;
 
 import com.derekprovance.biometrics.biometricsapi.services.sync.fitbit.FitBitAccessTokenService;
 import com.derekprovance.biometrics.biometricsapi.services.sync.FoodLogService;

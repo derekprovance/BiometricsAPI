@@ -1,4 +1,4 @@
-package com.derekprovance.biometrics.biometricsapi.jobs;
+package com.derekprovance.biometrics.biometricsapi.scheduledJobs;
 
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.GarminConnectAuthService;
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.GarminSyncService;
