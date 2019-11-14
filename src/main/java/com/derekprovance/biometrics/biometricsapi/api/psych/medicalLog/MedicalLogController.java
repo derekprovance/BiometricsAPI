@@ -52,7 +52,15 @@ public class MedicalLogController extends AbstractBioDateMultipleEntityApi {
 
     @RequestMapping(value = "/{logId}/symptom/{symptomId}", method=RequestMethod.DELETE, produces=MediaType.APPLICATION_JSON_VALUE)
     public void removeSymptom(@PathVariable Integer logId, @PathVariable Integer symptomId) {
-        //TODO - implement
+        final MedicalLog log = medicalLogRepository.findById(logId)
+                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + logId.toString()));
+
+        final Symptom symptom = symptomRepository.findById(symptomId)
+                .orElseThrow(() -> new EntityNotFoundException("Not Found: " + symptomId.toString()));
+
+        if(log.getSymptoms().contains(symptom)) {
+            symptomRepository.deleteById(symptom.getId());
+        }
     }
 
     @RequestMapping(value = "/{logId}/symptom/{symptomId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)

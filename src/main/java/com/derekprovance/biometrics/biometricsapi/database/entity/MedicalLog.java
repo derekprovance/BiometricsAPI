@@ -18,7 +18,7 @@ public class MedicalLog extends AbstractDateEntity {
 
     private Status status;
 
-    @OneToMany(mappedBy = "medicalLog", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "medicalLog")
     private Set<Symptom> symptoms;
 
     private LocalDateTime updated = LocalDateTime.now();
