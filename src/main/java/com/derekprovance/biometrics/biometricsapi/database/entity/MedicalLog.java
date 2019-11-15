@@ -11,7 +11,10 @@ import java.util.Set;
 public class MedicalLog extends AbstractDateEntity {
     private LocalDate dateChanged;
 
+    private String name;
+
     private String snoMedCtCode;
+
     private String icdCode;
 
     private String notes;
@@ -25,6 +28,14 @@ public class MedicalLog extends AbstractDateEntity {
 
     @PreUpdate
     public void setLastUpdate() {  this.updated = LocalDateTime.now(); }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public LocalDate getDateChanged() {
         return dateChanged;
