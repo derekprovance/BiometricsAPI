@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.derekprovance.biometrics'
-version = '1.0.0-20190505'
+version = '1.0.1-20191115'
 sourceCompatibility = '11'
 
 repositories {
