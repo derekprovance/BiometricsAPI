@@ -19,7 +19,7 @@ abstract public class AbstractBioDateTimeMultipleEntityApi extends AbstractBioAp
     }
 
     @RequestMapping(value="/date/{startDate}/{endDate}", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<?> getByDateBetween(
+    public Iterable<?> getByDatetimeBetween(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {

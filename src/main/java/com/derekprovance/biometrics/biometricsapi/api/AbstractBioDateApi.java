@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.time.LocalDate;
 
 abstract class AbstractBioDateApi extends AbstractBioApi {
-
     protected abstract GenericCrudDateRepository<?, Integer> getRepository();
 
     @RequestMapping(value="/date/{startDate}/{endDate}", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<?> getBetweenDate(
+    public Iterable<?> getByDateBetween(
             @PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
