@@ -1,6 +1,7 @@
 package com.derekprovance.biometrics.biometricsapi.services.sync.garmin.endpoints;
 
 import com.derekprovance.biometrics.biometricsapi.database.entity.Sleep;
+import com.derekprovance.biometrics.biometricsapi.database.entity.SleepLevel;
 import com.derekprovance.biometrics.biometricsapi.database.entity.SleepMovement;
 import com.derekprovance.biometrics.biometricsapi.database.repository.SleepRepository;
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.DailySleepDTO;
@@ -19,12 +20,14 @@ import java.util.List;
 public class GarminSleep {
     private final SleepRepository sleepRepository;
     private final GarminSleepMovement sleepMovement;
+    private final GarminSleepLevel sleepLevel;
     private final GarminApiService garminApiService;
 
     @Autowired
-    public GarminSleep(SleepRepository sleepRepository, GarminSleepMovement sleepMovement, GarminApiService garminApiService) {
+    public GarminSleep(SleepRepository sleepRepository, GarminSleepMovement sleepMovement, GarminSleepLevel sleepLevel, GarminApiService garminApiService) {
         this.sleepRepository = sleepRepository;
         this.sleepMovement = sleepMovement;
+        this.sleepLevel = sleepLevel;
         this.garminApiService = garminApiService;
     }
 
@@ -33,8 +36,9 @@ public class GarminSleep {
 
         syncSleepMeta(dailySleepData.getDailySleepDTO(), date);
         final List<SleepMovement> movementsInSleep = sleepMovement.syncSleepMovement(dailySleepData.getSleepMovement(), date);
+        final List<SleepLevel> sleepLevels = sleepLevel.syncSleepLevel(dailySleepData.getSleepLevels(), date);
 
-        return movementsInSleep.size();
+        return movementsInSleep.size() + sleepLevels.size();
     }
 
     private void syncSleepMeta(DailySleepDTO dailySleepDTO, LocalDate date) {

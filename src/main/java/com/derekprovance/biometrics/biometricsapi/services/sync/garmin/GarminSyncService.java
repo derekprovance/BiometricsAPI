@@ -41,7 +41,7 @@ public class GarminSyncService extends AbstractService {
 
         itemSyncCount.setHrData(garminHrData.syncHrData(date).size());
         itemSyncCount.setMovementData(garminMovement.syncMovementData(date).size());
-        itemSyncCount.setSleepMovementData(garminSleep.syncSleepData(date));
+        itemSyncCount.setSleepData(garminSleep.syncSleepData(date));
 
         return itemSyncCount;
     }

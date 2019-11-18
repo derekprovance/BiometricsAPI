@@ -6,7 +6,7 @@ public class ItemSyncCount {
     private LocalDate date;
     private Integer hrData;
     private Integer movementData;
-    private Integer sleepMovementData;
+    private Integer sleepData;
 
     public LocalDate getDate() {
         return date;
@@ -32,11 +32,11 @@ public class ItemSyncCount {
         this.movementData = movementData;
     }
 
-    public Integer getSleepMovementData() {
-        return sleepMovementData;
+    public Integer getSleepData() {
+        return sleepData;
     }
 
-    public void setSleepMovementData(Integer sleepMovementData) {
-        this.sleepMovementData = sleepMovementData;
+    public void setSleepData(Integer sleepData) {
+        this.sleepData = sleepData;
     }
 }
