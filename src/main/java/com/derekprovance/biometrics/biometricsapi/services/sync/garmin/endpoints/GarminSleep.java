@@ -2,6 +2,7 @@ package com.derekprovance.biometrics.biometricsapi.services.sync.garmin.endpoint
 
 import com.derekprovance.biometrics.biometricsapi.database.entity.Sleep;
 import com.derekprovance.biometrics.biometricsapi.database.entity.SleepMovement;
+import com.derekprovance.biometrics.biometricsapi.database.repository.GenericCrudDateTimeRepository;
 import com.derekprovance.biometrics.biometricsapi.database.repository.SleepRepository;
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.DailySleepDTO;
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.DailySleepData;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.CredentialNotFoundException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -30,14 +32,17 @@ public class GarminSleep {
     public int syncSleepData(LocalDate date) throws CredentialNotFoundException {
         final DailySleepData dailySleepData = garminApiService.getDailySleepData(date);
 
-        syncSleepMeta(dailySleepData.getDailySleepDTO());
-        final List<SleepMovement> movementsInSleep = sleepMovement.syncSleepMovement(dailySleepData.getSleepMovement());
+        syncSleepMeta(dailySleepData.getDailySleepDTO(), date);
+        final List<SleepMovement> movementsInSleep = sleepMovement.syncSleepMovement(dailySleepData.getSleepMovement(), date);
 
         return movementsInSleep.size();
     }
 
-    private void syncSleepMeta(DailySleepDTO dailySleepDTO) {
-        Sleep sleep = new Sleep();
+    private void syncSleepMeta(DailySleepDTO dailySleepDTO, LocalDate date) {
+        Sleep sleep = sleepRepository.findBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        if(sleep == null) {
+            sleep = new Sleep();
+        }
 
         sleep.setAwakeSleep(dailySleepDTO.getAwakeSleepSeconds());
         sleep.setDeepSleep(dailySleepDTO.getDeepSleepSeconds());

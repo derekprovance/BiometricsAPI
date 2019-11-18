@@ -3,7 +3,7 @@ package com.derekprovance.biometrics.biometricsapi.database.entity;
 import javax.persistence.Entity;
 
 @Entity
-public class Movement extends AbstractDateTimeEntity {
+public class MovementData extends AbstractDateTimeEntity {
     private Double movement;
 
     public Double getMovement() {

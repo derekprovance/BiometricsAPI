@@ -46,7 +46,7 @@ public class FitBitController extends AbstractApiController {
 
         if(!fitBitEnabled) {
             map.put("status", HttpStatus.BAD_REQUEST.value());
-            map.put("message", "FitBit API access has been disabled.");
+            map.put("message", "FitBit API integration has been disabled.");
             return ResponseEntity.badRequest().body(gson.toJson(map));
         }
 

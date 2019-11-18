@@ -17,19 +17,18 @@ public class GarminSyncService extends AbstractService {
     private final GarminHrData garminHrData;
     private final GarminMovement garminMovement;
     private final GarminSleep garminSleep;
-    private final GarminSleepMovement garminSleepMovement;
     private final GarminDailyStatistics garminDailyStatistics;
 
     @Autowired
-    public GarminSyncService(GarminHrData garminHrData,
-                             GarminMovement garminMovement,
-                             GarminSleep garminSleep,
-                             GarminSleepMovement garminSleepMovement,
-                             GarminDailyStatistics garminDailyStatistics) {
+    public GarminSyncService(
+            GarminHrData garminHrData,
+            GarminMovement garminMovement,
+            GarminSleep garminSleep,
+            GarminDailyStatistics garminDailyStatistics
+    ) {
         this.garminHrData = garminHrData;
         this.garminMovement = garminMovement;
         this.garminSleep = garminSleep;
-        this.garminSleepMovement = garminSleepMovement;
         this.garminDailyStatistics = garminDailyStatistics;
     }
 

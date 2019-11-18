@@ -37,30 +37,12 @@ public class GarminController extends AbstractApiController {
         if(!garminEnabled) {
             Map<String, Object> map = new HashMap<>();
             map.put("status", HttpStatus.BAD_REQUEST.value());
-            map.put("message", "Garmin API access has been disabled.");
+            map.put("message", "Garmin API integration has been disabled.");
             return ResponseEntity.badRequest().body(gson.toJson(map));
         }
 
         final ItemSyncCount syncCount = garminSyncService.sync(date);
 
-        if(itemsWereSynced(syncCount)) {
-            return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(syncCount));
-        } else {
-            Map<String, Object> map = new HashMap<>();
-            map.put("status", HttpStatus.OK.value());
-            map.put("message", "No items available for sync");
-            return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(map));
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(syncCount));
     }
-
-    private Boolean itemsWereSynced(ItemSyncCount itemSyncCount) {
-        if(itemSyncCount == null) {
-            return false;
-        }
-
-        return itemSyncCount.getHrData() > 0 ||
-                itemSyncCount.getMovementData() > 0 ||
-                itemSyncCount.getSleepMovementData() > 0;
-    }
-
 }
