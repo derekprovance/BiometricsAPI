@@ -33,19 +33,19 @@ public class GarminApiService extends AbstractService {
         initializeHttpEntity();
     }
 
-    DailySleepData getDailySleepData(LocalDate date) throws CredentialNotFoundException {
+    public DailySleepData getDailySleepData(LocalDate date) throws CredentialNotFoundException {
         return (DailySleepData) performApiCall(formatEndpoint(DAILY_SLEEP_ENDPOINT, date), DailySleepData.class);
     }
 
-    DailyHeartRate getDailyHrData(LocalDate date) throws CredentialNotFoundException {
+    public DailyHeartRate getDailyHrData(LocalDate date) throws CredentialNotFoundException {
         return (DailyHeartRate) performApiCall(formatEndpoint(DAILY_HR_ENDPOINT, date), DailyHeartRate.class);
     }
 
-    DailyMovementData getDailyMovement(LocalDate date) throws CredentialNotFoundException {
+    public DailyMovementData getDailyMovement(LocalDate date) throws CredentialNotFoundException {
         return (DailyMovementData) performApiCall(formatEndpoint(DAILY_MOVEMENT_ENDPOINT, date), DailyMovementData.class);
     }
 
-    DailyUserSummary getUserSummary(LocalDate date) throws CredentialNotFoundException {
+    public DailyUserSummary getUserSummary(LocalDate date) throws CredentialNotFoundException {
         return (DailyUserSummary) performApiCall(formatEndpoint(USER_SUMMARY_ENDPOINT, date), DailyUserSummary.class);
     }
 
