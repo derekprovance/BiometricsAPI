@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class GarminHrData extends AbstractEndpoint {
@@ -27,7 +28,7 @@ public class GarminHrData extends AbstractEndpoint {
 
     public List<HeartRate> syncHrData(LocalDate date) throws CredentialNotFoundException {
         final DailyHeartRate dailyHrDataFromGarmin = garminApiService.getDailyHrData(date);
-        Object[][] heartRateValuesFromGarmin = dailyHrDataFromGarmin.getHeartRateValues();
+        Object[][] heartRateValuesFromGarmin = Objects.requireNonNullElse(dailyHrDataFromGarmin.getHeartRateValues(), new Object[][]{});
         List<LocalDateTime> existingHrDates = getListOfDateTimeEntries(date);
 
         List<HeartRate> hrData = new ArrayList<>();

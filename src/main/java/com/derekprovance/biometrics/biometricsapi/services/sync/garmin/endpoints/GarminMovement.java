@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class GarminMovement extends AbstractEndpoint {
@@ -27,7 +28,7 @@ public class GarminMovement extends AbstractEndpoint {
 
     public List<MovementData> syncMovementData(LocalDate date) throws CredentialNotFoundException {
         final DailyMovementData dailyMovement = garminApiService.getDailyMovement(date);
-        Object[][] dailyMovementValues = dailyMovement.getMovementValues();
+        Object[][] dailyMovementValues = Objects.requireNonNullElse(dailyMovement.getMovementValues(), new Object[][]{});
         List<LocalDateTime> existingDates = getListOfDateTimeEntries(date);
 
         List<MovementData> movementData = new ArrayList<>();
