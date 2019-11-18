@@ -30,7 +30,7 @@ public class SleepController extends AbstractBioApi {
     public Sleep getSleepDataByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        final Sleep bySleepStartBetween = sleepRepository.findBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        final Sleep bySleepStartBetween = sleepRepository.findFirstBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
         if(bySleepStartBetween == null) {
             throw new EntityNotFoundException();
         }

@@ -42,22 +42,23 @@ public class GarminSleep {
     }
 
     private void syncSleepMeta(DailySleepDTO dailySleepDTO, LocalDate date) {
-        Sleep sleep = sleepRepository.findBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
-        if(sleep == null) {
-            sleep = new Sleep();
+        Sleep sleep = null;
+        try {
+            sleep = sleepRepository.findFirstBySleepStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        } catch (Exception ex){
+            ex.printStackTrace();
         }
 
-        sleep.setAwakeSleep(dailySleepDTO.getAwakeSleepSeconds());
-        sleep.setDeepSleep(dailySleepDTO.getDeepSleepSeconds());
-        sleep.setLightSleep(dailySleepDTO.getLightSleepSeconds());
-        sleep.setRemSleep(dailySleepDTO.getRemSleepSeconds());
-        sleep.setSleepStart(dailySleepDTO.getSleepStartTimestampGMT().toLocalDateTime());
-        sleep.setSleepEnd(dailySleepDTO.getSleepEndTimestampGMT().toLocalDateTime());
+        if(sleep == null) {
+            sleep = new Sleep();
+            sleep.setAwakeSleep(dailySleepDTO.getAwakeSleepSeconds());
+            sleep.setDeepSleep(dailySleepDTO.getDeepSleepSeconds());
+            sleep.setLightSleep(dailySleepDTO.getLightSleepSeconds());
+            sleep.setRemSleep(dailySleepDTO.getRemSleepSeconds());
+            sleep.setSleepStart(dailySleepDTO.getSleepStartTimestampGMT().toLocalDateTime());
+            sleep.setSleepEnd(dailySleepDTO.getSleepEndTimestampGMT().toLocalDateTime());
 
-        try {
             sleepRepository.save(sleep);
-        } catch (DataAccessException ex) {
-            ex.printStackTrace();
         }
     }
 }

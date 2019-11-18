@@ -22,7 +22,7 @@ public class GarminDailyStatistics {
     }
 
     public void syncDailyStatistics(LocalDate date) throws CredentialNotFoundException {
-        DailyStatistics dailyStatisticsEntry = (DailyStatistics) dailyStatisticsRepository.findByDate(date);
+        DailyStatistics dailyStatisticsEntry = (DailyStatistics) dailyStatisticsRepository.findFirstByDate(date);
         if(dailyStatisticsEntry == null) {
             dailyStatisticsEntry = new DailyStatistics();
         }

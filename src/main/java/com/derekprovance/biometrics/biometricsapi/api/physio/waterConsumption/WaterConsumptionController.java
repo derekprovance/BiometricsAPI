@@ -26,7 +26,7 @@ public class WaterConsumptionController extends AbstractBioDateSingleEntityApi {
             newEntry.setDate(LocalDate.now());
         }
 
-        final WaterConsumption waterConsumption = (WaterConsumption) waterConsumptionRepository.findByDate(newEntry.getDate());
+        final WaterConsumption waterConsumption = (WaterConsumption) waterConsumptionRepository.findFirstByDate(newEntry.getDate());
         if(waterConsumption != null) {
             newEntry.setId(waterConsumption.getId());
         }

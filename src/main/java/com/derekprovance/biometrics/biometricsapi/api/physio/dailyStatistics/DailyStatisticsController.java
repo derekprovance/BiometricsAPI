@@ -25,7 +25,7 @@ public class DailyStatisticsController extends AbstractBioDateSingleEntityApi {
             newEntry.setDate(LocalDate.now());
         }
 
-        final DailyStatistics existingDateEntry = (DailyStatistics) dailyStatisticsRepository.findByDate(newEntry.getDate());
+        final DailyStatistics existingDateEntry = (DailyStatistics) dailyStatisticsRepository.findFirstByDate(newEntry.getDate());
         if(existingDateEntry != null) {
             newEntry.setId(existingDateEntry.getId());
         }

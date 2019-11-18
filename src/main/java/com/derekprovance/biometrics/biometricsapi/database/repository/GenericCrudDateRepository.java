@@ -10,7 +10,7 @@ import java.util.List;
 
 @NoRepositoryBean
 public interface GenericCrudDateRepository<T extends AbstractDateEntity, U extends Serializable> extends CrudRepository<T, U> {
-    Object findByDate(LocalDate date);
+    Object findFirstByDate(LocalDate date);
     List<?> findByDateBetween(LocalDate start, LocalDate end);
     List<?> findAllByDate(LocalDate date);
 }

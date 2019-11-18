@@ -15,7 +15,7 @@ abstract public class AbstractBioDateSingleEntityApi extends AbstractBioDateApi 
     public ResponseEntity<String> getByDate(
             @PathVariable(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-        final Object entity = getRepository().findByDate(date);
+        final Object entity = getRepository().findFirstByDate(date);
 
         if(entity == null) {
             throw new EntityNotFoundException("Not Found: " + date);

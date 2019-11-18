@@ -25,7 +25,7 @@ public class MealLogController extends AbstractBioDateMultipleEntityApi {
             newEntry.setDate(LocalDate.now());
         }
 
-        final MealLog existingDateEntry = (MealLog) mealLogRepository.findByDate(newEntry.getDate());
+        final MealLog existingDateEntry = (MealLog) mealLogRepository.findFirstByDate(newEntry.getDate());
         if(existingDateEntry != null) {
             newEntry.setId(existingDateEntry.getId());
         }

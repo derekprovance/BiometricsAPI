@@ -39,7 +39,7 @@ public class WaterLogService {
     }
 
     private void processEntries(LocalDate date, WaterLogDTO waterLogDTO) {
-        WaterConsumption waterConsumption = (WaterConsumption) waterConsumptionRepository.findByDate(date);
+        WaterConsumption waterConsumption = (WaterConsumption) waterConsumptionRepository.findFirstByDate(date);
 
         if(waterConsumption == null) {
             waterConsumption = new WaterConsumption();

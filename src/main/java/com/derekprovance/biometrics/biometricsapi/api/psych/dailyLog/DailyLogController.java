@@ -25,7 +25,7 @@ public class DailyLogController extends AbstractBioDateSingleEntityApi {
             newEntry.setDate(LocalDate.now());
         }
 
-        final DailyLog existingDateEntry = (DailyLog) dailyLogRepository.findByDate(newEntry.getDate());
+        final DailyLog existingDateEntry = (DailyLog) dailyLogRepository.findFirstByDate(newEntry.getDate());
         if(existingDateEntry != null) {
             newEntry.setId(existingDateEntry.getId());
         }
