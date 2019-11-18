@@ -1,10 +1,8 @@
 package com.derekprovance.biometrics.biometricsapi.services.sync.garmin.endpoints;
 
-import com.derekprovance.biometrics.biometricsapi.database.entity.AbstractDateTimeEntity;
 import com.derekprovance.biometrics.biometricsapi.database.entity.SleepMovement;
 import com.derekprovance.biometrics.biometricsapi.database.repository.SleepMovementRepository;
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.SleepMovementDTO;
-import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.GarminApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,9 @@ public class GarminSleepMovement {
         List<LocalDateTime> existingDates = getListOfDateTimeEntries(date);
 
         for(SleepMovementDTO sleepMovementValue : sleepMovement) {
-            if(existingDates.contains(sleepMovementValue.getStartGMT().toLocalDateTime())) {
+            LocalDateTime localDateTime = sleepMovementValue.getStartGMT().toLocalDateTime();
+
+            if(!existingDates.contains(localDateTime)) {
                 SleepMovement newEntry = new SleepMovement();
                 newEntry.setActivityLevel(sleepMovementValue.getActivityLevel());
                 newEntry.setStart(sleepMovementValue.getStartGMT().toLocalDateTime());
@@ -55,7 +56,7 @@ public class GarminSleepMovement {
 
     private List<LocalDateTime> getListOfDateTimeEntries(LocalDate date) {
         List<LocalDateTime> dates = new ArrayList<>();
-        List<SleepMovement> allByDatetimeBetween = sleepMovementRepository.findAllByStartBetween(date.atStartOfDay(), date.atTime(LocalTime.MAX));
+        List<SleepMovement> allByDatetimeBetween = sleepMovementRepository.findAllByStartBetween(date.minus(1, ChronoUnit.DAYS).atStartOfDay(), date.atTime(LocalTime.MAX));
 
         for(SleepMovement sleepMovement : allByDatetimeBetween) {
             dates.add(sleepMovement.getStart());

@@ -2,7 +2,6 @@ package com.derekprovance.biometrics.biometricsapi.services.sync.garmin.endpoint
 
 import com.derekprovance.biometrics.biometricsapi.database.entity.Sleep;
 import com.derekprovance.biometrics.biometricsapi.database.entity.SleepMovement;
-import com.derekprovance.biometrics.biometricsapi.database.repository.GenericCrudDateTimeRepository;
 import com.derekprovance.biometrics.biometricsapi.database.repository.SleepRepository;
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.DailySleepDTO;
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.DailySleepData;
