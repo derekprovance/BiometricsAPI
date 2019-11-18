@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.CredentialNotFoundException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class GarminSyncService extends AbstractService {
@@ -30,6 +31,22 @@ public class GarminSyncService extends AbstractService {
         this.garminMovement = garminMovement;
         this.garminSleep = garminSleep;
         this.garminDailyStatistics = garminDailyStatistics;
+    }
+
+    public ItemSyncCount sync(LocalDate start, LocalDate end) throws CredentialNotFoundException {
+        ItemSyncCount result = new ItemSyncCount();
+
+        LocalDate current = start;
+        while(end.compareTo(current) >= 0) {
+            ItemSyncCount tempSyncCount = sync(current);
+            result.setHrData(result.getHrData() + tempSyncCount.getHrData());
+            result.setMovementData(result.getMovementData() + tempSyncCount.getMovementData());
+            result.setSleepData(result.getSleepData() + tempSyncCount.getSleepData());
+
+            current = current.plus(1, ChronoUnit.DAYS);
+        }
+
+        return result;
     }
 
     public ItemSyncCount sync(LocalDate date) throws CredentialNotFoundException {

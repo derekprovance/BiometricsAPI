@@ -5,6 +5,7 @@ import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.GarminSyn
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.security.auth.login.CredentialNotFoundException;
+import java.time.temporal.ChronoUnit;
 
 public class GarminSyncJob extends AbstractSyncJob {
     private final GarminSyncService garminSyncService;
@@ -16,5 +17,10 @@ public class GarminSyncJob extends AbstractSyncJob {
     @Scheduled(cron = "0 0 0/3 * * ?")
     public void runGarminSyncJobs() throws CredentialNotFoundException {
         garminSyncService.sync(getYesterdayDate().toLocalDate());
+    }
+
+    @Scheduled(cron = "0 0 5 ? * 1/5")
+    public void runGarminSyncJobsWeekly() throws CredentialNotFoundException {
+        garminSyncService.sync(getYesterdayDate().toLocalDate().minus(5, ChronoUnit.DAYS), getYesterdayDate().toLocalDate());
     }
 }

@@ -35,14 +35,32 @@ public class GarminController extends AbstractApiController {
     @RequestMapping(value = "/sync/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getGarminData(@PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) throws CredentialNotFoundException {
         if(!garminEnabled) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("status", HttpStatus.BAD_REQUEST.value());
-            map.put("message", "Garmin API integration has been disabled.");
-            return ResponseEntity.badRequest().body(gson.toJson(map));
+            return ResponseEntity.badRequest().body(gson.toJson(getDisabledJsonMap()));
         }
 
         final ItemSyncCount syncCount = garminSyncService.sync(date);
 
         return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(syncCount));
+    }
+
+    @RequestMapping(value = "/sync/{start}/{end}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGarminDataWithRange(
+            @PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end
+    ) throws CredentialNotFoundException {
+        if(!garminEnabled) {
+            return ResponseEntity.badRequest().body(gson.toJson(getDisabledJsonMap()));
+        }
+
+        final ItemSyncCount syncCount = garminSyncService.sync(start, end);
+
+        return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(syncCount));
+    }
+
+    private Map<String, Object> getDisabledJsonMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", HttpStatus.BAD_REQUEST.value());
+        map.put("message", "Garmin API integration has been disabled.");
+        return map;
     }
 }

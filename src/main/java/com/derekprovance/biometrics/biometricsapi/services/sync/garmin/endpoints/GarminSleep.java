@@ -8,7 +8,6 @@ import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.daily
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.DTO.dailySleepData.DailySleepData;
 import com.derekprovance.biometrics.biometricsapi.services.sync.garmin.GarminApiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.CredentialNotFoundException;

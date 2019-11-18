@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 public class ItemSyncCount {
     private LocalDate date;
-    private Integer hrData;
-    private Integer movementData;
-    private Integer sleepData;
+    private Integer hrData = 0;
+    private Integer movementData = 0;
+    private Integer sleepData = 0;
 
     public LocalDate getDate() {
         return date;
