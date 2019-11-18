@@ -39,4 +39,10 @@ public class ItemSyncCount {
     public void setSleepData(Integer sleepData) {
         this.sleepData = sleepData;
     }
+
+    public void addSyncedItems(ItemSyncCount count) {
+        this.hrData += count.getHrData();
+        this.movementData += count.getMovementData();
+        this.sleepData += count.getSleepData();
+    }
 }

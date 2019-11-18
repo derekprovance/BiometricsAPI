@@ -39,9 +39,7 @@ public class GarminSyncService extends AbstractService {
         LocalDate current = start;
         while(end.compareTo(current) >= 0) {
             ItemSyncCount tempSyncCount = sync(current);
-            result.setHrData(result.getHrData() + tempSyncCount.getHrData());
-            result.setMovementData(result.getMovementData() + tempSyncCount.getMovementData());
-            result.setSleepData(result.getSleepData() + tempSyncCount.getSleepData());
+            result.addSyncedItems(tempSyncCount);
 
             current = current.plus(1, ChronoUnit.DAYS);
         }
