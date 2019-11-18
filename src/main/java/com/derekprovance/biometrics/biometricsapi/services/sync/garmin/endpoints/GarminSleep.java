@@ -43,7 +43,7 @@ public class GarminSleep {
     }
 
     private void syncSleepMeta(DailySleepDTO dailySleepDTO, LocalDate date) {
-        Sleep sleep = sleepRepository.findFirstBySleepStartBetween(date.minus(1, ChronoUnit.DAYS).atStartOfDay(), date.atTime(LocalTime.MAX));
+        Sleep sleep = sleepRepository.findFirstBySleepStartBetween(date.minus(1, ChronoUnit.DAYS).atTime(LocalTime.NOON), date.atTime(LocalTime.MAX));
 
         if(sleep == null) {
             sleep = new Sleep();
