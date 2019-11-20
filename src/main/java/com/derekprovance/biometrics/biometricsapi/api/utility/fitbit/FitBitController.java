@@ -56,7 +56,6 @@ public class FitBitController extends AbstractApiController {
         map.put("message", "Processed water log entry for date " + date.toString());
 
         return ResponseEntity.status(HttpStatus.OK).body(gson.toJson(map));
-
     }
 
     @RequestMapping(value = "/sync/meal/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
